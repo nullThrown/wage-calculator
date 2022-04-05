@@ -9,7 +9,7 @@ import {
 const NumInput = ({ name, title, isRequired, isInvalid, errorMsg }) => {
   return (
     <FormControl m='.7em 0' isRequired={isRequired} isInvalid={isInvalid}>
-      <FormLabel opacity='.8' for={name}>
+      <FormLabel opacity='.85' htmlFor={name}>
         {title}
       </FormLabel>
       <NumberInput
