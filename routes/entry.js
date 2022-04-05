@@ -15,6 +15,7 @@ router.get('/all/:username', async (req, res) => {
     res.status(200).json(entries);
   } catch (err) {
     console.log(err);
+    res.status(500).json({ error: 'server_error' });
   }
 });
 
@@ -59,6 +60,7 @@ router.post('/create', async (req, res) => {
     }
   } catch (err) {
     console.log(err);
+    res.status(500).json({ error: 'server_error' });
   }
 });
 
