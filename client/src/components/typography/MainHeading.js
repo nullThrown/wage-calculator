@@ -1,14 +1,9 @@
 import { Heading } from '@chakra-ui/react';
 
-const MainHeading = () => {
+const MainHeading = ({ text }) => {
   return (
-    <Heading
-      as='h1'
-      size='xl'
-      orientation='horizontal'
-      opacity='.75'
-      fontWeight='400'>
-      welcome, 'username'
+    <Heading as='h1' size='2xl' opacity='.95' fontWeight='400'>
+      {text}
     </Heading>
   );
 };
