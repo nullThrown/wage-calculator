@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-import {
+const {
   requiredNum,
   requiredStr,
   requiredBool,
   currentTime,
-} from './fieldTypes';
+} = require('./fieldTypes');
 const userSchema = new Schema(
   {
     username: { type: String, unique: true },
