@@ -7,7 +7,7 @@ const Home = () => {
     <>
       <Header />
       <Container>
-        <MainHeading />
+        <MainHeading text='Welcome, <username>' />
         <AddEntryBtn />
       </Container>
     </>
