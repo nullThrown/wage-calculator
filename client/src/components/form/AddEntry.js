@@ -3,7 +3,6 @@ import SecHeading from '../typography/SecHeading';
 import TertHeading from '../typography/TertHeading';
 import NumInput from './NumInput';
 import RadioGrp from './Radio';
-import BrunchSwitch from './BrunchSwitch';
 
 const AddEntryForm = ({ onToggle }) => {
   return (
@@ -21,17 +20,10 @@ const AddEntryForm = ({ onToggle }) => {
       <Flex direction='column' align='start' m='1em 0'>
         <TertHeading text='Totals' />
         <Divider mt='.2em' />
-        <Grid gap='21px' templateColumns='repeat(2, 1fr)' w='100%' m='.4em 0'>
-          <GridItem>
-            <NumInput title='Hours Worked' name='hours-worked' />
-          </GridItem>
-          <GridItem>
-            <NumInput
-              title='Total Sales'
-              name='total-sales'
-              isRequired={true}
-            />
-          </GridItem>
+        <Grid gap='10px' templateColumns='repeat(3, 1fr)' w='100%' m='.4em 0'>
+          <NumInput title='Hours Worked' name='hours-worked' />
+          <NumInput title='Overtime Hours' name='overtime-hours' />
+          <NumInput title='Total Sales' name='total-sales' />
         </Grid>
         <Divider />
       </Flex>
@@ -46,12 +38,12 @@ const AddEntryForm = ({ onToggle }) => {
         </Grid>
         <Divider />
       </Flex>
+
       <Flex direction='column' align='start' m='1em 0'>
         <TertHeading text='Shift' />
         <Divider mt='.2em' />
         <Flex align='center' w='100%' justify='space-around' m='.4em 0'>
           <RadioGrp />
-          <BrunchSwitch />
         </Flex>
         <Divider />
         <Button onClick={onToggle} colorScheme='green' m='2.6em auto 0'>
