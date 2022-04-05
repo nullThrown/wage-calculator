@@ -1,11 +1,10 @@
-import { useState } from 'react';
 import Container from '../components/base/container';
 import AddEntryForm from '../components/form/AddEntry';
-import NumInput from '../components/form/Input';
+import RadioGrp from '../components/form/Radio';
 const Test = () => {
-  const [error, setError] = useState(false);
   return (
     <Container>
+      {/* <RadioGrp /> */}
       <AddEntryForm />
     </Container>
   );
