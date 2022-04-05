@@ -7,6 +7,9 @@ const RadioGrp = () => {
         <Radio size='md' value='morning' colorScheme='yellow'>
           Morning
         </Radio>
+        <Radio size='md' value='afternoon' colorScheme='teal'>
+          Afternoon
+        </Radio>
         <Radio size='md' value='night'>
           Night
         </Radio>
