@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
+const verifyUser = require('../middleware/auth');
+const { server_error } = require('../util/responseTypes');
 
-//ROUTE GET api/entries/all
+// ROUTE GET api/entries/all
 // DESC get all entries
 // ACCESS public for now
-router.get('/all/:username', async (req, res) => {
+router.get('/all/:username', verifyUser, async (req, res) => {
   const { username } = req.params;
   try {
     const entries = await User.findOne(
@@ -15,14 +17,14 @@ router.get('/all/:username', async (req, res) => {
     res.status(200).json(entries);
   } catch (err) {
     console.log(err);
-    res.status(500).json({ error: 'server_error' });
+    res.status(500).json(server_error);
   }
 });
 
-//ROUTE POST api/entries/create
+// ROUTE POST api/entries/create
 // DESC create new earning
 // ACCESS public for now
-router.post('/create', async (req, res) => {
+router.post('/create', verifyUser, async (req, res) => {
   const {
     username,
     hoursWorked,
@@ -33,10 +35,10 @@ router.post('/create', async (req, res) => {
     tipOut,
     actualTipPct,
     shiftType,
-    brunch,
+    createdAt,
   } = req.body;
 
-  const newEarning = {
+  const newEntry = {
     hoursWorked,
     totalSales,
     creditTips,
@@ -45,22 +47,19 @@ router.post('/create', async (req, res) => {
     tipOut,
     actualTipPct,
     shiftType,
-    brunch,
+    createdAt,
   };
 
   try {
-    const user = await User.findOne({ username: username });
-
-    if (!user) {
-      res.status(422).json({ error: 'account_does_not_exist' });
-    } else {
-      user.entries.push(newEarning);
-      await user.save();
-      res.status(201).json(user.entries);
-    }
+    const user = await User.findOneAndUpdate(
+      { username: username },
+      { $push: { entries: newEntry } },
+      { returnOriginal: false }
+    );
+    res.status(201).json(user.entries);
   } catch (err) {
     console.log(err);
-    res.status(500).json({ error: 'server_error' });
+    res.status(500).json(server_error);
   }
 });
 
