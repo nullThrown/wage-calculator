@@ -1,8 +1,13 @@
 import { Heading } from '@chakra-ui/react';
 
-const TertHeading = ({ text }) => {
+const TertHeading = ({ text, textAlign }) => {
   return (
-    <Heading as='h3' size='lg' opacity='.85' fontWeight='400'>
+    <Heading
+      as='h3'
+      size='lg'
+      opacity='.85'
+      fontWeight='300'
+      textAlign={textAlign}>
       {text}
     </Heading>
   );
