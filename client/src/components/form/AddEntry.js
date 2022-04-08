@@ -3,18 +3,10 @@ import SecHeading from '../typography/SecHeading';
 import TertHeading from '../typography/TertHeading';
 import NumInput from './NumInput';
 import RadioGrp from './Radio';
-
+import Card from '../base/Card';
 const AddEntryForm = ({ onToggle }) => {
   return (
-    <Box
-      as='form'
-      maxW='640px'
-      w='100%'
-      mt='10px'
-      textAlign='center'
-      boxShadow='5px 5px 10px rgba(220,220,220,1.0)'
-      borderRadius={10}
-      p='2em'>
+    <Card as='form' m='10px 0 0 0 '>
       <SecHeading text="Add Earning's Reports" />
 
       <Flex direction='column' align='start' m='1em 0'>
@@ -46,11 +38,11 @@ const AddEntryForm = ({ onToggle }) => {
           <RadioGrp />
         </Flex>
         <Divider />
-        <Button onClick={onToggle} colorScheme='green' m='2.6em auto 0'>
-          Submit Entry
-        </Button>
       </Flex>
-    </Box>
+      <Button onClick={onToggle} colorScheme='green' m='2.6em auto 0'>
+        Submit Entry
+      </Button>
+    </Card>
   );
 };
 
