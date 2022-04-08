@@ -1,5 +1,5 @@
 import { Collapse, useDisclosure } from '@chakra-ui/react';
-import Container from '../components/base/container';
+import MainContainer from '../components/base/Container';
 import MainHeading from '../components/typography/MainHeading';
 import AddEntryBtn from '../components/button/AddEntry';
 import Header from '../components/base/Header';
@@ -9,13 +9,13 @@ const Home = () => {
   return (
     <>
       <Header />
-      <Container>
+      <MainContainer>
         <MainHeading text='Welcome, <username>' />
         <AddEntryBtn onToggle={onToggle} />
         <Collapse in={isOpen} animateOpacity>
           <AddEntryForm onToggle={onToggle} />
         </Collapse>
-      </Container>
+      </MainContainer>
     </>
   );
 };
