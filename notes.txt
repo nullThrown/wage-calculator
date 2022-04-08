@@ -1,27 +1,4 @@
 Wage Calulator App
 
-  *set up server 
-  *import routes
-    -create routes folder 
-    -create routes file for earnings
-    *create routes 
-      -POST create new earning
-      -GET all earnings  
-
-    *connect to mongodb
-    *create model for earning
-      -array of objs
-    {
-      hoursWorked: Number
-      hourlyWage: Number 
-      creditTips: Number
-      cashTips: Number
-      shiftType: String ('morning' 'night')
-      createdAt: Date,
-      updatedAt: Date,
-
-    }
-    -options: timestamps: true
-
-*add func for creating new earning 
-*text POST req in postman 
+  Front End
+    *
