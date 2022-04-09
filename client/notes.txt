@@ -1,0 +1,32 @@
+
+  Front End
+
+     General   
+    *look into stacks for analytics container
+      -should reduce the need for margin on card components 
+      -might be a better fit than Flex
+
+    Add Entry Form
+      *add select for company
+      *break hours worked into two inputs
+        - hours
+        -minutes
+      *add button for edit existing earning
+
+    Day Component
+      *Day component needs date select
+        -first option should be most recent
+        - first datarow requires actual title
+
+    Month Component  
+      *Month component needs date select
+        -first option should be most recent
+        - first datarow requires actual title
+      *add Line chart to shift component
+      
+
+    
+    Back Burner  
+      *extend theme for size prop
+        -titles should be smaller and sizing still needs to be responsive
+        -probably will require 4 different title components
