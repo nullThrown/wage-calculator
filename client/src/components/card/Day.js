@@ -1,6 +1,6 @@
 import Card from '../base/Card';
-import SecHeading from '../typography/SecHeading';
 import TertHeading from '../typography/TertHeading';
+import QuatHeading from '../typography/QuatHeading';
 import { Flex } from '@chakra-ui/react';
 import StatRow from '../data/StatRow';
 import SimpleStat from '../data/SimpleStat';
@@ -8,9 +8,9 @@ import SimpleStat from '../data/SimpleStat';
 const Day = () => {
   return (
     <Card as='section'>
-      <SecHeading text='By Day' textAlign='center' />
+      <TertHeading text='By Day' textAlign='center' />
       <Flex direction='column'>
-        <TertHeading text='Most Recent' />
+        <QuatHeading text='Most Recent' />
         <StatRow>
           <SimpleStat title='Hours Worked' amount='6.54' />
           <SimpleStat title='Total Earned' amount='134.24' symbolBefore='$' />
@@ -22,7 +22,7 @@ const Day = () => {
             helpText='after tipout'
           />
         </StatRow>
-        <TertHeading text='Tips' />
+        <QuatHeading text='Tips' />
         <StatRow>
           <SimpleStat title='Credit Tips' amount='60.54' symbolBefore='$' />
           <SimpleStat title='Cash Tips' amount='16.13' symbolBefore='$' />
