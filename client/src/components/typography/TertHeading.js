@@ -5,8 +5,8 @@ const TertHeading = ({ text, textAlign }) => {
     <Heading
       as='h3'
       size='lg'
-      opacity='.85'
-      fontWeight='300'
+      opacity='.9'
+      fontWeight='500'
       textAlign={textAlign}>
       {text}
     </Heading>
