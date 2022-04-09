@@ -1,16 +1,13 @@
-import Card from '../base/Card';
-import SecHeading from '../typography/SecHeading';
 import { Flex } from '@chakra-ui/react';
-import StatRow from '../data/StatRow';
-import SimpleStat from '../data/SimpleStat';
+import Card from '../base/Card';
 import TertHeading from '../typography/TertHeading';
-
+import QuatHeading from '../typography/QuatHeading';
 const Shift = () => {
   return (
     <Card as='section'>
-      <SecHeading text='Shift' textAlign='center' />
+      <TertHeading text='Shift' textAlign='center' />
       <Flex direction='column'>
-        <TertHeading text='Totals' />
+        <QuatHeading text='Totals' />
       </Flex>
     </Card>
   );

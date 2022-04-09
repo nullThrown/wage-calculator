@@ -1,6 +1,6 @@
 import Card from '../base/Card';
-import SecHeading from '../typography/SecHeading';
 import TertHeading from '../typography/TertHeading';
+import QuatHeading from '../typography/QuatHeading';
 import { Flex } from '@chakra-ui/react';
 import StatRow from '../data/StatRow';
 import SimpleStat from '../data/SimpleStat';
@@ -8,9 +8,9 @@ import SimpleStat from '../data/SimpleStat';
 const Overview = () => {
   return (
     <Card as='section'>
-      <SecHeading text='Overview' textAlign='center' />
+      <TertHeading text='Overview' textAlign='center' />
       <Flex direction='column'>
-        <TertHeading text='Averages' />
+        <QuatHeading text='Averages' />
         <StatRow>
           <SimpleStat
             title='Total Per Hour'
