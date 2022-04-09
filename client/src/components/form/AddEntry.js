@@ -1,16 +1,18 @@
-import { Box, Divider, Flex, Grid, GridItem, Button } from '@chakra-ui/react';
-import SecHeading from '../typography/SecHeading';
+import { Divider, Flex, Grid } from '@chakra-ui/react';
 import TertHeading from '../typography/TertHeading';
+import QuatHeading from '../typography/QuatHeading';
 import NumInput from './NumInput';
 import RadioGrp from './Radio';
 import Card from '../base/Card';
+import SubmitEntry from '../button/SubmitEntry';
+
 const AddEntryForm = ({ onToggle }) => {
   return (
-    <Card as='form' m='10px 0 0 0 '>
-      <SecHeading text="Add Earning's Reports" />
+    <Card as='form' m='1em 0 0 0'>
+      <TertHeading text="Add Earning's Reports" textAlign='center' />
 
       <Flex direction='column' align='start' m='1em 0'>
-        <TertHeading text='Totals' />
+        <QuatHeading text='Totals' />
         <Divider mt='.2em' />
         <Grid gap='10px' templateColumns='repeat(3, 1fr)' w='100%' m='.4em 0'>
           <NumInput title='Hours Worked' name='hours-worked' />
@@ -21,7 +23,7 @@ const AddEntryForm = ({ onToggle }) => {
       </Flex>
 
       <Flex direction='column' align='start' m='1em 0'>
-        <TertHeading text='Tips' />
+        <QuatHeading text='Tips' />
         <Divider mt='.2em' />
         <Grid gap='10px' templateColumns='repeat(3,1fr)' m='.4em 0'>
           <NumInput title='Credit Tips' name='credit-tips' />
@@ -32,16 +34,14 @@ const AddEntryForm = ({ onToggle }) => {
       </Flex>
 
       <Flex direction='column' align='start' m='1em 0'>
-        <TertHeading text='Shift' />
+        <QuatHeading text='Shift' />
         <Divider mt='.2em' />
         <Flex align='center' w='100%' justify='space-around' m='.4em 0'>
           <RadioGrp />
         </Flex>
         <Divider />
       </Flex>
-      <Button onClick={onToggle} colorScheme='green' m='2.6em auto 0'>
-        Submit Entry
-      </Button>
+      <SubmitEntry onClick={onToggle} />
     </Card>
   );
 };
