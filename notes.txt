@@ -1,19 +1,1 @@
-Wage Calulator App
 
-  Front End
-    *center heading for add entry form
-    *center button for add entry form 
-    *add select for company
-    *add margin bottom for all card components
-    *place container around all analytic data displays
-    *add title to data displays as well
-    *extend theme for size prop 
-      -titles should be smaller and sizing still needs to be responsive
-      -probably will require 4 different title components
-    *Day component needs date select 
-      -first option should be most recent 
-      - first datarow requires actual title
-    *Month component needs date select 
-      -first option should be most recent 
-      - first datarow requires actual title
-    *add Line chart to shift component    
