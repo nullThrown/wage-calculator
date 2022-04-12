@@ -7,10 +7,7 @@
       -might be a better fit than Flex
 
     Add Entry Form
-      *add select for company
-      *break hours worked into two inputs
-        - hours
-        -minutes
+
       *add button for edit existing earning
 
     Day Component
