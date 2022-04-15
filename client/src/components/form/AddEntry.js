@@ -1,4 +1,4 @@
-import { Divider, Flex, Grid, Center } from '@chakra-ui/react';
+import { Divider, Flex, Grid, useDisclosure } from '@chakra-ui/react';
 import TertHeading from '../typography/TertHeading';
 import QuatHeading from '../typography/QuatHeading';
 import NumInput from './NumInput';
@@ -8,12 +8,16 @@ import Card from '../base/Card';
 import SubmitEntry from '../button/SubmitEntry';
 import CompanySelect from './CompanySelect';
 import EditEntryBtn from '../button/EditEntry';
+import EditEntryModal from '../modal/EditEntry';
 const AddEntryForm = ({ onToggle }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <Card as='form' m='1em 0 0 0'>
       <TertHeading text="Add Earning's Reports" textAlign='center' />
       <Flex m='1em' justify='center'>
-        <EditEntryBtn />
+        <EditEntryBtn onClick={onOpen} />
+        <EditEntryModal isOpen={isOpen} onClose={onClose} />
       </Flex>
       <Flex direction='column' align='start' m='1em 0'>
         <QuatHeading text='Totals' />
