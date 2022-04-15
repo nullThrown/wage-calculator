@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   Modal,
   ModalOverlay,
@@ -6,35 +7,39 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  useDisclosure,
   Button,
-  Flex,
+  Center,
 } from '@chakra-ui/react';
+import DatePicker from 'react-datepicker';
+import TertHeading from '../typography/TertHeading';
+import 'react-datepicker/dist/react-datepicker.css';
 
-const EditEntryModal = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+const EditEntryModal = ({ isOpen, onClose }) => {
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <>
-      <Button onClick={onOpen}>Open Modal</Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Edit Existing Entry</ModalHeader>
+          <ModalHeader textAlign='center'>Select A Date</ModalHeader>
+          <TertHeading>Select a Date</TertHeading>
           <ModalCloseButton />
           <ModalBody>
-            <p>
-              salkdaskldlasdjlksadjlkaslkdasdlkasdlksadaslkdlsakdlaskdlkasdlkaslkdl
-            </p>
+            <Center>
+              <DatePicker
+                selected={selectedDate}
+                onChange={(date) => setSelectedDate(date)}
+                minDate={new Date('4-5-2022')}
+                maxDate={new Date()}></DatePicker>
+            </Center>
           </ModalBody>
           <ModalFooter>
-            <Flex>
-              <Button colorScheme='blue' mr='.8em'>
-                Fill
-              </Button>
-              <Button colorScheme='gray' variant='outline' onClick={onClose}>
-                Cancel
-              </Button>
-            </Flex>
+            <Button colorScheme='blue' mr='.8em'>
+              Fill
+            </Button>
+            <Button colorScheme='gray' variant='outline' onClick={onClose}>
+              Cancel
+            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
