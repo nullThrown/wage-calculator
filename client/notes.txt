@@ -1,14 +1,19 @@
 
   Front End
 
-     General   
-    *look into stacks for analytics container
-      -should reduce the need for margin on card components 
-      -might be a better fit than Flex
+    General   
+
+    5*implement react query
+    -send post request to node server to submit entry
+    -make sure Entry data model and React form are in sync
+    -make sure Model has all fields
 
     Add Entry Form
-
-      *add button for edit existing earning
+      *format inputs to include Dollar signs 
+        -complete when form state is included in component
+      
+    Edit Entry modal
+      *inert action placed on underneath content stays active after closure of modal
 
     Day Component
       *Day component needs date select
