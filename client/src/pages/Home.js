@@ -1,4 +1,10 @@
-import { Collapse, useDisclosure, Flex, Divider } from '@chakra-ui/react';
+import {
+  Collapse,
+  useDisclosure,
+  Divider,
+  VStack,
+  Box,
+} from '@chakra-ui/react';
 import MainContainer from '../components/base/Container';
 import MainHeading from '../components/typography/MainHeading';
 import AddEntryBtn from '../components/button/AddEntry';
@@ -21,14 +27,16 @@ const Home = () => {
         <Collapse in={isOpen} animateOpacity>
           <AddEntryForm onToggle={onToggle} />
         </Collapse>
-        <Flex direction='column' w='100%' m='3em auto' align='center'>
-          <SecHeading text='Analytics' />
-          <Divider mb='2em' maxW='700px' />
-          <Overview />
-          <Day />
-          <Month />
-          <Shift />
-        </Flex>
+        <Box m='4em auto' w='100%'>
+          <SecHeading text='Analytics' textAlign='center' />
+          <Divider maxW='700px' />
+          <VStack m='3em auto' w='100%' spacing='3em'>
+            <Overview />
+            <Day />
+            <Month />
+            <Shift />
+          </VStack>
+        </Box>
       </MainContainer>
     </>
   );
