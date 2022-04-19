@@ -11,7 +11,17 @@ import {
   FormHelperText,
 } from '@chakra-ui/react';
 
-export const TimeInput = ({ name, title, isRequired, isInvalid, errorMsg }) => {
+export const TimeInput = ({
+  name,
+  title,
+  isRequired,
+  isInvalid,
+  errorMsg,
+  hourValue,
+  hourOnChange,
+  minuteValue,
+  minuteOnChange,
+}) => {
   return (
     <FormControl isRequired={isRequired} isInvalid={isInvalid}>
       <FormLabel opacity='.85' htmlFor={name}>
@@ -25,7 +35,9 @@ export const TimeInput = ({ name, title, isRequired, isInvalid, errorMsg }) => {
           min={0}
           focusBorderColor='blue.400'
           id={name}
-          name={name}>
+          name={name}
+          value={hourValue}
+          onChange={hourOnChange}>
           <NumberInputField />
           <NumberInputStepper>
             <NumberIncrementStepper />
@@ -41,7 +53,9 @@ export const TimeInput = ({ name, title, isRequired, isInvalid, errorMsg }) => {
           max={59}
           focusBorderColor='blue.400'
           id={name}
-          name={name}>
+          name={name}
+          value={minuteValue}
+          onChange={minuteOnChange}>
           <NumberInputField />
           <NumberInputStepper>
             <NumberIncrementStepper />
