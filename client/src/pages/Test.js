@@ -7,10 +7,12 @@ import AddEntry from '../components/form/AddEntry';
 import TimeInput from '../components/form/TimeInput';
 import EditEntryBtn from '../components/button/EditEntry';
 import EditEntryModal from '../components/modal/EditEntry';
+import Example from '../components/Example';
 const Test = () => {
   return (
     <TestContainer>
-      <EditEntryModal />
+      <Example />
+      <AddEntry />
     </TestContainer>
   );
 };
