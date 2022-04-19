@@ -2,14 +2,18 @@
   Front End
 
     General   
-
-    5*implement react query
+      1*organize file structure 
+    6*implement react query
     -send post request to node server to submit entry
     -make sure Entry data model and React form are in sync
     -make sure Model has all fields
 
     Add Entry Form
-      *format inputs to include Dollar signs 
+      2*remove timeInput as a separate component
+        -makes things too complicated 
+      3*write comments for separate changeHandlers
+      4*all inputs change handlers must have consistent naming conventions
+      5*format inputs to include Dollar signs 
         -complete when form state is included in component
       
     Edit Entry modal
