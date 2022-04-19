@@ -1,4 +1,12 @@
-import { Divider, Flex, Grid, useDisclosure } from '@chakra-ui/react';
+import {
+  Divider,
+  Flex,
+  Grid,
+  useDisclosure,
+  NumberInput,
+  Input,
+} from '@chakra-ui/react';
+import { useState } from 'react';
 import TertHeading from '../typography/TertHeading';
 import QuatHeading from '../typography/QuatHeading';
 import NumInput from './NumInput';
@@ -9,9 +17,42 @@ import SubmitEntry from '../button/SubmitEntry';
 import CompanySelect from './CompanySelect';
 import EditEntryBtn from '../button/EditEntry';
 import EditEntryModal from '../modal/EditEntry';
-const AddEntryForm = ({ onToggle }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+import { useMutation } from 'react-query';
+import axios from 'axios';
 
+const AddEntryForm = ({ onToggle }) => {
+  const [newEntry, setNewEntry] = useState({
+    hoursWorked: 0,
+    minutesWorked: 0,
+    totalSales: 0,
+    creditTips: 0,
+    cashTips: 0,
+    tipOut: 0,
+    shiftTime: 'morning',
+    company: '',
+  });
+  const onInputChange = (value, name) => {
+    setNewEntry({ ...newEntry, [name]: value });
+  };
+  const companyInputChange = (e) => {
+    setNewEntry({ ...newEntry, company: e.target.value });
+  };
+  const submitHandler = (e) => {
+    e.preventDefault();
+    // send react query post request
+    // if req == success
+    // display success page
+    // close form on setTimeout
+    // update query cache
+    // rerender analytics data components
+    // if req == error
+    // display 'something went wrong' error msg
+  };
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const mutation = useMutation((newEntry) => {
+    return axios.post('http://localhost:4000/api/entries/create', newEntry);
+  });
   return (
     <Card as='form' m='1em 0 0 0'>
       <TertHeading text="Add Earning's Reports" textAlign='center' />
@@ -28,9 +69,20 @@ const AddEntryForm = ({ onToggle }) => {
           w='100%'
           m='.4em 0'
           alignItems='start'>
-          <TimeInput title='Regular Hours' name='hours-worked' />
-          {/* <TimeInput title='Overtime Hours' name='overtime-hours' /> */}
-          <NumInput title='Total Sales' name='total-sales' />
+          {/* <TimeInput
+            title='Regular Hours'
+            name='hoursWorked'
+            hourValue={newEntry.hoursWorked}
+            hourOnChange={(value) => onInputChange(value, 'hoursWorked')}
+            minuteValue={newEntry.minutesWorked}
+            minuteOnChange={(value) => onInputChange(value, 'minutesWorked')}
+          /> */}
+          <NumInput
+            title='Total Sales'
+            name='totalSales'
+            value={newEntry.totalSales}
+            handleChange={(value) => onInputChange(value, 'totalSales')}
+          />
         </Grid>
         <Divider />
       </Flex>
@@ -39,9 +91,22 @@ const AddEntryForm = ({ onToggle }) => {
         <QuatHeading text='Tips' />
         <Divider mt='.2em' />
         <Grid gap='10px' templateColumns='repeat(4,1fr)' m='.4em 0'>
-          <NumInput title='Credit Tips' name='credit-tips' />
-          <NumInput title='Cash Tips' name='cash-tips' />
-          <NumInput title='Tip Out' name='tip-out' />
+          <NumInput
+            title='Credit Tips'
+            name='creditTips'
+            value={newEntry.creditTips}
+            handleChange={(value) => onInputChange(value, 'creditTips')}
+          />
+          <NumInput
+            title='Cash Tips'
+            name='cashTips'
+            handleChange={(value) => onInputChange(value, 'cashTips')}
+          />
+          <NumInput
+            title='Tip Out'
+            name='tipOut'
+            handleChange={(value) => onInputChange(value, 'tipOut')}
+          />
         </Grid>
         <Divider />
       </Flex>
@@ -54,8 +119,14 @@ const AddEntryForm = ({ onToggle }) => {
           templateColumns='repeat(2,1fr)'
           alignItems='center'
           m='.4em 0'>
-          <ShiftRadioGroup />
-          <CompanySelect />
+          <ShiftRadioGroup
+            onChange={(value) => onInputChange(value, 'shiftTime')}
+            value={newEntry.shiftTime}
+          />
+          <CompanySelect
+            onChange={companyInputChange}
+            value={newEntry.company}
+          />
         </Grid>
         <Divider />
       </Flex>
