@@ -6,7 +6,15 @@ import {
   FormErrorMessage,
 } from '@chakra-ui/react';
 
-const NumInput = ({ name, title, isRequired, isInvalid, errorMsg }) => {
+const NumInput = ({
+  name,
+  title,
+  isRequired,
+  isInvalid,
+  errorMsg,
+  value,
+  handleChange,
+}) => {
   return (
     <FormControl m='.7em 0' isRequired={isRequired} isInvalid={isInvalid}>
       <FormLabel opacity='.85' htmlFor={name}>
@@ -17,6 +25,8 @@ const NumInput = ({ name, title, isRequired, isInvalid, errorMsg }) => {
         precision={2}
         min={0}
         focusBorderColor='blue.400'
+        value={value}
+        onChange={handleChange}
         id={name}
         name={name}>
         <NumberInputField />
