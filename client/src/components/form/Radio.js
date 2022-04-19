@@ -1,8 +1,12 @@
 import { Radio, RadioGroup, Stack } from '@chakra-ui/react';
 
-const ShiftRadioGroup = () => {
+const ShiftRadioGroup = ({ onChange, value }) => {
   return (
-    <RadioGroup defaultValue='morning' name='shift-time'>
+    <RadioGroup
+      defaultValue='morning'
+      name='shiftTime'
+      onChange={onChange}
+      value={value}>
       <Stack direction='row' spacing={4}>
         <Radio size='md' value='morning' colorScheme='yellow'>
           Morning
