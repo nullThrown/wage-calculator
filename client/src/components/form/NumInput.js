@@ -13,7 +13,11 @@ const NumInput = ({
   isInvalid,
   errorMsg,
   value,
-  handleChange,
+  onChange,
+  precision,
+  step,
+  min,
+  max,
 }) => {
   return (
     <FormControl m='.7em 0' isRequired={isRequired} isInvalid={isInvalid}>
@@ -22,11 +26,14 @@ const NumInput = ({
       </FormLabel>
       <NumberInput
         defaultValue={0}
-        precision={2}
-        min={0}
+        placeholder='0.00'
+        precision={precision}
+        step={step}
+        min={min}
+        max={max}
         focusBorderColor='blue.400'
         value={value}
-        onChange={handleChange}
+        onChange={onChange}
         id={name}
         name={name}>
         <NumberInputField />
