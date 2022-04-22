@@ -25,28 +25,33 @@ router.get('/all/:username', verifyUser, async (req, res) => {
 // DESC create new earning
 // ACCESS public for now
 router.post('/create', verifyUser, async (req, res) => {
+  console.log(req.body);
   const {
     username,
-    hoursWorked,
+    timeWorkedDec,
     totalSales,
     creditTips,
     cashTips,
     tipPct,
-    tipOut,
     actualTipPct,
-    shiftType,
+    tipOut,
+    shiftTime,
+    company,
+    shiftDate,
     createdAt,
   } = req.body;
 
   const newEntry = {
-    hoursWorked,
+    timeWorkedDec,
     totalSales,
     creditTips,
     cashTips,
     tipPct,
-    tipOut,
     actualTipPct,
-    shiftType,
+    tipOut,
+    shiftTime,
+    company,
+    shiftDate,
     createdAt,
   };
 
