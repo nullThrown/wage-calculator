@@ -15,11 +15,11 @@ class Analytics {
       totalTips: 0,
     };
     this.entries.forEach((entry) => {
-      tips.totalCash += entry.cashTips;
-      tips.totalCredit += entry.creditTips;
+      totalTips.totalCash += entry.cashTips;
+      totalTips.totalCredit += entry.creditTips;
     });
-    tips.totalTips = entry.cashTips + entry.creditTips;
-    return tips;
+    totalTips.totalTips = entry.cashTips + entry.creditTips;
+    return totalTips;
   }
   calcTotalTipOut() {
     this.entries.reduce((acc, value) => {
