@@ -2,7 +2,10 @@ const User = require('../models/User');
 const { invalid_credentials } = require('../util/responseTypes');
 
 const verifyUser = async (req, res, next) => {
-  const { username } = req.body;
+  let { username } = req.body;
+  if (!username) {
+    username = req.params.username;
+  }
   try {
     if (!username) throw 'invalid_credentials';
     const user = await User.findOne({ username: username });

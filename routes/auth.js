@@ -30,7 +30,7 @@ router.post('/register', async (req, res) => {
 router.post('/login', verifyUser, async (req, res) => {
   const { username } = req.body;
   try {
-    const user = await User.findOne({ username: username }, { entries: 0 });
+    const user = await User.findOne({ username: username }).populate('entries');
     res.json(user);
   } catch (err) {
     console.log(err);

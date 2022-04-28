@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
+const Entries = require('../models/Entries');
 const verifyUser = require('../middleware/auth');
 const { server_error } = require('../util/responseTypes');
 
@@ -10,11 +11,8 @@ const { server_error } = require('../util/responseTypes');
 router.get('/all/:username', verifyUser, async (req, res) => {
   const { username } = req.params;
   try {
-    const entries = await User.findOne(
-      { username: username },
-      { entries: 1, _id: 0 }
-    );
-    res.status(200).json(entries);
+    const userId = await User.findOne({ username: username }, { _id: 1 });
+    res.status(200).send(userId);
   } catch (err) {
     console.log(err);
     res.status(500).json(server_error);
@@ -25,11 +23,11 @@ router.get('/all/:username', verifyUser, async (req, res) => {
 // DESC create new earning
 // ACCESS public for now
 router.post('/create', verifyUser, async (req, res) => {
-  console.log(req.body);
   const {
     username,
     timeWorkedDec,
     totalSales,
+    totalSalesApplicable,
     creditTips,
     cashTips,
     tipPct,
@@ -37,13 +35,15 @@ router.post('/create', verifyUser, async (req, res) => {
     tipOut,
     shiftTime,
     company,
+    position,
+    specialEvent,
     shiftDate,
-    createdAt,
   } = req.body;
-
+  console.log(timeWorkedDec);
   const newEntry = {
     timeWorkedDec,
     totalSales,
+    totalSalesApplicable,
     creditTips,
     cashTips,
     tipPct,
@@ -51,17 +51,24 @@ router.post('/create', verifyUser, async (req, res) => {
     tipOut,
     shiftTime,
     company,
+    position,
+    specialEvent,
     shiftDate,
-    createdAt,
   };
 
   try {
-    const user = await User.findOneAndUpdate(
-      { username: username },
-      { $push: { entries: newEntry } },
-      { returnOriginal: false }
-    );
-    res.status(201).json(user.entries);
+    const user = await User.findOne({ username: username });
+    let entries = await Entries.findOne({ user: user._id });
+    if (!entries) {
+      entries = new Entries({ user: user._id, entries: newEntry });
+      user.entries = entries._id;
+      await user.save();
+    } else {
+      entries.entries.push(newEntry);
+    }
+    await entries.save();
+
+    res.status(201).json(entries);
   } catch (err) {
     console.log(err);
     res.status(500).json(server_error);
@@ -69,3 +76,9 @@ router.post('/create', verifyUser, async (req, res) => {
 });
 
 module.exports = router;
+
+// const entries = await Entries.findOneAndUpdate(
+//   { user: userId },
+//   { $push: { entries: newEntry } },
+//   { returnOriginal: false }
+// );
