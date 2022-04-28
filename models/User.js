@@ -1,33 +1,17 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const { requiredNum, requiredStr, currentTime } = require('./fieldTypes');
-const userSchema = new Schema(
+const UserSchema = new Schema(
   {
     username: { type: String, unique: true },
     account: {
       hourlyWage: Number,
       overtimeMultiplier: { type: Number, default: 1.5 },
-      position: String,
-      company: String,
+      company: [{ name: String, active: Boolean, position: String }],
     },
-    entries: [
-      {
-        timeWorkedDec: requiredNum,
-        totalSales: requiredNum,
-        creditTips: requiredNum,
-        cashTips: requiredNum,
-        tipPct: requiredNum,
-        actualTipPct: requiredNum,
-        tipOut: requiredNum,
-        shiftTime: requiredStr,
-        company: requiredStr,
-        shiftDate: { type: Date },
-        createdAt: currentTime,
-        updatedAt: { type: Date },
-      },
-    ],
+    entries: { type: Schema.Types.ObjectId, ref: 'entries' },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model('user', userSchema);
+module.exports = mongoose.model('user', UserSchema);
