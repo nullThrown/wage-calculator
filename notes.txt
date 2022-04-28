@@ -1,16 +1,48 @@
 Routes
 
   Auth 
-  success!!  // route for registering new user
-    // route for deleting user -- not created yet
-   success!! // route for getting user + entries populate
+   ✔ route for registering new user
+    route for deleting user -- not created yet
+   ✔ route for getting user + entries populate
 
   Account 
-    success!! // route for updating account
+   ✔ route for updating account
 
 
   Entries
-    // route for getting all entries
-    Sucess!! // route for creating new entry
-    // route for updating entry
-    // route for getting all analytic data from entries 
+   route for getting all entries + data analytic object 
+   ✔ route for creating new entry
+   route for updating existing entry
+     
+
+  Models 
+    Entries
+      Virtuals
+
+    Entry
+      Virtuals 
+      get -> total tips
+      get -> 
+
+
+
+  Data Analytic object
+    Overview -- all entries taken together
+      total per hour 
+      tip amt per hour
+      tip percentage
+      true tip percentage
+
+
+    By Day - any given entry, begins with most recent
+      Hours worked 
+      total earned
+      wages
+      tips
+      credit tips
+      cash tips 
+      tip pct 
+      true tip pct 
+
+
+
