@@ -23,7 +23,10 @@ const EntrySchema = new Schema(
     specialEvent: requiredBool,
     shiftDate: { type: Date },
   },
-  { timestamps: true }
+  { timestamps: true, toJSON: { virtuals: true } }
 );
 
+EntrySchema.virtual('totalTips').get(function () {
+  return this.creditTips + this.cashTips;
+});
 module.exports = mongoose.model('entry', EntrySchema);
