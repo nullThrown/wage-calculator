@@ -1,2 +1,16 @@
+Routes
 
-testing of separate account
+  Auth 
+  success!!  // route for registering new user
+    // route for deleting user -- not created yet
+   success!! // route for getting user + entries populate
+
+  Account 
+    success!! // route for updating account
+
+
+  Entries
+    // route for getting all entries
+    Sucess!! // route for creating new entry
+    // route for updating entry
+    // route for getting all analytic data from entries 
