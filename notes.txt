@@ -27,11 +27,20 @@ Routes
 
 
   Data Analytic object
+  constants -- virtual properties that need to be attached to entries model 
+
     Overview -- all entries taken together
-      total per hour 
-      tip amt per hour
-      tip percentage
-      true tip percentage
+    constants 
+      totaltTimeWorked -- add up all timeWorkedDec  
+      allTips -- add up totalTips virtual
+      totalSales -- add up all sales, if applicable
+      totalTipOut -- add up all tipout
+      
+    total per hour 
+
+    tip amt per hour
+    tip percentage
+    true tip percentage
 
 
     By Day - any given entry, begins with most recent
@@ -46,3 +55,6 @@ Routes
 
 
 
+
+
+    
