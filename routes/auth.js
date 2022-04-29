@@ -4,7 +4,7 @@ const router = express.Router();
 const User = require('../models/User');
 const { email_already_exists, server_error } = require('../util/responseTypes');
 
-// ROUTE POST api/user/register
+// ROUTE POST api/auth/register
 // DESC register a new user
 // ACCESS public
 router.post('/register', async (req, res) => {
@@ -24,7 +24,7 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// ROUTE POST api/user/login
+// ROUTE POST api/auth/login
 // DESC login a user
 // ACCESS public
 router.post('/login', verifyUser, async (req, res) => {
