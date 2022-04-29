@@ -4,15 +4,35 @@ const User = require('../models/User');
 const Entries = require('../models/Entries');
 const verifyUser = require('../middleware/auth');
 const { server_error } = require('../util/responseTypes');
-
+const createOverviewData = require('../logic/overview');
 // ROUTE GET api/entries/all
 // DESC get all entries
-// ACCESS public for now
+// ACCESS private for now
 router.get('/all/:username', verifyUser, async (req, res) => {
   const { username } = req.params;
   try {
     const userId = await User.findOne({ username: username }, { _id: 1 });
-    res.status(200).send(userId);
+    const entries = await Entries.findOne({user: userId})
+    res.status(200).json(entries);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(server_error);
+  }
+});
+// ROUTE GET api/entries/all
+// DESC get all entries combined with all manipulated data 
+// ACCESS private for now
+router.get('/all/analytic/:username', verifyUser, async (req, res) => {
+  const { username } = req.params;
+  try {
+    const user = await User.findOne({ username: username });
+    const entries = await Entries.findOne({user: user._id})
+    const overview = createOverviewData(entries, user)
+    const responseData = {
+      entries, 
+      overview,
+    };
+    res.status(200).json(responseData);
   } catch (err) {
     console.log(err);
     res.status(500).json(server_error);
@@ -21,7 +41,7 @@ router.get('/all/:username', verifyUser, async (req, res) => {
 
 // ROUTE POST api/entries/create
 // DESC create new earning
-// ACCESS public for now
+// ACCESS private for now
 router.post('/create', verifyUser, async (req, res) => {
   const {
     username,
