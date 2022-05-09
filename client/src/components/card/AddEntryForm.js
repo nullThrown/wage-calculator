@@ -23,8 +23,6 @@ const AddEntryForm = ({ onToggle }) => {
     totalSales: 0,
     creditTips: 0,
     cashTips: 0,
-    tipPct: 0,
-    actualTipPct: 0,
     tipOut: 0,
     shiftTime: 'morning',
     company: '',
@@ -45,26 +43,28 @@ const AddEntryForm = ({ onToggle }) => {
     mutation.mutate(newEntry);
   };
 
-  useEffect(() => {
-    const { totalSales, creditTips, cashTips, tipOut } = newEntry;
-    if (totalSales > 0) {
-      console.log(typeof totalSales);
-      const tipPct = ((+creditTips + +cashTips) / +totalSales) * 100;
-      const actualTipPct =
-        ((+creditTips + +cashTips - +tipOut) / +totalSales) * 100;
-      setNewEntry({ ...newEntry, tipPct: tipPct, actualTipPct: actualTipPct });
-    }
-  }, [
-    newEntry.totalSales,
-    newEntry.creditTips,
-    newEntry.cashTips,
-    newEntry.tipOut,
-  ]);
+  // this type of logic can be handle by mongoose virtuals -- much simpler!!
+  // useEffect(() => {
+  //   const { totalSales, creditTips, cashTips, tipOut } = newEntry;
+  //   if (totalSales > 0) {
+  //     const tipPct = ((+creditTips + +cashTips) / +totalSales) * 100;
+  //     const actualTipPct =
+  //       ((+creditTips + +cashTips - +tipOut) / +totalSales) * 100;
+  //     setNewEntry({ ...newEntry, tipPct: tipPct, actualTipPct: actualTipPct });
+  //   }
+  // }, [
+  //   newEntry.totalSales,
+  //   newEntry.creditTips,
+  //   newEntry.cashTips,
+  //   newEntry.tipOut,
+  // ]);
+  // converts hours and minutes into a decimal number
   useEffect(() => {
     const { hoursWorked, minutesWorked } = newEntry;
     const timeWorkedDec = +minutesWorked / 60 + +hoursWorked;
     setNewEntry({ ...newEntry, timeWorkedDec: timeWorkedDec });
   }, [newEntry.hoursWorked, newEntry.minutesWorked]);
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const mutation = useMutation((newEntry) => {
     return axios.post('http://localhost:4000/api/entries/create', newEntry);
