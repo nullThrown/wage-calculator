@@ -20,13 +20,19 @@ const EntrySchema = new Schema(
   { timestamps: true, toJSON: { virtuals: true } }
 );
 
+// EntrySchema.virtual('calculatedData').get(function () {
+//   const totalTips = this.creditTips + this.cashTips;
+//   const trueTips = this.creditTips + this.cashTips - this.tipOut;
+//   const totalWagesEarned = this.creditTips + 
+//   return this.creditTips + this.cashTips;
+// });
 EntrySchema.virtual('totalTips').get(function () {
   return this.creditTips + this.cashTips;
 });
-EntrySchema.virtual('trueTips').get(function () {
+EntrySchema.virtual('trueTotalTips').get(function () {
   return this.creditTips + this.cashTips - this.tipOut;
 });
-EntrySchema.virtual('totalWagesEarned').get(function () {
+EntrySchema.virtual('totalWages').get(function () {
   return this.timeWorkedDec * this.hourlyWage;
 });
 EntrySchema.virtual('totalEarned').get(function () {
