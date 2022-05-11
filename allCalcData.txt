@@ -1,0 +1,16 @@
+
+Overview, Month, Week, Single Day - returns avgs over a a given number of entries
+total earned - 
+wages earned - 
+credit tips - 
+cash tips - 
+total per hour - 
+tip per hour - 
+tip pct - 
+true tip pct - 
+
+
+
+
+
+BestShift -
