@@ -22,6 +22,52 @@ router.get('/all/:username', verifyUser, async (req, res) => {
   }
 });
 
+// ROUTE GET api/entries/:month/:year/:username
+// DESC get all entries by specific month
+// ACCESS private for now
+router.get('/:month/:year/:username', verifyUser, async (req, res) => {
+  const { username, month, year } = req.params;
+  console.log(year);
+  const startDate = new Date(year, month, 1);
+  const endDate = new Date(year, month + 1, 0);
+  console.log(startDate);
+  console.log(endDate);
+  try {
+    const userId = await User.findOne({ username: username }, { _id: 1 });
+    // const entries = await Entries.findOne({ user: userId });
+    const filters = {
+      shiftDate: {
+        $gte: startDate,
+        $lt: endDate,
+      },
+    };
+    // const entries = await Entries.find({ data: filters }).where(filters);
+    // const entries = await Entries.find({
+    //   user: userId,
+    //   'data.shiftDate': { $gte: startDate, $lte: endDate },
+    // });
+    // const entries = await Entries.find(
+    //   {
+    //     user: userId,
+    //     'data.shiftDate': { $gte: startDate, $lte: endDate },
+    //   },
+    //   {
+    //     id: userId,
+    //     data: {
+    //       $elemMatch: {
+    //         date: { $gte: startDate, $lte: endDate },
+    //       },
+    //     },
+    //   }
+    // );
+    const entries = await Entries.find({ user: userId }).where(filters);
+    res.status(200).json(entries);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(server_error);
+  }
+});
+
 // ROUTE GET api/entries/:id
 // DESC get single entries
 // ACCESS private
@@ -59,7 +105,7 @@ router.get('/all/analytic/:username', verifyUser, async (req, res) => {
     const responseData = {
       entries,
       overview,
-      currentMonthData,
+      // currentMonthData,
     };
 
     res.status(200).json(responseData);
