@@ -1,14 +1,2 @@
-const arr = [
-  {
-    name: 'Punch Bowl Social',
-    active: true,
-    position: 'server',
-  },
-  {
-    name: 'Target',
-    active: true,
-    position: 'bartender',
-  },
-];
-
-console.log(JSON.stringify(arr));
+const month = 4;
+const year = 2022;
