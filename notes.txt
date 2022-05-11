@@ -70,5 +70,35 @@ Routes
 
     Overview - the properties of the overview object... Can these calculations be done within the Database as well ?
     Month - will the virtuals be applied to the list of subdocuments selected or will the virtuals be run on every subdocument?
+          - It appears that the virtuals will run on only the subdocuments that are being queried and pulled
     Day - most of this data should be calculated by the database 
     bestShift - I still need to figure what type of data should be displayed here..
+
+    EndPoints - have different endpoints for each piece of data you want to access
+     overview + all entries - for entries plus overview data -- unless overview data can be accessed by virtuals 
+      month - selects entries for only a given month and returns the virtual data associated with those given entries
+      week - selects entries for a given week nad returns the virtual data associated with those given entries
+      day - returns all entries that match a given day -- all data needed should be attached to that document
+      bestShift - might be done by virtuals but could be too difficult ???
+
+      react query 
+       - will make calls to each one of these endpoints in concurrent API calls
+       - will also be able to make single calls based on when specific components data is changed
+
+
+       todo 
+       - calc Data object returned from entries virtual still needs some work 
+          - some null values are returned 
+          -can we use this. to access not just doc fields but also virtuals from same doc??
+          -split up calcData object -- it is way too large and ugly. confusing!!
+        - go over react components and rework all calculations that will be needed
+          - it seems that both overview, week, and day data can all be the same 
+        
+        - create virtual in Entries model that returns a single calcData object 
+          - this calc object will be used for overiew, month, week data
+        - create virutal in Entry model that returns single calcData obj 
+          - this calc object will be used for day datat 
+        -check if day data can be accessed via virtual properties
+        -create endpoints for overview + entries data
+        -create endpoint for month data 
+        -create endpoint for bestShifts Data
