@@ -57,4 +57,18 @@ Routes
 
 
 
-    
+    Lets write this all out. We are trying to convert an array of entries into usable data. 
+    there are  four major components that require data at this point. 
+   
+    Overview 
+    month
+    Day
+    bestShift
+
+    the data for Overview and month are the same. It just requires a different set of entries to be run through a factory function 
+    that spits out a calculated form of data. Much of this calculation can be done through mongoose virtuals. Keep the business logic as close to the database as possible.
+
+    Overview - the properties of the overview object... Can these calculations be done within the Database as well ?
+    Month - will the virtuals be applied to the list of subdocuments selected or will the virtuals be run on every subdocument?
+    Day - most of this data should be calculated by the database 
+    bestShift - I still need to figure what type of data should be displayed here..
