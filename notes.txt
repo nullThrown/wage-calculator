@@ -86,11 +86,14 @@ Routes
        - will also be able to make single calls based on when specific components data is changed
 
 
-       todo 
+       todo
+       -look into a date library  
        - calc Data object returned from entries virtual still needs some work 
           -split up calcData object -- it is way too large and ugly. confusing!!
         
-        -create endpoints for overview + entries data
+        -create endpoints for all entries
         -create endpoint for month data 
-        -create endpoint for 
+        -create endpoint for week data 
         -create endpoint for bestShifts Data
+         
+
