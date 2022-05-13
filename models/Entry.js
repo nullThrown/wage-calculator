@@ -20,12 +20,6 @@ const EntrySchema = new Schema(
   { timestamps: true, toJSON: { virtuals: true } }
 );
 
-// EntrySchema.virtual('calculatedData').get(function () {
-//   const totalTips = this.creditTips + this.cashTips;
-//   const trueTips = this.creditTips + this.cashTips - this.tipOut;
-//   const totalWagesEarned = this.creditTips + 
-//   return this.creditTips + this.cashTips;
-// });
 EntrySchema.virtual('totalTips').get(function () {
   return this.creditTips + this.cashTips;
 });
