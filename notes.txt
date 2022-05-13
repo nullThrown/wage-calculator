@@ -90,8 +90,7 @@ Routes
        - calc Data object returned from entries virtual still needs some work 
           -split up calcData object -- it is way too large and ugly. confusing!!
         
-        - create virutal in Entry model that returns single calcData obj 
-          - this calc object will be used for day data 
         -create endpoints for overview + entries data
         -create endpoint for month data 
+        -create endpoint for 
         -create endpoint for bestShifts Data
