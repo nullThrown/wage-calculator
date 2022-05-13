@@ -27,11 +27,8 @@ router.get('/all/:username', verifyUser, async (req, res) => {
 // ACCESS private for now
 router.get('/:month/:year/:username', verifyUser, async (req, res) => {
   const { username, month, year } = req.params;
-  console.log(year);
   const startDate = new Date(year, month, 1);
   const endDate = new Date(year, month + 1, 0);
-  console.log(startDate);
-  console.log(endDate);
   try {
     const userId = await User.findOne({ username: username }, { _id: 1 });
     // const entries = await Entries.findOne({ user: userId });
@@ -154,7 +151,7 @@ router.post('/create', verifyUser, async (req, res) => {
     const user = await User.findOne({ username: username });
     let entries = await Entries.findOne({ user: user._id });
     if (!entries) {
-      entries = new Entries({ user: user._id, entries: newEntry });
+      entries = new Entries({ user: user._id, data: newEntry });
       user.entries = entries._id;
       await user.save();
     } else {
