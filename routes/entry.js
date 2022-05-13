@@ -9,7 +9,7 @@ const createByMonthData = require('../logic/byMonth');
 
 // ROUTE GET api/entries/all
 // DESC get all entries
-// ACCESS private for now
+// ACCESS private
 router.get('/all/:username', verifyUser, async (req, res) => {
   const { username } = req.params;
   try {
@@ -24,40 +24,35 @@ router.get('/all/:username', verifyUser, async (req, res) => {
 
 // ROUTE GET api/entries/:month/:year/:username
 // DESC get all entries by specific month
-// ACCESS private for now
+// ACCESS private
 router.get('/:year/:month/:username', verifyUser, async (req, res) => {
   const { username, month, year } = req.params;
   const startDate = new Date(year, month, 1);
   const endDate = new Date(year, month + 1, 0);
   try {
     const userId = await User.findOne({ username: username }, { _id: 1 });
-    // const entries = await Entries.findOne({ user: userId });
-    const filters = {
-      shiftDate: {
-        $gte: startDate,
-        $lt: endDate,
-      },
-    };
-    // const entries = await Entries.find({ data: filters }).where(filters);
-    // const entries = await Entries.find({
-    //   user: userId,
-    //   'data.shiftDate': { $gte: startDate, $lte: endDate },
-    // });
-    // const entries = await Entries.find(
-    //   {
-    //     user: userId,
-    //     'data.shiftDate': { $gte: startDate, $lte: endDate },
-    //   },
-    //   {
-    //     id: userId,
-    //     data: {
-    //       $elemMatch: {
-    //         date: { $gte: startDate, $lte: endDate },
-    //       },
-    //     },
-    //   }
-    // );
-    const entries = await Entries.find({ user: userId }).where(filters);
+    // need to create filters that selects entry subdocs between two dates
+    // const entries = await Entries.find({ user: userId });
+    res.status(200).json(entries);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(server_error);
+  }
+});
+
+// ROUTE GET api/entries/:month/:year/:day/:username
+// DESC get all entries by specific week Monday-Sunday
+// ACCESS private
+router.get('/:year/:month/:day/:username', verifyUser, async (req, res) => {
+  const { username, month, year } = req.params;
+  const startDate = new Date(year, month, 1);
+  const endDate = new Date(year, month + 1, 0);
+  try {
+    const userId = await User.findOne({ username: username }, { _id: 1 });
+    // need to create filter that queries entry subdocs by selected week
+    // a given day will be selected and entries from the preceding monday and the following
+    // sunday will be selected and returned
+    // const entries = await Entries.find({ user: userId });
     res.status(200).json(entries);
   } catch (err) {
     console.log(err);
@@ -66,7 +61,7 @@ router.get('/:year/:month/:username', verifyUser, async (req, res) => {
 });
 
 // ROUTE GET api/entries/:id
-// DESC get single entries
+// DESC get single entry
 // ACCESS private
 router.get('/:id/:username', verifyUser, async (req, res) => {
   const { username } = req.params;
@@ -80,41 +75,9 @@ router.get('/:id/:username', verifyUser, async (req, res) => {
   }
 });
 
-// ROUTE GET api/entries/all
-// DESC get all entries combined with all manipulated data
-// ACCESS private for now
-router.get('/all/analytic/:username', verifyUser, async (req, res) => {
-  const { username } = req.params;
-  try {
-    const user = await User.findOne({ username: username });
-    const entries = await Entries.findOne({ user: user._id });
-    const currentDate = new Date();
-    const EntriesByCurrentmonth = entries.data.filter((entry) => {
-      return (
-        entry.shiftDate.getMonth() === currentDate.getMonth() &&
-        entry.shiftDate.getFullYear() === currentDate.getFullYear()
-      );
-    });
-
-    const overview = createOverviewData(entries, user);
-    const currentMonthData = createByMonthData(EntriesByCurrentmonth);
-
-    const responseData = {
-      entries,
-      overview,
-      // currentMonthData,
-    };
-
-    res.status(200).json(responseData);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json(server_error);
-  }
-});
-
 // ROUTE POST api/entries/create
 // DESC create new earning
-// ACCESS private for now
+// ACCESS private
 router.post('/create', verifyUser, async (req, res) => {
   const {
     username,
@@ -167,9 +130,3 @@ router.post('/create', verifyUser, async (req, res) => {
 });
 
 module.exports = router;
-
-// const entries = await Entries.findOneAndUpdate(
-//   { user: userId },
-//   { $push: { entries: newEntry } },
-//   { returnOriginal: false }
-// );
