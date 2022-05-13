@@ -25,7 +25,7 @@ router.get('/all/:username', verifyUser, async (req, res) => {
 // ROUTE GET api/entries/:month/:year/:username
 // DESC get all entries by specific month
 // ACCESS private for now
-router.get('/:month/:year/:username', verifyUser, async (req, res) => {
+router.get('/:year/:month/:username', verifyUser, async (req, res) => {
   const { username, month, year } = req.params;
   const startDate = new Date(year, month, 1);
   const endDate = new Date(year, month + 1, 0);
