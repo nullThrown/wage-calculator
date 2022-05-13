@@ -10,10 +10,7 @@ const EntriesSchema = new Schema(
   { timestamps: true, toJSON: { virtuals: true } }
 );
 
-EntriesSchema.virtual('calculatedData').get(function () {
-  // remember totals averaged includes the tipout --
-  //  we only neglect tipout when we are trying
-  // to determine tip percentage
+EntriesSchema.virtual('calcData').get(function () {
   const calcData = {
     totalTimeWorked: 0,
     totalEarned: 0,
@@ -24,14 +21,9 @@ EntriesSchema.virtual('calculatedData').get(function () {
     totalTips: 0,
     trueTotalTips: 0,
     tipsEarnedWithSalesApp: 0,
-    tipOutWithSalesTaxApp: 0,
+    tipOutWithSalesApp: 0,
     totalSales: 0,
     totalTipOut: 0,
-    // includes tip out
-    totalPerHour: 0,
-    tipPerHour: 0,
-    tipPct: 0,
-    trueTipPct: 0,
   };
   this.data.forEach((entry) => {
     calcData.totalTimeWorked += entry.timeWorkedDec;
@@ -44,46 +36,28 @@ EntriesSchema.virtual('calculatedData').get(function () {
     calcData.trueTotalTips += entry.trueTotalTips;
     if (entry.totalSalesApplicable) {
       calcData.tipsEarnedWithSalesApp += entry.totalTips;
-      calcData.tipOutWithSalesTaxApp += entry.tipOut;
+      calcData.tipOutWithSalesApp += entry.tipOut;
     }
     calcData.totalSales += entry.totalSales;
     calcData.totalTipOut += entry.tipOut;
   });
-  calcData.totalPerHour = calcData.trueTotalEarned / calcData.totalTimeWorked;
-  calcData.tipPerHour = calcData.trueTotalTips / calcData.totalTimeWorked;
-  calcData.tipPct = calcData.tipsEarnedWithSalesApp / calcData.totalSales;
-  calcData.trueTipPct =
-    (calcData.tipsEarnedWithSalesApp - calcData.tipOutWithSalesTaxApp) /
-    calcData.totalSales;
 
   return calcData;
 });
-EntriesSchema.virtual('totalTimeWorked').get(function () {
-  return this.data.reduce((acc, value) => {
-    return acc + value.timeWorkedDec;
-  }, 0);
+EntriesSchema.virtual('totalPerHour').get(function () {
+  return this.calcData.trueTotalEarned / this.calcData.totalTimeWorked;
 });
-EntriesSchema.virtual('totalTips').get(function () {
-  return this.data.reduce((acc, value) => {
-    return acc + value.totalTips;
-  }, 0);
+EntriesSchema.virtual('tipPerHour').get(function () {
+  return this.calcData.trueTotalTips / this.calcData.totalTimeWorked;
 });
-EntriesSchema.virtual('trueTotalTips').get(function () {
-  return this.data.reduce((acc, value) => {
-    return acc + (value.totalTips - value.tipOut);
-  }, 0);
+EntriesSchema.virtual('tipPct').get(function () {
+  return this.calcData.tipsEarnedWithSalesApp / this.calcData.totalSales;
 });
-EntriesSchema.virtual('totalSales').get(function () {
-  return this.data.reduce((acc, value) => {
-    if (value.totalSalesApplicable) {
-      return acc + value.totalSales;
-    } else return acc;
-  }, 0);
-});
-EntriesSchema.virtual('totalTipOut').get(function () {
-  return this.data.reduce((acc, value) => {
-    return acc + value.tipOut;
-  }, 0);
+EntriesSchema.virtual('trueTipPct').get(function () {
+  return (
+    (this.calcData.tipsEarnedWithSalesApp - this.calcData.tipOutWithSalesApp) /
+    this.calcData.totalSales
+  );
 });
 
 module.exports = mongoose.model('entries', EntriesSchema);
