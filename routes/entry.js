@@ -4,17 +4,20 @@ const User = require('../models/User');
 const Entries = require('../models/Entries');
 const verifyUser = require('../middleware/auth');
 const { server_error } = require('../util/responseTypes');
-const createOverviewData = require('../logic/overview');
-const createByMonthData = require('../logic/byMonth');
 
 // ROUTE GET api/entries/all
-// DESC get all entries
+// DESC get all entries + all data
 // ACCESS private
-router.get('/all/:username', verifyUser, async (req, res) => {
+router.get('/all/data/:username', verifyUser, async (req, res) => {
   const { username } = req.params;
   try {
     const userId = await User.findOne({ username: username }, { _id: 1 });
     const entries = await Entries.findOne({ user: userId });
+
+    // data by month
+    // const entries = await Entries.findOne({ user: userId });
+    // data by week
+    // const entries = await Entries.findOne({ user: userId });
     res.status(200).json(entries);
   } catch (err) {
     console.log(err);
