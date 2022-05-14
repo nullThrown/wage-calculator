@@ -89,11 +89,21 @@ Routes
        todo
        -look into a date library  
        - calc Data object returned from entries virtual still needs some work 
-          -split up calcData object -- it is way too large and ugly. confusing!!
         
         -create endpoints for all entries
         -create endpoint for month data 
         -create endpoint for week data 
         -create endpoint for bestShifts Data
-         
 
+
+       Best Shifts Data - Best Shifts data can be a serious of virtuals attached to the database  
+        
+         comparison of day - place entries in separate array by day and return data obj for each day 
+          *create array of 7 objects 2 props - day: String and entries: Array
+          *loop through entire entries array 
+          * use switch statement with case: day to push entries into respective categories
+          *loop through array of Entrys and run each one in a data object factory function    
+         comparison of company - place entries in separate array by company and return data obj for each day
+         comparison of shiftTime - place entries in separate array by shifttime and return data obj for each shifttime
+         comparison of shiftTime & day - place entries in separate array by shifttime & day and return data obj for each shiftTime
+         comparison of position - place entries in separate array by position and return data obj for each position 
