@@ -1,6 +1,4 @@
 const calculateData = require('./calculateData');
-const data = require('./data');
-const position = ['Love Supreme', 'Punch Bowl Social', 'Maiko'];
 
 const createPositonData = (positions, entries) => {
   const entriesByPosition = positions.map((position) => {
@@ -19,7 +17,7 @@ const createPositonData = (positions, entries) => {
     return { ...category, calcData };
   });
 
-  return calculatedEntriesByCompany;
+  return calculatedEntriesByPosition;
 };
 
 module.exports = createPositonData;
