@@ -52,5 +52,5 @@ EntrySchema.virtual('trueTipPct').get(function () {
     return -1;
   }
 });
-
-module.exports = mongoose.model('entry', EntrySchema);
+module.exports = EntrySchema;
+// module.exports = mongoose.model('entry', EntrySchema);
