@@ -16,6 +16,8 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use('/api/entries', require('./routes/entry'));
 app.use('/api/auth', require('./routes/auth'));
+// this is no longer required
+app.use('/api/user', require('./routes/user'));
 app.use('/api/account', require('./routes/account'));
 
 const port = process.env.PORT || 4000;
