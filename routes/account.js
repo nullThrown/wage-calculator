@@ -7,6 +7,8 @@ const { server_error } = require('../util/responseTypes');
 // ROUTE POST api/account/create
 // DESC update current user's account
 // ACCESS private
+
+// this route can be merged into user route & then deleted
 router.post('/create', verifyUser, async (req, res) => {
   const { username, hourlyWage, overtimeMultiplier, company } = req.body;
   try {
