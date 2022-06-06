@@ -1,26 +1,17 @@
 NOTES 
 
   Server
-    *User model requires password 
-    *auth middleware needs to check password 
-    *register route needs to add password field & hash password
     *account routes can probably be deleted 
       -all account creation (which is really creating/editing company) can be placed within user route 
+    *create route for user 
+      -GET user by email
+      -PUT update user account 
+      -POST add new company to company list
+      -PUT update company from company list
+      -DEL company from company list
 
-    *login route needs to add decryption from db hashed password 
     *fieldTypes js file needs to be moved into util folder
 
-    *User model -- account field members need to be moved into company 
-      -wage and overtime multiplier need to be attached to a company 
-      company: [
-        {
-          name: String,
-          overtimeMult: Number,
-          hourlyWage: Number,
-          startDate: Date, -- add date when company is added to account
-          endDate: Date, -- add date when last entry was added
-        }
-      ]
     *new folder name for business    
     *business logic needs to be cleaned up
       -many of these files are useless 
