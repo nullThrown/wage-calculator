@@ -1,23 +1,21 @@
-const User = require('../models/User');
-const { invalid_credentials } = require('../util/responseTypes');
+const jwt = require('jsonwebtoken');
+const { token_invalid } = require('../util/responseTypes');
 
-const verifyUser = async (req, res, next) => {
-  let { username } = req.body;
-  if (!username) {
-    username = req.params.username;
+// grabs token from request headers
+// may switch to a cookie based system
+const verifyToken = (req, res, next) => {
+  const token = req.header('x_auth_token');
+
+  if (!token) {
+    return res.status(401).json(token_invalid);
   }
-  try {
-    if (!username) throw 'invalid_credentials';
-    const user = await User.findOne({ username: username });
-    if (!user) throw 'invalid_credentials';
-  } catch (err) {
-    if (err === 'invalid_credentials') {
-      return res.status(401).json(invalid_credentials);
-    }
 
-    return res.status(500).json({ error: 'server_error' });
+  try {
+    const decoded = jwt.verify(token, process.env.JWTSECRET);
+    req.user = decoded.user;
+  } catch (err) {
+    return res.status(401).json(token_invalid);
   }
   next();
 };
-
-module.exports = verifyUser;
+module.exports = verifyToken;
