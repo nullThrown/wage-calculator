@@ -116,7 +116,7 @@ router.put('/company/update', verifyToken, async (req, res) => {
 });
 
 // ROUTE DELETE api/user/company/delete/:id
-// DESC remove a company from company list
+// DESC set a companies removed status from company list
 // ACCESS private
 router.put('/company/remove/set', verifyToken, async (req, res) => {
   const { companyId, value } = req.body;
