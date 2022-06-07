@@ -1,10 +1,7 @@
 NOTES 
 
   Server
-    *account routes can probably be deleted 
-      -all account creation (which is really creating/editing company) can be placed within user route 
     *create route for user 
-      -GET user by email
       -PUT update user account 
       -POST add new company to company list
       -PUT update company from company list
