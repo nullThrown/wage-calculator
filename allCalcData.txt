@@ -1,13 +1,37 @@
 NOTES 
 
   Server
-    *create route for user 
-      -PUT update user account 
-      -POST add new company to company list
-      -PUT update company from company list
-      -DEL company from company list
 
-    *fieldTypes js file needs to be moved into util folder
+    figure out entry routes
+    look into date fns library 
+    
+    *clean up rest of the routes 
+      - remove username 
+      -import date fns and create date filters to month/week
+      -figure out how to query by date in mongoose
+    
+    *look at business folder & clean it up 
+      -test data object -- make sure it is accurate 
+
+    *retest mongoose virtuals -- make sure they are accurate
+
+    *test all routes using postman -- double check math  
+    
+
+      - POST - create new earning's entry
+      - POST - update earning's entry
+      - GET - all entries
+      - GET - all entries by specific month
+      - GET - all entries by specific week
+      - GET - single entry (probable deletion)
+      - GET - shift data 
+
+        - this last route will be difficult to create 
+        - will need to apply filters of some sort 
+        - filter application will need to be a dynamic process 
+        -first will need to figure out which filters to actually apply
+        -second will need to send those filters to backend and figure out 
+          how to dyanmically apply them to DB call
 
     *new folder name for business    
     *business logic needs to be cleaned up
