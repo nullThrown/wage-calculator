@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const { requiredNum, requiredStr, requiredBool } = require('./fieldTypes');
+const {
+  requiredNum,
+  requiredStr,
+  requiredBool,
+  requiredDate,
+} = require('../util/mongooseTypes');
 
 const EntrySchema = new Schema(
   {
@@ -15,7 +20,7 @@ const EntrySchema = new Schema(
     position: requiredStr,
     hourlyWage: requiredNum,
     specialEvent: requiredBool,
-    shiftDate: { type: Date },
+    shiftDate: requiredDate,
   },
   { timestamps: true, toJSON: { virtuals: true } }
 );
@@ -53,4 +58,3 @@ EntrySchema.virtual('trueTipPct').get(function () {
   }
 });
 module.exports = EntrySchema;
-// module.exports = mongoose.model('entry', EntrySchema);
