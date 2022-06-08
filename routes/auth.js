@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
 const User = require('../models/User');
+const Entries = require('../models/Entries');
 const {
   email_already_exists,
   server_error,
@@ -25,7 +26,10 @@ router.post('/register', async (req, res) => {
       const salt = await bcrypt.genSalt(12);
       const hashedPassword = await bcrypt.hash(password, salt);
       user = new User({ username, email, password: hashedPassword });
+
+      const entries = new Entries({ user: user._id });
       await user.save();
+      await entries.save();
       res.status(201).json(resource_created);
     }
   } catch (err) {
