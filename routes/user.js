@@ -26,24 +26,24 @@ router.put('/me/update', verifyToken, async (req, res) => {
   const { username, email, password } = req.body;
   try {
     const user = await User.findById(req.user.id);
-    
-    if(user.email !== email) {
+
+    if (user.email !== email) {
       const foundUser = await User.findOne({ email: email });
 
-      if(foundUser) {
+      if (foundUser) {
         return res.status(409).json(email_already_exists);
       }
-   }
-   if(password) {
-     const salt = await bcrypt.genSalt(12);
-     const hashedPassword = await bcrypt.hash(password, salt);
+    }
+    if (password) {
+      const salt = await bcrypt.genSalt(12);
+      const hashedPassword = await bcrypt.hash(password, salt);
       user.password = hashedPassword;
-    } 
+    }
 
     user.username = username;
     user.email = email;
 
-    await user.save(); 
+    await user.save();
     return res.status(200).json(user);
   } catch (err) {
     console.log(err);
