@@ -72,17 +72,18 @@ router.get('/all', verifyToken, async (req, res) => {
   }
 });
 
-// ROUTE GET api/entries/:month/:year/:username
+// ROUTE GET api/entries/:year/:month
 // DESC get all entries by specific month
 // ACCESS private
-router.get('/:year/:month/:username', verifyToken, async (req, res) => {
-  const { username, month, year } = req.params;
-  const startDate = new Date(year, month, 1);
-  const endDate = new Date(year, month + 1, 0);
+router.get('/:year/:month', verifyToken, async (req, res) => {
+  const { year, month } = req.params;
   try {
-    const userId = await User.findOne({ username: username }, { _id: 1 });
-    // need to create filters that selects entry subdocs between two dates
-    // const entries = await Entries.find({ user: userId });
+    //create startDate var from year and month params (e.g., Number: 2022, Number: 6)
+    //create endDate var from year and month params (e.g., Number: 2022, Number: 6)
+    //find Entries document with user ID
+    //query Entries by shiftDate that is >= to startDate && <= endDate
+    // return entries
+    // entries should have all mongoose virtual calculations done on only the queried subdocs
     res.status(200).json(entries);
   } catch (err) {
     console.log(err);
@@ -90,19 +91,18 @@ router.get('/:year/:month/:username', verifyToken, async (req, res) => {
   }
 });
 
-// ROUTE GET api/entries/:month/:year/:day/:username
-// DESC get all entries by specific week Monday-Sunday
+// ROUTE GET api/entries/:month/:year/:day/
+// DESC get all entries by specific week Monday-Sunday both inclusive
 // ACCESS private
-router.get('/:year/:month/:day', verifyToken, async (req, res) => {
-  const { month, year } = req.params;
-  const startDate = new Date(year, month, 1);
-  const endDate = new Date(year, month + 1, 0);
+router.get('/:year/:month/:startDay/:endDay', verifyToken, async (req, res) => {
+  const { year, month, startDay, endDay } = req.params;
+  //create startDate var from year, month, and startDay params (e.g., Number: 2022, Number: 6, Number: 23)
+  //create endDate var from year, month, and endDay params (e.g., Number: 2022, Number: 6, Number: 30)
+  //find Entries document with user ID
+  //query Entries by shiftDate that is >= to startDate && <= endDate
+  // return entries
+  // entries should have all mongoose virtual calculations done on only the queried subdocs
   try {
-    const userId = await User.findOne({ username: username }, { _id: 1 });
-    // need to create filter that queries entry subdocs by selected week
-    // a given day will be selected and entries from the preceding monday and the following
-    // sunday will be selected and returned
-    // const entries = await Entries.find({ user: userId });
     res.status(200).json(entries);
   } catch (err) {
     console.log(err);
