@@ -9,7 +9,7 @@ NOTES
       - remove username 
       -import date fns and create date filters to month/week
       -figure out how to query by date in mongoose
-    
+    *complete update earning's entry route
     *look at business folder & clean it up 
       -test data object -- make sure it is accurate 
 
@@ -18,13 +18,13 @@ NOTES
     *test all routes using postman -- double check math  
     
 
-      - POST - create new earning's entry
-      - POST - update earning's entry
-      - GET - all entries
-      - GET - all entries by specific month
-      - GET - all entries by specific week
-      - GET - single entry (probable deletion)
-      - GET - shift data 
+      ✔- POST - create new earning's entry
+       - POST - update earning's entry
+      ✔- GET - all entries
+       - GET - all entries by specific month
+       - GET - all entries by specific week
+       - GET - single entry (probable deletion)
+       - GET - shift data 
 
         - this last route will be difficult to create 
         - will need to apply filters of some sort 
