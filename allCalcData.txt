@@ -1,7 +1,8 @@
 NOTES 
 
-  Server    
-    *complete update earning's entry route
+  Server  
+    *calc data function must be placed outside of mongoose virtuals 
+      -virtuals do not run on queries completed via pipeline aggregation  
     *complete get shift data route
     *look at business folder & clean it up 
       -test data object -- make sure it is accurate 
