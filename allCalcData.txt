@@ -1,15 +1,8 @@
 NOTES 
 
-  Server
-
-    figure out entry routes
-    look into date fns library 
-    
-    *clean up rest of the routes 
-      - remove username 
-      -import date fns and create date filters to month/week
-      -figure out how to query by date in mongoose
+  Server    
     *complete update earning's entry route
+    *complete get shift data route
     *look at business folder & clean it up 
       -test data object -- make sure it is accurate 
 
@@ -21,8 +14,8 @@ NOTES
       ✔- POST - create new earning's entry
        - POST - update earning's entry
       ✔- GET - all entries
-       - GET - all entries by specific month
-       - GET - all entries by specific week
+      ✔- GET - all entries by specific month
+      ✔- GET - all entries by specific week
        - GET - single entry (probable deletion)
        - GET - shift data 
 
