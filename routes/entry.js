@@ -3,8 +3,9 @@ const router = express.Router();
 const User = require('../models/User');
 const Entries = require('../models/Entries');
 const verifyToken = require('../middleware/auth');
-const { server_error } = require('../util/responseTypes');
+const { server_error, resource_updated } = require('../util/responseTypes');
 const mongoose = require('mongoose');
+
 // ROUTE POST api/entries/create
 // DESC create new earning's entry
 // ACCESS private
@@ -57,7 +58,58 @@ router.post('/create', verifyToken, async (req, res) => {
 // ROUTE POST api/entries/update
 // DESC update earning's entry
 // ACCESS private
-router.post('/update', verifyToken, async (req, res) => {});
+router.put('/update', verifyToken, async (req, res) => {
+  // check to see that ID and createdAt fields are consistent
+  // check to see that updatedAt field is set
+  const {
+    entryID,
+    timeWorkedDec,
+    totalSales,
+    totalSalesApplicable,
+    creditTips,
+    cashTips,
+    tipOut,
+    shiftTime,
+    company,
+    position,
+    hourlyWage,
+    specialEvent,
+    shiftDate,
+  } = req.body;
+
+  try {
+    const user = await Entries.findOneAndUpdate(
+      { user: req.user.id, 'data._id': entryID },
+      {
+        // updating the subdoc with entire object produces an update conflict error
+        // $set: { 'data.$': updatedEntry },
+        // MongoServerError: Updating the path 'data.$.updatedAt' would create a conflict at 'data.$'
+        //  code: 40,
+        //  codeName: 'ConflictingUpdateOperators',
+        // therefore dot notation is used to update each property
+
+        $set: {
+          'data.$.timeWorkedDec': timeWorkedDec,
+          'data.$.totalSales': totalSales,
+          'data.$.totalSalesApplicable': totalSalesApplicable,
+          'data.$.creditTips': creditTips,
+          'data.$.cashTips': cashTips,
+          'data.$.tipOut': tipOut,
+          'data.$.shiftTime': shiftTime,
+          'data.$.company': company,
+          'data.$.position': position,
+          'data.$.hourlyWage': hourlyWage,
+          'data.$.specialEvent': specialEvent,
+          'data.$.shiftDate': shiftDate,
+        },
+      }
+    );
+    res.status(200).json(resource_updated);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(server_error);
+  }
+});
 
 // ROUTE GET api/entries/all
 // DESC get all entries
@@ -111,7 +163,6 @@ router.get('/month/:year/:month', verifyToken, async (req, res) => {
     res.status(500).json(server_error);
   }
 });
-// $match: { data: { shiftDate: { $gte: startDate, $lt: endDate } } },
 
 // ROUTE GET api/entries/week/:startDate/:endDate
 // DESC get all entries by specific week Monday-Sunday both inclusive
