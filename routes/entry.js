@@ -4,7 +4,7 @@ const User = require('../models/User');
 const Entries = require('../models/Entries');
 const verifyToken = require('../middleware/auth');
 const { server_error } = require('../util/responseTypes');
-
+const mongoose = require('mongoose');
 // ROUTE POST api/entries/create
 // DESC create new earning's entry
 // ACCESS private
@@ -72,36 +72,79 @@ router.get('/all', verifyToken, async (req, res) => {
   }
 });
 
-// ROUTE GET api/entries/:year/:month
+// ROUTE GET api/entries/month/:year/:month
 // DESC get all entries by specific month
 // ACCESS private
-router.get('/:year/:month', verifyToken, async (req, res) => {
+
+router.get('/month/:year/:month', verifyToken, async (req, res) => {
+  // year = full year e.g., 2022
+  //month = 1-indexed, no lead 0, e.g., 1,2,3...12
   const { year, month } = req.params;
   try {
-    //create startDate var from year and month params (e.g., Number: 2022, Number: 6)
-    //create endDate var from year and month params (e.g., Number: 2022, Number: 6)
-    //find Entries document with user ID
-    //query Entries by shiftDate that is >= to startDate && <= endDate
-    // return entries
-    // entries should have all mongoose virtual calculations done on only the queried subdocs
+    const startDate = new Date(`${year}-0${month}-01T00:00:00Z`);
+    const endDate = new Date(year, month, 0);
+    endDate.setUTCHours(23, 59, 59, 999);
+
+    const entries = await Entries.aggregate([
+      { $match: { user: mongoose.Types.ObjectId(req.user.id) } },
+      {
+        $project: {
+          _id: 0,
+          data: {
+            $filter: {
+              input: '$data',
+              as: 'entry',
+              cond: {
+                $and: [
+                  { $gte: ['$$entry.shiftDate', startDate] },
+                  { $lte: ['$$entry.shiftDate', endDate] },
+                ],
+              },
+            },
+          },
+        },
+      },
+    ]);
     res.status(200).json(entries);
   } catch (err) {
     console.log(err);
     res.status(500).json(server_error);
   }
 });
+// $match: { data: { shiftDate: { $gte: startDate, $lt: endDate } } },
 
-// ROUTE GET api/entries/:month/:year/:day/
+// ROUTE GET api/entries/week/:startDate/:endDate
 // DESC get all entries by specific week Monday-Sunday both inclusive
 // ACCESS private
-router.get('/:year/:month/:startDay/:endDay', verifyToken, async (req, res) => {
-  const { year, month, startDay, endDay } = req.params;
-  //create startDate var from year, month, and startDay params (e.g., Number: 2022, Number: 6, Number: 23)
-  //create endDate var from year, month, and endDay params (e.g., Number: 2022, Number: 6, Number: 30)
-  //find Entries document with user ID
-  //query Entries by shiftDate that is >= to startDate && <= endDate
-  // return entries
-  // entries should have all mongoose virtual calculations done on only the queried subdocs
+router.get('/week/:startDate/:endDate', verifyToken, async (req, res) => {
+  // date params e.g., 6-13-2022
+  const { startDate, endDate } = req.params;
+
+  const startDate2 = new Date(startDate);
+  startDate2.setUTCHours(0, 0, 0, 0);
+  const endDate2 = new Date(endDate);
+  endDate2.setUTCHours(23, 59, 59, 999);
+
+  const entries = await Entries.aggregate([
+    { $match: { user: mongoose.Types.ObjectId(userID) } },
+    {
+      $project: {
+        _id: 0,
+        data: {
+          $filter: {
+            input: '$data',
+            as: 'entry',
+            cond: {
+              $and: [
+                { $gte: ['$$entry.shiftDate', startDate] },
+                { $lte: ['$$entry.shiftDate', endDate] },
+              ],
+            },
+          },
+        },
+      },
+    },
+  ]);
   try {
     res.status(200).json(entries);
   } catch (err) {
