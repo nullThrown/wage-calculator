@@ -16,7 +16,7 @@ const EntrySchema = new Schema(
     cashTips: requiredNum,
     tipOut: requiredNum,
     shiftTime: requiredStr,
-    company: requiredStr,
+    company: { type: mongoose.Types.ObjectId },
     position: requiredStr,
     hourlyWage: requiredNum,
     specialEvent: requiredBool,
