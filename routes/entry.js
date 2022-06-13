@@ -112,11 +112,87 @@ router.put('/update', verifyToken, async (req, res) => {
 });
 
 // ROUTE GET api/entries/all
-// DESC get all entries
+// DESC get all entries + overview data
 // ACCESS private
-router.get('/all', verifyToken, async (req, res) => {
+router.get('/all/:filter', verifyToken, async (req, res) => {
+  const { filter } = req.params;
+
+  const userID = mongoose.Types.ObjectId(req.user.id);
+
   try {
-    const entries = await Entries.findOne({ user: req.user.id });
+    let entries;
+    if (filter === 'all') {
+      entries = await Entries.findOne({ user: req.user.id });
+    } else if (filter === 'active') {
+      const user = await User.aggregate([
+        { $match: { _id: userID } },
+        {
+          $project: {
+            _id: 0,
+            companies: {
+              $filter: {
+                input: '$companies',
+                as: 'company',
+                cond: { $eq: ['$$company.active', true] },
+              },
+            },
+          },
+        },
+      ]);
+
+      const activeIDs = user[0].companies.map((company) => {
+        return mongoose.Types.ObjectId(company._id);
+      });
+      // this filter function needs to take an indeterminate number of company IDs
+      entries = await Entries.aggregate([
+        { $match: { user: userID } },
+        {
+          $project: {
+            data: {
+              $filter: {
+                input: '$data',
+                as: 'entry',
+                cond: {
+                  $or: [
+                    { $eq: ['$$entry.company', activeIDs[0]] },
+                    { $eq: ['$$entry.company', activeIDs[1]] },
+                  ],
+                },
+              },
+            },
+          },
+        },
+      ]);
+    } else {
+      const isValidID = mongoose.isObjectIdOrHexString(filter);
+      if (!isValidID) {
+        const error = new Error(
+          'filter is not valid search param or mongoose object ID'
+        );
+        return res.status(422).json({
+          msg: error.message,
+        });
+      }
+      const companyID = mongoose.Types.ObjectId(filter);
+      entries = await Entries.aggregate([
+        { $match: { user: userID } },
+        {
+          $project: {
+            _id: 0,
+            data: {
+              $filter: {
+                input: '$data',
+                as: 'entry',
+                cond: {
+                  $eq: ['$$entry.company', companyID],
+                },
+              },
+            },
+          },
+        },
+      ]);
+    }
+
     res.status(200).json(entries);
   } catch (err) {
     console.log(err);
@@ -207,8 +283,56 @@ router.get('/week/:startDate/:endDate', verifyToken, async (req, res) => {
 // ROUTE GET api/entries/shift
 // DESC get filtered shift data
 // ACCESS private
-router.get('/shift', verifyToken, async (req, res) => {});
+router.get('/shift', verifyToken, async (req, res) => {
+  // make query to get all entries
+  // create object to hold data for different filters
+  // forEach entries array
+  // calculate avg/hr for each filter
+  // return calc data object
+  try {
+    const entries = await Entries.findOne({ user: req.user.id });
 
+    const byDayData = [
+      {
+        day: 'Sunday',
+        avgPerHour: 0,
+      },
+      {
+        day: 'Monday',
+        avgPerHour: 0,
+      },
+      {
+        day: 'Tuesday',
+        avgPerHour: 0,
+      },
+      {
+        day: 'Wednesday',
+        avgPerHour: 0,
+      },
+      {
+        day: 'Thursday',
+        avgPerHour: 0,
+      },
+      {
+        day: 'Friday',
+        avgPerHour: 0,
+      },
+      {
+        day: 'Saturday',
+        avgPerHour: 0,
+      },
+    ];
+
+    // entry.shiftDate.toLocaleString('en-us', { weekday: 'long' })
+    entries.data.forEach((entry) => {
+      // if shiftDay
+    });
+    res.json(entries);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(server_error);
+  }
+});
 // ROUTE GET api/entries/:id
 // DESC get single entry
 // ACCESS private
