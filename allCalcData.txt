@@ -3,7 +3,11 @@ NOTES
   Server  
     *calc data function must be placed outside of mongoose virtuals 
       -virtuals do not run on queries completed via pipeline aggregation  
+      -place logic inside of 'entries/create' & 'entries/update' routes 
+      -add new properties where the value is calculated in JS routes
+    
     *complete get shift data route
+      -filters: day,shiftTime,company
     *look at business folder & clean it up 
       -test data object -- make sure it is accurate 
 
@@ -13,12 +17,17 @@ NOTES
     
 
       ✔- POST - create new earning's entry
-       - POST - update earning's entry
-      ✔- GET - all entries
-      ✔- GET - all entries by specific month
-      ✔- GET - all entries by specific week
+      ✔- POST - update earning's entry
+      ✔- GET - all entries + overview data
+        -filters : All, Active, by specific company
+      ✔- GET - data by specific month
+        -filters: All, Active, by specific company
+      ✔- GET - data by specific week
+        -filters: All, Active, by specific company
        - GET - single entry (probable deletion)
        - GET - shift data 
+        -filters: All, Active, by specific company
+
 
         - this last route will be difficult to create 
         - will need to apply filters of some sort 
