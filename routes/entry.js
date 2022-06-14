@@ -5,7 +5,11 @@ const Entries = require('../models/Entries');
 const verifyToken = require('../middleware/auth');
 const { server_error, resource_updated } = require('../util/responseTypes');
 const mongoose = require('mongoose');
-
+const getActiveCompanies = require('../queries/user/company');
+const {
+  getAllActiveEntries,
+  getAllEntriesByCompany,
+} = require('../queries/entry/overview');
 // ROUTE POST api/entries/create
 // DESC create new earning's entry
 // ACCESS private
@@ -121,48 +125,17 @@ router.get('/all/:filter', verifyToken, async (req, res) => {
 
   try {
     let entries;
+
     if (filter === 'all') {
       entries = await Entries.findOne({ user: req.user.id });
     } else if (filter === 'active') {
-      const user = await User.aggregate([
-        { $match: { _id: userID } },
-        {
-          $project: {
-            _id: 0,
-            companies: {
-              $filter: {
-                input: '$companies',
-                as: 'company',
-                cond: { $eq: ['$$company.active', true] },
-              },
-            },
-          },
-        },
-      ]);
+      const user = await getActiveCompanies(userID);
 
-      const activeIDs = user[0].companies.map((company) => {
+      const activeCompanyIDs = user[0].companies.map((company) => {
         return mongoose.Types.ObjectId(company._id);
       });
-      // this filter function needs to take an indeterminate number of company IDs
-      entries = await Entries.aggregate([
-        { $match: { user: userID } },
-        {
-          $project: {
-            data: {
-              $filter: {
-                input: '$data',
-                as: 'entry',
-                cond: {
-                  $or: [
-                    { $eq: ['$$entry.company', activeIDs[0]] },
-                    { $eq: ['$$entry.company', activeIDs[1]] },
-                  ],
-                },
-              },
-            },
-          },
-        },
-      ]);
+
+      entries = await getAllActiveEntries(userID, activeCompanyIDs);
     } else {
       const isValidID = mongoose.isObjectIdOrHexString(filter);
       if (!isValidID) {
@@ -174,23 +147,7 @@ router.get('/all/:filter', verifyToken, async (req, res) => {
         });
       }
       const companyID = mongoose.Types.ObjectId(filter);
-      entries = await Entries.aggregate([
-        { $match: { user: userID } },
-        {
-          $project: {
-            _id: 0,
-            data: {
-              $filter: {
-                input: '$data',
-                as: 'entry',
-                cond: {
-                  $eq: ['$$entry.company', companyID],
-                },
-              },
-            },
-          },
-        },
-      ]);
+      entries = await getAllEntriesByCompany(userID, companyID);
     }
 
     res.status(200).json(entries);
