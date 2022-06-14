@@ -1,52 +1,61 @@
 NOTES 
 
   Server  
-    *calc data function must be placed outside of mongoose virtuals 
-      -virtuals do not run on queries completed via pipeline aggregation  
-      -place logic inside of 'entries/create' & 'entries/update' routes 
-      -add new properties where the value is calculated in JS routes
     
-    *complete get shift data route
-      -filters: day,shiftTime,company
     *look at business folder & clean it up 
       -test data object -- make sure it is accurate 
 
-    *retest mongoose virtuals -- make sure they are accurate
+    Entries Routes
+      look at $group to separate entries subdocs
 
-    *test all routes using postman -- double check math  
-    
-
+    POST
       ✔- POST - create new earning's entry
       ✔- POST - update earning's entry
-      look at $group to separate entries subdocs
       
-      - GET - all entries + overview data
-        -filters : All, Active, by specific company
-          -perhaps switch name to overview 
-          -'active' filter needs to take an indeterminate number of company IDs 
-      
+    GET
+      -'active' filter needs to take an indeterminate number of company IDs 
+
+      - GET - overview data
+        -switch name to overview 
+        -entries => calc data
+
       - GET - data by specific month
-        -filters: All, Active, by specific company
-        -'active' filter needs to take an indeterminate number of company IDs 
+        -aggregration for active filter
+       entries => calc data 
+
+      - GET - entries & data by specific week and 3 weeks prior 
+        -how create 3 weekdates mon-sun from a given date?
+        -aggregration for active filter 
+        -entries => entries + calc data
       
-      - GET - data by specific week and 3 weeks prior 
-        -filters: All, Active, by specific company
-        -how create 3 weekdates mon-sun from 2 a given date?
-        -'active' filter needs to take an indeterminate number of company IDs 
-      
-       - GET - shift data 
-        -filters: All, Active, by specific company
-        -'active' filter needs to take an indeterminate number of company IDs 
+      - GET - shift data 
+        returned groupings:
+          by day - 7 groups: entries grouped only by day mon, tues, wed ...
+            structure: 
+              const byDayData = [
+                  {
+                    day: 'Sunday',
+                    avgPerHour: 0,
+                  }, ...
 
-       - GET - single entry (probable deletion)
+          by company & day - 7*numOfCompany entries grouped first by company & then by day 
+            structure: 
+              const byCompany = [
+                  {
+                    companyName: 'Iron Cactus',
+                    day: [
+                      {
+                       day: 'sunday',
+                       avgPerHour: 0, 
+                      }
+                      {
+                       day: 'monday',
+                       avgPerHour: 0, 
+                      }
+                    ]...
+                   
 
 
-        - this last route will be difficult to create 
-        - will need to apply filters of some sort 
-        - filter application will need to be a dynamic process 
-        -first will need to figure out which filters to actually apply
-        -second will need to send those filters to backend and figure out 
-          how to dyanmically apply them to DB call
 
     *new folder name for business    
     *business logic needs to be cleaned up
