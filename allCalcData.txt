@@ -18,15 +18,22 @@ NOTES
 
       ✔- POST - create new earning's entry
       ✔- POST - update earning's entry
-      ✔- GET - all entries + overview data
+      
+      - GET - all entries + overview data
         -filters : All, Active, by specific company
-      ✔- GET - data by specific month
+          -perhaps switch name to overview 
+          -'active' filter needs to take an indeterminate number of company IDs 
+      
+      - GET - data by specific month
         -filters: All, Active, by specific company
-      ✔- GET - data by specific week
+      
+      - GET - data by specific week
         -filters: All, Active, by specific company
-       - GET - single entry (probable deletion)
+      
        - GET - shift data 
         -filters: All, Active, by specific company
+      
+       - GET - single entry (probable deletion)
 
 
         - this last route will be difficult to create 
