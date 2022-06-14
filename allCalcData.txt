@@ -18,6 +18,7 @@ NOTES
 
       ✔- POST - create new earning's entry
       ✔- POST - update earning's entry
+      look at $group to separate entries subdocs
       
       - GET - all entries + overview data
         -filters : All, Active, by specific company
@@ -26,13 +27,17 @@ NOTES
       
       - GET - data by specific month
         -filters: All, Active, by specific company
+        -'active' filter needs to take an indeterminate number of company IDs 
       
-      - GET - data by specific week
+      - GET - data by specific week and 3 weeks prior 
         -filters: All, Active, by specific company
+        -how create 3 weekdates mon-sun from 2 a given date?
+        -'active' filter needs to take an indeterminate number of company IDs 
       
        - GET - shift data 
         -filters: All, Active, by specific company
-      
+        -'active' filter needs to take an indeterminate number of company IDs 
+
        - GET - single entry (probable deletion)
 
 
