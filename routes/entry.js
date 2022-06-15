@@ -6,14 +6,23 @@ const verifyToken = require('../middleware/auth');
 const { server_error, resource_updated } = require('../util/responseTypes');
 const mongoose = require('mongoose');
 const getActiveCompanies = require('../queries/user/company');
+
 const {
   getAllActiveEntries,
   getAllEntriesByCompany,
 } = require('../queries/entry/overview');
+
 const {
   getAllMonthlyEntries,
   getMonthlyEntriesByCompany,
+  getActiveMonthlyEntries,
 } = require('../queries/entry/month');
+
+const {
+  getAllWeeklyEntries,
+  getActiveWeeklyEntries,
+  getWeeklyEntriesByCompany,
+} = require('../queries/entry/week');
 
 // ROUTE POST api/entries/create
 // DESC create new earning's entry
@@ -87,11 +96,11 @@ router.put('/update', verifyToken, async (req, res) => {
   } = req.body;
 
   try {
-    const user = await Entries.findOneAndUpdate(
+    await Entries.findOneAndUpdate(
       { user: req.user.id, 'data._id': entryID },
       {
         // updating the subdoc with entire object produces an update conflict error
-        // $set: { 'data.$': updatedEntry },
+        // $set: { 'data.$': updatedEntry }, -> entire object
         // MongoServerError: Updating the path 'data.$.updatedAt' would create a conflict at 'data.$'
         //  code: 40,
         //  codeName: 'ConflictingUpdateOperators',
@@ -123,7 +132,7 @@ router.put('/update', verifyToken, async (req, res) => {
 // ROUTE GET api/entries/all
 // DESC get all entries + overview data
 // ACCESS private
-router.get('/all/:filter', verifyToken, async (req, res) => {
+router.get('/overview/:filter', verifyToken, async (req, res) => {
   const { filter } = req.params;
 
   const userID = mongoose.Types.ObjectId(req.user.id);
@@ -180,8 +189,17 @@ router.get('/month/:year/:month/:filter', verifyToken, async (req, res) => {
     if (filter === 'all') {
       entries = await getAllMonthlyEntries(userID, startDate, endDate);
     } else if (filter === 'active') {
-      // active search will need to be dynamic i.e., take in unknown number of company IDs
-      // entries = wait getActiveMonthlyEntries(userID, startDate, endDate, companyIDs)
+      const user = await getActiveCompanies(userID);
+
+      const activeCompanyIDs = user[0].companies.map((company) => {
+        return mongoose.Types.ObjectId(company._id);
+      });
+      entries = await getActiveMonthlyEntries(
+        userID,
+        activeCompanyIDs,
+        startDate,
+        endDate
+      );
     } else {
       const isValidID = mongoose.isObjectIdOrHexString(filter);
       if (!isValidID) {
@@ -207,39 +225,55 @@ router.get('/month/:year/:month/:filter', verifyToken, async (req, res) => {
   }
 });
 
-// ROUTE GET api/entries/week/:startDate/:endDate
+// ROUTE GET api/entries/week/:startDate/:endDate/:filter
 // DESC get all entries by specific week Monday-Sunday both inclusive
 // ACCESS private
-router.get('/week/:startDate/:endDate', verifyToken, async (req, res) => {
+router.get('/week/:date/:filter', verifyToken, async (req, res) => {
   // date params e.g., 6-13-2022
-  const { startDate, endDate } = req.params;
-
-  const startDate2 = new Date(startDate);
-  startDate2.setUTCHours(0, 0, 0, 0);
-  const endDate2 = new Date(endDate);
-  endDate2.setUTCHours(23, 59, 59, 999);
-
-  const entries = await Entries.aggregate([
-    { $match: { user: mongoose.Types.ObjectId(userID) } },
-    {
-      $project: {
-        _id: 0,
-        data: {
-          $filter: {
-            input: '$data',
-            as: 'entry',
-            cond: {
-              $and: [
-                { $gte: ['$$entry.shiftDate', startDate] },
-                { $lte: ['$$entry.shiftDate', endDate] },
-              ],
-            },
-          },
-        },
-      },
-    },
-  ]);
   try {
+    const { date, filter } = req.params;
+    // receive date from params
+    // convert date into new date object
+
+    const userID = mongoose.Types.ObjectId(req.user.id);
+    const startDate = new Date(start);
+    startDate.setUTCHours(0, 0, 0, 0);
+    const endDate = new Date(end);
+    endDate.setUTCHours(23, 59, 59, 999);
+
+    let entries;
+    if (filter === 'all') {
+      entries = await getAllWeeklyEntries(userID, startDate, endDate);
+    } else if (filter === 'active') {
+      const user = await getActiveCompanies(userID);
+
+      const activeCompanyIDs = user[0].companies.map((company) => {
+        return mongoose.Types.ObjectId(company._id);
+      });
+      entries = await getActiveWeeklyEntries(
+        userID,
+        activeCompanyIDs,
+        startDate,
+        endDate
+      );
+    } else {
+      const isValidID = mongoose.isObjectIdOrHexString(filter);
+      if (!isValidID) {
+        const error = new Error(
+          'filter is not valid search param or mongoose object ID'
+        );
+        return res.status(422).json({
+          msg: error.message,
+        });
+      }
+      const companyID = mongoose.Types.ObjectId(filter);
+      entries = await getWeeklyEntriesByCompany(
+        userID,
+        companyID,
+        startDate,
+        endDate
+      );
+    }
     res.status(200).json(entries);
   } catch (err) {
     console.log(err);
