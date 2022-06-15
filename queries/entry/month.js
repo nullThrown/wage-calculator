@@ -22,6 +22,37 @@ const getAllMonthlyEntries = async (userID, startDate, endDate) => {
     },
   ]);
 };
+const getActiveMonthlyEntries = async (
+  userID,
+  activeCompanyIDs,
+  startDate,
+  endDate
+) => {
+  const createEqCheck = activeCompanyIDs.map((ID) => {
+    return { $eq: ['$$entry.company', ID] };
+  });
+
+  return await Entries.aggregate([
+    { $match: { user: userID } },
+    {
+      $project: {
+        data: {
+          $filter: {
+            input: '$data',
+            as: 'entry',
+            cond: {
+              $and: [
+                { $or: createEqCheck },
+                { $gte: ['$$entry.shiftDate', startDate] },
+                { $lte: ['$$entry.shiftDate', endDate] },
+              ],
+            },
+          },
+        },
+      },
+    },
+  ]);
+};
 
 const getMonthlyEntriesByCompany = async (
   userID,
@@ -54,5 +85,6 @@ const getMonthlyEntriesByCompany = async (
 
 module.exports = {
   getAllMonthlyEntries,
+  getActiveMonthlyEntries,
   getMonthlyEntriesByCompany,
 };
