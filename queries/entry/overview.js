@@ -1,12 +1,10 @@
 const Entries = require('../../models/Entries');
 
-// this filter function needs to take an indeterminate number of company IDs
 const getAllActiveEntries = async (userID, activeCompanyIDs) => {
   const createEqCheck = activeCompanyIDs.map((ID) => {
     return { $eq: ['$$entry.company', ID] };
   });
 
-  console.log(createEqCheck);
   return await Entries.aggregate([
     { $match: { user: userID } },
     {
