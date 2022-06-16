@@ -17,7 +17,6 @@ NOTES
       ✔- POST - update earning's entry
       
     GET
-      -'active' filter needs to take an indeterminate number of company IDs 
 
       - GET - overview data
         -switch name to overview 
