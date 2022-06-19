@@ -28,7 +28,6 @@ const getAllEntriesByCompany = async (userID, companyID) => {
     { $match: { user: userID } },
     {
       $project: {
-        _id: 0,
         data: {
           $filter: {
             input: '$data',
@@ -47,8 +46,3 @@ module.exports = {
   getAllActiveEntries,
   getAllEntriesByCompany,
 };
-
-// [
-//   { $eq: ['$$entry.company', activeCompanyIDs[0]] },
-//   { $eq: ['$$entry.company', activeCompanyIDs[1]] },
-// ],
