@@ -1,9 +1,5 @@
 const findWeekPairs = (date, numOfWeeks) => {
   let monday = new Date(date);
-  // if (!(date instanceof Date)) {
-  //   monday = new Date(date);
-  // }
-
   monday.setUTCHours(0, 0, 0, 0);
 
   const weeks = [];
