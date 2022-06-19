@@ -5,7 +5,6 @@ const getAllMonthlyEntries = async (userID, startDate, endDate) => {
     { $match: { user: userID } },
     {
       $project: {
-        _id: 0,
         data: {
           $filter: {
             input: '$data',
@@ -64,7 +63,6 @@ const getMonthlyEntriesByCompany = async (
     { $match: { user: userID } },
     {
       $project: {
-        _id: 0,
         data: {
           $filter: {
             input: '$data',
