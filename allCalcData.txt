@@ -3,12 +3,11 @@ NOTES
   Server  
     
   TODO 
-    *finish routes for get data by specific month 
-    *finish route for get data by specific week
-    *look at business folder & clean it up 
     *finish calc data obj and attach to all get requests
-    *create $grouping of shift data     
+    *move virtual functions into middleware functions
 
+    *create $grouping of shift data     
+    *look at business folder & clean it up 
     Entries Routes
       look at $group to separate entries subdocs
 
@@ -19,14 +18,12 @@ NOTES
     GET
 
       - GET - overview data
-        -switch name to overview 
         -entries => calc data
 
       - GET - data by specific month
-       entries => calc data 
+        -entries => calc data 
 
       - GET - entries & data by specific week and 3 weeks prior 
-        -how create 3 weekdates mon-sun from a given date?
         -entries => entries + calc data
       
       - GET - shift data 
