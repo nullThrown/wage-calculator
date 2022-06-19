@@ -1,6 +1,7 @@
 const Entries = require('../../models/Entries');
+// filters Entries beginning with start date and filter: all, active companies, specific company
 
-const getAllWeeklyEntries = async (userID, startDate, endDate) => {
+const getAllWeeklyEntries = async (userID, earliestDate, latestDate) => {
   return await Entries.aggregate([
     { $match: { user: userID } },
     {
@@ -12,8 +13,8 @@ const getAllWeeklyEntries = async (userID, startDate, endDate) => {
             as: 'entry',
             cond: {
               $and: [
-                { $gte: ['$$entry.shiftDate', startDate] },
-                { $lte: ['$$entry.shiftDate', endDate] },
+                { $gte: ['$$entry.shiftDate', earliestDate] },
+                { $lte: ['$$entry.shiftDate', latestDate] },
               ],
             },
           },
@@ -22,12 +23,11 @@ const getAllWeeklyEntries = async (userID, startDate, endDate) => {
     },
   ]);
 };
-
 const getActiveWeeklyEntries = async (
   userID,
   activeCompanyIDs,
-  startDate,
-  endDate
+  earliestDate,
+  latestDate
 ) => {
   const createEqCheck = activeCompanyIDs.map((ID) => {
     return { $eq: ['$$entry.company', ID] };
@@ -44,8 +44,8 @@ const getActiveWeeklyEntries = async (
             cond: {
               $and: [
                 { $or: createEqCheck },
-                { $gte: ['$$entry.shiftDate', startDate] },
-                { $lte: ['$$entry.shiftDate', endDate] },
+                { $gte: ['$$entry.shiftDate', earliestDate] },
+                { $lte: ['$$entry.shiftDate', latestDate] },
               ],
             },
           },
@@ -58,8 +58,8 @@ const getActiveWeeklyEntries = async (
 const getWeeklyEntriesByCompany = async (
   userID,
   companyID,
-  startDate,
-  endDate
+  earliestDate,
+  latestDate
 ) => {
   return await Entries.aggregate([
     { $match: { user: userID } },
@@ -72,9 +72,9 @@ const getWeeklyEntriesByCompany = async (
             as: 'entry',
             cond: {
               $and: [
-                { $gte: ['$$entry.shiftDate', startDate] },
-                { $lte: ['$$entry.shiftDate', endDate] },
                 { $eq: ['$$entry.company', companyID] },
+                { $gte: ['$$entry.shiftDate', earliestDate] },
+                { $gte: ['$$entry.shiftDate', latestDate] },
               ],
             },
           },
