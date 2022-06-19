@@ -6,7 +6,7 @@ const verifyToken = require('../middleware/auth');
 const { server_error, resource_updated } = require('../util/responseTypes');
 const mongoose = require('mongoose');
 const getActiveCompanies = require('../queries/user/company');
-
+const findWeekPairs = require('../util/findWeekPairs');
 const {
   getAllActiveEntries,
   getAllEntriesByCompany,
@@ -174,7 +174,6 @@ router.get('/overview/:filter', verifyToken, async (req, res) => {
 // ROUTE GET api/entries/month/:year/:month
 // DESC calc data by specific month
 // ACCESS private
-
 router.get('/month/:year/:month/:filter', verifyToken, async (req, res) => {
   // year = full year e.g., 2022
   //month = 1-indexed, no lead 0, e.g., 1,2,3...12
@@ -225,37 +224,93 @@ router.get('/month/:year/:month/:filter', verifyToken, async (req, res) => {
   }
 });
 
+// this route uses mongodb aggregration pipeline to grab entries by both
+// company (all, active, specific) as well entries with shiftDates between two dates
+// this method will not work when multiple weeks are needed to be processed
+// the route below will accomplish this using JS code run directly in the node server
+// this solution will be easier to implement but ultimately not as effecient nor consistent
+// with the rest of the query actions in this folder
+
+// ROUTE GET api/entries/week/:startDate/:endDate/:filter
+// DESC get all entries by specific week Monday-Sunday both inclusive
+// ACCESS private
+// router.get('/week/:date/:filter', verifyToken, async (req, res) => {
+//   // date params e.g., 6-13-2022
+//   try {
+//     const { date, filter } = req.params;
+//     // receive date from params
+//     // convert date into new date object
+
+//     const userID = mongoose.Types.ObjectId(req.user.id);
+//     const startDate = new Date(start);
+//     startDate.setUTCHours(0, 0, 0, 0);
+//     const endDate = new Date(end);
+//     endDate.setUTCHours(23, 59, 59, 999);
+
+//     let entries;
+//     if (filter === 'all') {
+//       entries = await getAllWeeklyEntries(userID, startDate, endDate);
+//     } else if (filter === 'active') {
+//       const user = await getActiveCompanies(userID);
+
+//       const activeCompanyIDs = user[0].companies.map((company) => {
+//         return mongoose.Types.ObjectId(company._id);
+//       });
+//       entries = await getActiveWeeklyEntries(
+//         userID,
+//         activeCompanyIDs,
+//         startDate,
+//         endDate
+//       );
+//     } else {
+//       const isValidID = mongoose.isObjectIdOrHexString(filter);
+//       if (!isValidID) {
+//         const error = new Error(
+//           'filter is not valid search param or mongoose object ID'
+//         );
+//         return res.status(422).json({
+//           msg: error.message,
+//         });
+//       }
+//       const companyID = mongoose.Types.ObjectId(filter);
+//       entries = await getWeeklyEntriesByCompany(
+//         userID,
+//         companyID,
+//         startDate,
+//         endDate
+//       );
+//     }
+//     res.status(200).json(entries);
+//   } catch (err) {
+//     console.log(err);
+//     res.status(500).json(server_error);
+//   }
+// });
+
 // ROUTE GET api/entries/week/:startDate/:endDate/:filter
 // DESC get all entries by specific week Monday-Sunday both inclusive
 // ACCESS private
 router.get('/week/:date/:filter', verifyToken, async (req, res) => {
-  // date params e.g., 6-13-2022
+  let { date, filter } = req.params;
+
   try {
-    const { date, filter } = req.params;
-    // receive date from params
-    // convert date into new date object
-
+    if (date === 'today') {
+      date = new Date();
+    }
+    const weekPairs = findWeekPairs(date, 4);
     const userID = mongoose.Types.ObjectId(req.user.id);
-    const startDate = new Date(start);
-    startDate.setUTCHours(0, 0, 0, 0);
-    const endDate = new Date(end);
-    endDate.setUTCHours(23, 59, 59, 999);
-
     let entries;
+
     if (filter === 'all') {
-      entries = await getAllWeeklyEntries(userID, startDate, endDate);
+      entries = await Entries.findOne({ user: req.user.id });
     } else if (filter === 'active') {
       const user = await getActiveCompanies(userID);
 
       const activeCompanyIDs = user[0].companies.map((company) => {
         return mongoose.Types.ObjectId(company._id);
       });
-      entries = await getActiveWeeklyEntries(
-        userID,
-        activeCompanyIDs,
-        startDate,
-        endDate
-      );
+
+      entries = await getAllActiveEntries(userID, activeCompanyIDs);
     } else {
       const isValidID = mongoose.isObjectIdOrHexString(filter);
       if (!isValidID) {
@@ -267,14 +322,35 @@ router.get('/week/:date/:filter', verifyToken, async (req, res) => {
         });
       }
       const companyID = mongoose.Types.ObjectId(filter);
-      entries = await getWeeklyEntriesByCompany(
-        userID,
-        companyID,
-        startDate,
-        endDate
-      );
+      entries = await getAllEntriesByCompany(userID, companyID);
     }
-    res.status(200).json(entries);
+    const entriesByWeek = weekPairs.map((week) => {
+      return {
+        startDate: week[0],
+        endDate: week[1],
+        entries: [],
+        calcData: {},
+      };
+    });
+    const { data } = entries;
+
+    data.forEach((entry) => {
+      entriesByWeek.forEach((week) => {
+        if (
+          entry.shiftDate.getTime() > week.startDate.getTime() &&
+          entry.shiftDate.getTime() < week.endDate.getTime()
+        ) {
+          week.entries.push(entry);
+        }
+      });
+    });
+    // populates calcData fields on entriesByWeek arr.obj with calcData
+    const weeksCalcData = entriesByWeek.map((week) => {
+      const calcData = calcData(week.entries);
+
+      return { ...week, calcData };
+    });
+    res.status(200).json(entriesByWeek);
   } catch (err) {
     console.log(err);
     res.status(500).json(server_error);
