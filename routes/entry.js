@@ -7,6 +7,7 @@ const { server_error, resource_updated } = require('../util/responseTypes');
 const mongoose = require('mongoose');
 const getActiveCompanies = require('../queries/user/company');
 const findWeekPairs = require('../util/findWeekPairs');
+const calculateData = require('../business/calculateData');
 const {
   getAllActiveEntries,
   getAllEntriesByCompany,
@@ -130,7 +131,7 @@ router.put('/update', verifyToken, async (req, res) => {
 });
 
 // ROUTE GET api/entries/all
-// DESC get all entries + overview data
+// DESC get overview data
 // ACCESS private
 router.get('/overview/:filter', verifyToken, async (req, res) => {
   const { filter } = req.params;
@@ -141,7 +142,11 @@ router.get('/overview/:filter', verifyToken, async (req, res) => {
     let entries;
 
     if (filter === 'all') {
-      entries = await Entries.findOne({ user: req.user.id });
+      entries = await Entries.aggregate([
+        {
+          $match: { user: userID },
+        },
+      ]);
     } else if (filter === 'active') {
       const user = await getActiveCompanies(userID);
 
@@ -163,8 +168,8 @@ router.get('/overview/:filter', verifyToken, async (req, res) => {
       const companyID = mongoose.Types.ObjectId(filter);
       entries = await getAllEntriesByCompany(userID, companyID);
     }
-
-    res.status(200).json(entries);
+    const overviewData = calculateData(entries[0].data);
+    res.status(200).json({ entries, overviewData });
   } catch (err) {
     console.log(err);
     res.status(500).json(server_error);
@@ -217,78 +222,16 @@ router.get('/month/:year/:month/:filter', verifyToken, async (req, res) => {
         companyID
       );
     }
-    res.status(200).json(entries);
+    const monthData = calculateData(entries[0].data);
+    res.status(200).json({ entries, monthData });
   } catch (err) {
     console.log(err);
     res.status(500).json(server_error);
   }
 });
 
-// this route uses mongodb aggregration pipeline to grab entries by both
-// company (all, active, specific) as well entries with shiftDates between two dates
-// this method will not work when multiple weeks are needed to be processed
-// the route below will accomplish this using JS code run directly in the node server
-// this solution will be easier to implement but ultimately not as effecient nor consistent
-// with the rest of the query actions in this folder
-
-// ROUTE GET api/entries/week/:startDate/:endDate/:filter
-// DESC get all entries by specific week Monday-Sunday both inclusive
-// ACCESS private
-// router.get('/week/:date/:filter', verifyToken, async (req, res) => {
-//   // date params e.g., 6-13-2022
-//   try {
-//     const { date, filter } = req.params;
-//     // receive date from params
-//     // convert date into new date object
-
-//     const userID = mongoose.Types.ObjectId(req.user.id);
-//     const startDate = new Date(start);
-//     startDate.setUTCHours(0, 0, 0, 0);
-//     const endDate = new Date(end);
-//     endDate.setUTCHours(23, 59, 59, 999);
-
-//     let entries;
-//     if (filter === 'all') {
-//       entries = await getAllWeeklyEntries(userID, startDate, endDate);
-//     } else if (filter === 'active') {
-//       const user = await getActiveCompanies(userID);
-
-//       const activeCompanyIDs = user[0].companies.map((company) => {
-//         return mongoose.Types.ObjectId(company._id);
-//       });
-//       entries = await getActiveWeeklyEntries(
-//         userID,
-//         activeCompanyIDs,
-//         startDate,
-//         endDate
-//       );
-//     } else {
-//       const isValidID = mongoose.isObjectIdOrHexString(filter);
-//       if (!isValidID) {
-//         const error = new Error(
-//           'filter is not valid search param or mongoose object ID'
-//         );
-//         return res.status(422).json({
-//           msg: error.message,
-//         });
-//       }
-//       const companyID = mongoose.Types.ObjectId(filter);
-//       entries = await getWeeklyEntriesByCompany(
-//         userID,
-//         companyID,
-//         startDate,
-//         endDate
-//       );
-//     }
-//     res.status(200).json(entries);
-//   } catch (err) {
-//     console.log(err);
-//     res.status(500).json(server_error);
-//   }
-// });
-
-// ROUTE GET api/entries/week/:startDate/:endDate/:filter
-// DESC get all entries by specific week Monday-Sunday both inclusive
+// ROUTE GET api/entries/week/:date/:filter
+// DESC get entries grouped by weeks (mon-sun both inclusive)
 // ACCESS private
 router.get('/week/:date/:filter', verifyToken, async (req, res) => {
   let { date, filter } = req.params;
@@ -298,11 +241,13 @@ router.get('/week/:date/:filter', verifyToken, async (req, res) => {
       date = new Date();
     }
     const weekPairs = findWeekPairs(date, 4);
+    const earliestDate = weekPairs[0][0];
+    const latestDate = weekPairs[weekPairs.length - 1][1];
     const userID = mongoose.Types.ObjectId(req.user.id);
     let entries;
 
     if (filter === 'all') {
-      entries = await Entries.findOne({ user: req.user.id });
+      entries = await getAllWeeklyEntries(userID, earliestDate, latestDate);
     } else if (filter === 'active') {
       const user = await getActiveCompanies(userID);
 
@@ -310,7 +255,12 @@ router.get('/week/:date/:filter', verifyToken, async (req, res) => {
         return mongoose.Types.ObjectId(company._id);
       });
 
-      entries = await getAllActiveEntries(userID, activeCompanyIDs);
+      entries = await getAllActiveEntries(
+        userID,
+        activeCompanyIDs,
+        earliestDate,
+        latestDate
+      );
     } else {
       const isValidID = mongoose.isObjectIdOrHexString(filter);
       if (!isValidID) {
@@ -322,7 +272,12 @@ router.get('/week/:date/:filter', verifyToken, async (req, res) => {
         });
       }
       const companyID = mongoose.Types.ObjectId(filter);
-      entries = await getAllEntriesByCompany(userID, companyID);
+      entries = await getAllEntriesByCompany(
+        userID,
+        companyID,
+        earliestDate,
+        latestDate
+      );
     }
     const entriesByWeek = weekPairs.map((week) => {
       return {
@@ -332,7 +287,7 @@ router.get('/week/:date/:filter', verifyToken, async (req, res) => {
         calcData: {},
       };
     });
-    const { data } = entries;
+    const { data } = entries[0];
 
     data.forEach((entry) => {
       entriesByWeek.forEach((week) => {
@@ -344,13 +299,13 @@ router.get('/week/:date/:filter', verifyToken, async (req, res) => {
         }
       });
     });
-    // populates calcData fields on entriesByWeek arr.obj with calcData
+    // populates calcData fields on entriesByWeek with calcData
     const weeksCalcData = entriesByWeek.map((week) => {
-      const calcData = calcData(week.entries);
+      const calcData = calculateData(week.entries);
 
       return { ...week, calcData };
     });
-    res.status(200).json(entriesByWeek);
+    res.status(200).json(weeksCalcData);
   } catch (err) {
     console.log(err);
     res.status(500).json(server_error);
