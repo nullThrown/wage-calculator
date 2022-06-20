@@ -3,11 +3,21 @@ NOTES
   Server  
     
   TODO 
-    *finish calc data obj and attach to all get requests
-    *move virtual functions into middleware functions
-
+    *create schema for new Entry fields 
+    *test new entry route fields -- make sure they are accurate
+    *add same fields to update entry route
+    *test every data get route -- create new entries  of course
+      -filters: all, active, company 
+        -overview 
+        -month 
+        -week 
+      -do filters filter and group the correct entries based on filter and date?  
+    *test calculate data function 
+      -will most likely need to be reconfigured considering data is now coming directly from collection document  
+    *look at business folder & clean it up
+      -most of these files are useless, however, make sure to check to see if any logic is still useful 
+      
     *create $grouping of shift data     
-    *look at business folder & clean it up 
     Entries Routes
       look at $group to separate entries subdocs
 
