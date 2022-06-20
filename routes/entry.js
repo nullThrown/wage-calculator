@@ -105,7 +105,22 @@ router.put('/update', verifyToken, async (req, res) => {
     specialEvent,
     shiftDate,
   } = req.body;
-
+  const totalTips = +creditTips + +cashTips;
+  const trueTotalTips = +creditTips + +cashTips - +tipOut;
+  const totalWages = +timeWorkedDec * +hourlyWage;
+  const totalEarned = +creditTips + +cashTips + +timeWorkedDec * +hourlyWage;
+  const trueTotalEarned =
+    +creditTips + +cashTips - tipOut + +timeWorkedDec * +hourlyWage;
+  console.log(typeof totalSalesApplicable);
+  let tipPct;
+  let trueTipPct;
+  if (JSON.parse(totalSalesApplicable.toLowerCase())) {
+    tipPct = (+creditTips + +cashTips) / +totalSales;
+    trueTipPct = (+creditTips + +cashTips - +tipOut) / +totalSales;
+  } else {
+    tipPct = -1;
+    trueTipPct = -1;
+  }
   try {
     await Entries.findOneAndUpdate(
       { user: req.user.id, 'data._id': entryID },
@@ -130,6 +145,13 @@ router.put('/update', verifyToken, async (req, res) => {
           'data.$.hourlyWage': hourlyWage,
           'data.$.specialEvent': specialEvent,
           'data.$.shiftDate': shiftDate,
+          'data.$.totalTips': totalTips,
+          'data.$.trueTotalTips': trueTotalTips,
+          'data.$.totalWages': totalWages,
+          'data.$.totalEarned': totalEarned,
+          'data.$.trueTotalEarned': trueTotalEarned,
+          'data.$.tipPct': tipPct,
+          'data.$.trueTipPct': trueTipPct,
         },
       }
     );
