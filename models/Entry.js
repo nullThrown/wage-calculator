@@ -21,39 +21,46 @@ const EntrySchema = new Schema(
     hourlyWage: requiredNum,
     specialEvent: requiredBool,
     shiftDate: requiredDate,
+    totalTips: requiredNum,
+    trueTotalTips: requiredNum,
+    totalWages: requiredNum,
+    totalEarned: requiredNum,
+    trueTotalEarned: requiredNum,
+    tipPct: { ...requiredNum, default: -1 },
+    trueTipPct: { ...requiredNum, default: -1 },
   },
   { timestamps: true, toJSON: { virtuals: true } }
 );
-EntrySchema.virtual('totalTips').get(function () {
-  return this.creditTips + this.cashTips;
-});
-EntrySchema.virtual('trueTotalTips').get(function () {
-  return this.creditTips + this.cashTips - this.tipOut;
-});
-EntrySchema.virtual('totalWages').get(function () {
-  return this.timeWorkedDec * this.hourlyWage;
-});
-EntrySchema.virtual('totalEarned').get(function () {
-  return this.creditTips + this.cashTips + this.timeWorkedDec * this.hourlyWage;
-});
-EntrySchema.virtual('trueTotalEarned').get(function () {
-  return (
-    this.creditTips +
-    this.cashTips -
-    this.tipOut +
-    this.timeWorkedDec * this.hourlyWage
-  );
-});
-EntrySchema.virtual('tipPct').get(function () {
-  if (this.totalSalesApplicable) {
-    return (this.creditTips + this.cashTips) / this.totalSales;
-  } else return -1;
-});
-EntrySchema.virtual('trueTipPct').get(function () {
-  if (this.totalSalesApplicable) {
-    return (this.creditTips + this.cashTips - this.tipOut) / this.totalSales;
-  } else {
-    return -1;
-  }
-});
+// EntrySchema.virtual('totalTips').get(function () {
+//   return this.creditTips + this.cashTips;
+// });
+// EntrySchema.virtual('trueTotalTips').get(function () {
+//   return this.creditTips + this.cashTips - this.tipOut;
+// });
+// EntrySchema.virtual('totalWages').get(function () {
+//   return this.timeWorkedDec * this.hourlyWage;
+// });
+// EntrySchema.virtual('totalEarned').get(function () {
+//   return this.creditTips + this.cashTips + this.timeWorkedDec * this.hourlyWage;
+// });
+// EntrySchema.virtual('trueTotalEarned').get(function () {
+//   return (
+//     this.creditTips +
+//     this.cashTips -
+//     this.tipOut +
+//     this.timeWorkedDec * this.hourlyWage
+//   );
+// });
+// EntrySchema.virtual('tipPct').get(function () {
+//   if (this.totalSalesApplicable) {
+//     return (this.creditTips + this.cashTips) / this.totalSales;
+//   } else return -1;
+// });
+// EntrySchema.virtual('trueTipPct').get(function () {
+//   if (this.totalSalesApplicable) {
+//     return (this.creditTips + this.cashTips - this.tipOut) / this.totalSales;
+//   } else {
+//     return -1;
+//   }
+// });
 module.exports = EntrySchema;
