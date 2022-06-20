@@ -1,7 +1,7 @@
 const Entries = require('../../models/Entries');
 
 const getAllActiveEntries = async (userID, activeCompanyIDs) => {
-  const createEqCheck = activeCompanyIDs.map((ID) => {
+  const EqualityChecks = activeCompanyIDs.map((ID) => {
     return { $eq: ['$$entry.company', ID] };
   });
 
@@ -14,7 +14,7 @@ const getAllActiveEntries = async (userID, activeCompanyIDs) => {
             input: '$data',
             as: 'entry',
             cond: {
-              $or: createEqCheck,
+              $or: EqualityChecks,
             },
           },
         },
