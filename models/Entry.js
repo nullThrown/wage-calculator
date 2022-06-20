@@ -24,7 +24,6 @@ const EntrySchema = new Schema(
   },
   { timestamps: true, toJSON: { virtuals: true } }
 );
-
 EntrySchema.virtual('totalTips').get(function () {
   return this.creditTips + this.cashTips;
 });
