@@ -57,7 +57,17 @@ router.post('/create', verifyToken, async (req, res) => {
     hourlyWage,
     specialEvent,
     shiftDate,
+    totalTips: +creditTips + +cashTips,
+    trueTotalTips: +creditTips + +cashTips - +tipOut,
+    totalWages: +timeWorkedDec * +hourlyWage,
+    totalEarned: +creditTips + +cashTips + +timeWorkedDec * +hourlyWage,
+    trueTotalEarned:
+      +creditTips + +cashTips - tipOut + +timeWorkedDec * +hourlyWage,
   };
+  if (totalSalesApplicable) {
+    newEntry.tipPct = (+creditTips + +cashTips) / +totalSales;
+    newEntry.trueTipPct = (+creditTips + +cashTips - +tipOut) / +totalSales;
+  }
   try {
     const entries = await Entries.findOneAndUpdate(
       { user: req.user.id },
@@ -279,7 +289,7 @@ router.get('/week/:date/:filter', verifyToken, async (req, res) => {
         latestDate
       );
     }
-    const entriesByWeek = weekPairs.map((week) => {
+    let entriesByWeek = weekPairs.map((week) => {
       return {
         startDate: week[0],
         endDate: week[1],
@@ -300,12 +310,12 @@ router.get('/week/:date/:filter', verifyToken, async (req, res) => {
       });
     });
     // populates calcData fields on entriesByWeek with calcData
-    const weeksCalcData = entriesByWeek.map((week) => {
+    entriesByWeek = entriesByWeek.map((week) => {
       const calcData = calculateData(week.entries);
 
       return { ...week, calcData };
     });
-    res.status(200).json(weeksCalcData);
+    res.status(200).json(entriesByWeek);
   } catch (err) {
     console.log(err);
     res.status(500).json(server_error);
