@@ -3,15 +3,41 @@ NOTES
   Server  
     
   TODO 
-    *create schema for new Entry fields 
-    *test new entry route fields -- make sure they are accurate
-    *add same fields to update entry route
+    ✔*create schema for new Entry fields 
+    ✔*test new entry route fields -- make sure they are accurate
+    ✔*add same fields to update entry route
     *test every data get route -- create new entries  of course
       -filters: all, active, company 
         -overview 
         -month 
         -week 
-      -do filters filter and group the correct entries based on filter and date?  
+      -do routes filter and group the correct entries based on filter and date?  
+    
+    
+      overview 
+        ✔ filter == 'all' should return all 6 entries
+        filter == 'active' should return all entries with active companies
+          ✔1. 'active' should return no entries
+          ✔2. 'active' should return entries associated with 'iron cactus'
+          ✔3. 'active' should return entries associated with 'bew market'
+          ✔4. 'active' should return entries associated with 'Jon's coffee'
+          ✔5. 'active' should return entries associated with 'iron cactus & brew market'
+          ✔6. 'active' should return entries associated with 'iron cactus & brew market & jon's coffee'
+        ✔filter == validCompanyID should return entries attached to single company 
+        ✔filter != 'all', 'active', or validMongoID should return code 422, msg: 'filter is not valid'
+
+        check math for calc data
+
+      month 
+
+      
+      week    
+    
+    
+    
+    
+    
+    
     *test calculate data function 
       -will most likely need to be reconfigured considering data is now coming directly from collection document  
     *look at business folder & clean it up
