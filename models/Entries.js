@@ -44,20 +44,31 @@ EntriesSchema.virtual('calcData').get(function () {
 
   return calcData;
 });
-EntriesSchema.virtual('totalPerHour').get(function () {
-  return this.calcData.trueTotalEarned / this.calcData.totalTimeWorked;
-});
-EntriesSchema.virtual('tipPerHour').get(function () {
-  return this.calcData.trueTotalTips / this.calcData.totalTimeWorked;
-});
-EntriesSchema.virtual('tipPct').get(function () {
-  return this.calcData.tipsEarnedWithSalesApp / this.calcData.totalSales;
-});
-EntriesSchema.virtual('trueTipPct').get(function () {
-  return (
-    (this.calcData.tipsEarnedWithSalesApp - this.calcData.tipOutWithSalesApp) /
-    this.calcData.totalSales
-  );
-});
+// EntriesSchema.pre('findOneAndUpdate', async function () {
+//   let pushedEntry = this.getUpdate();
+//   console.log(pushedEntry);
+
+// pushedEntry.$set['data.$.creditTips'];
+// if (!pushedEntry) {
+//   pushedEntry = this.getUpdate().$set.data;
+// }
+// pushedEntry.totalTips = +pushedEntry.creditTips + +pushedEntry.cashTips;
+// });
 
 module.exports = mongoose.model('entries', EntriesSchema);
+
+// EntriesSchema.virtual('totalPerHour').get(function () {
+//   return this.calcData.trueTotalEarned / this.calcData.totalTimeWorked;
+// });
+// EntriesSchema.virtual('tipPerHour').get(function () {
+//   return this.calcData.trueTotalTips / this.calcData.totalTimeWorked;
+// });
+// EntriesSchema.virtual('tipPct').get(function () {
+//   return this.calcData.tipsEarnedWithSalesApp / this.calcData.totalSales;
+// });
+// EntriesSchema.virtual('trueTipPct').get(function () {
+//   return (
+//     (this.calcData.tipsEarnedWithSalesApp - this.calcData.tipOutWithSalesApp) /
+//     this.calcData.totalSales
+//   );
+// });
