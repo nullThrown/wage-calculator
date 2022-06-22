@@ -2,41 +2,8 @@ NOTES
 
   Server  
     
-  TODO 
-    ✔*create schema for new Entry fields 
-    ✔*test new entry route fields -- make sure they are accurate
-    ✔*add same fields to update entry route
-    *test every data get route -- create new entries  of course
-      -filters: all, active, company 
-        -overview 
-        -month 
-        -week 
-      -do routes filter and group the correct entries based on filter and date?  
-    
-    
-      overview 
-        ✔ filter == 'all' should return all 6 entries
-        filter == 'active' should return all entries with active companies
-          ✔1. 'active' should return no entries
-          ✔2. 'active' should return entries associated with 'iron cactus'
-          ✔3. 'active' should return entries associated with 'bew market'
-          ✔4. 'active' should return entries associated with 'Jon's coffee'
-          ✔5. 'active' should return entries associated with 'iron cactus & brew market'
-          ✔6. 'active' should return entries associated with 'iron cactus & brew market & jon's coffee'
-        ✔filter == validCompanyID should return entries attached to single company 
-        ✔filter != 'all', 'active', or validMongoID should return code 422, msg: 'filter is not valid'
-
-        check math for calc data
-
-      month 
-
-      
-      week    
-    
-    
-    
-    
-    
+  TODO
+        *check math for calculations done in create entry route & update entry route
     
     *test calculate data function 
       -will most likely need to be reconfigured considering data is now coming directly from collection document  
@@ -48,19 +15,11 @@ NOTES
       look at $group to separate entries subdocs
 
     POST
-      ✔- POST - create new earning's entry
-      ✔- POST - update earning's entry
       
     GET
 
-      - GET - overview data
-        -entries => calc data
 
-      - GET - data by specific month
-        -entries => calc data 
 
-      - GET - entries & data by specific week and 3 weeks prior 
-        -entries => entries + calc data
       
       - GET - shift data 
         returned groupings:
@@ -87,15 +46,6 @@ NOTES
                        avgPerHour: 0, 
                       }
                     ]...
-                   
-
-
-
-    *new folder name for business    
-    *business logic needs to be cleaned up
-      -many of these files are useless 
-      -better names to be applied to factory functions 
-    *data needs to be derived for best shift
   
   React 
     *clean up components folder 
