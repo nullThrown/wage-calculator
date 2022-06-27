@@ -3,49 +3,10 @@ NOTES
   Server  
     
   TODO
-        *check math for calculations done in create entry route & update entry route
     
     *test calculate data function 
       -will most likely need to be reconfigured considering data is now coming directly from collection document  
-    *look at business folder & clean it up
-      -most of these files are useless, however, make sure to check to see if any logic is still useful 
       
-    *create $grouping of shift data     
-    Entries Routes
-      look at $group to separate entries subdocs
-
-    POST
-      
-    GET
-
-
-
-      
-      - GET - shift data 
-        returned groupings:
-          by day - 7 groups: entries grouped only by day mon, tues, wed ...
-            structure: 
-              const byDayData = [
-                  {
-                    day: 'Sunday',
-                    avgPerHour: 0,
-                  }, ...
-
-          by company & day - 7*numOfCompany entries grouped first by company & then by day 
-            structure: 
-              const byCompany = [
-                  {
-                    companyName: 'Iron Cactus',
-                    day: [
-                      {
-                       day: 'sunday',
-                       avgPerHour: 0, 
-                      }
-                      {
-                       day: 'monday',
-                       avgPerHour: 0, 
-                      }
-                    ]...
   
   React 
     *clean up components folder 
@@ -54,4 +15,41 @@ NOTES
       -try to map the functionality from there onto this project 
     *try to map react-query axios calls onto backend API   
     *add providers into separate file 
-    
+
+
+
+
+
+
+
+    SHIFT DATA 
+      *create $grouping of shift data     
+      Entries Routes
+        look at $group to separate entries subdocs
+
+        - GET - shift data 
+          returned groupings:
+            by day - 7 groups: entries grouped only by day mon, tues, wed ...
+              structure: 
+                const byDayData = [
+                    {
+                      day: 'Sunday',
+                      avgPerHour: 0,
+                    }, ...
+
+            by company & day - 7*numOfCompany entries grouped first by company & then by day 
+              structure: 
+                const byCompany = [
+                    {
+                      companyName: 'Iron Cactus',
+                      day: [
+                        {
+                          day: 'sunday',
+                          avgPerHour: 0, 
+                        }
+                        {
+                          day: 'monday',
+                          avgPerHour: 0, 
+                        }
+                      ]...
+      
