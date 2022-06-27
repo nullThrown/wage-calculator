@@ -5,7 +5,7 @@ const {
   requiredStr,
   requiredBool,
   currentTime,
-} = require('../util/mongooseTypes');
+} = require('../constants/mongooseTypes');
 
 const UserSchema = new Schema(
   {

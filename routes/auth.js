@@ -9,7 +9,7 @@ const {
   server_error,
   resource_created,
   invalid_credentials,
-} = require('../util/responseTypes');
+} = require('../constants/responseTypes');
 
 // ROUTE POST api/auth/register
 // DESC register a new user

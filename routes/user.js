@@ -3,7 +3,10 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
 const User = require('../models/User');
-const { email_already_exists, server_error } = require('../util/responseTypes');
+const {
+  email_already_exists,
+  server_error,
+} = require('../constants/responseTypes');
 const verifyToken = require('../middleware/auth');
 
 // ROUTE GET api/user/me

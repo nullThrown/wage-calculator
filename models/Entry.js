@@ -5,7 +5,7 @@ const {
   requiredStr,
   requiredBool,
   requiredDate,
-} = require('../util/mongooseTypes');
+} = require('../constants/mongooseTypes');
 
 const EntrySchema = new Schema(
   {

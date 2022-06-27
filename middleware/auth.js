@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { token_invalid } = require('../util/responseTypes');
+const { token_invalid } = require('../constants/responseTypes');
 
 // grabs token from request headers
 // may switch to a cookie based system

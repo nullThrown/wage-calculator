@@ -3,7 +3,10 @@ const router = express.Router();
 const User = require('../models/User');
 const Entries = require('../models/Entries');
 const verifyToken = require('../middleware/auth');
-const { server_error, resource_updated } = require('../util/responseTypes');
+const {
+  server_error,
+  resource_updated,
+} = require('../constants/responseTypes');
 const mongoose = require('mongoose');
 const getActiveCompanies = require('../queries/user/company');
 const findWeekPairs = require('../util/findWeekPairs');
@@ -201,7 +204,7 @@ router.get('/overview/:filter', verifyToken, async (req, res) => {
       entries = await getAllEntriesByCompany(userID, companyID);
     }
     const overviewData = calculateData(entries[0].data);
-    res.status(200).json({ entries, overviewData });
+    res.status(200).json(overviewData);
   } catch (err) {
     console.log(err);
     res.status(500).json(server_error);
@@ -255,7 +258,7 @@ router.get('/month/:year/:month/:filter', verifyToken, async (req, res) => {
       );
     }
     const monthData = calculateData(entries[0].data);
-    res.status(200).json({ entries, monthData });
+    res.status(200).json(monthData);
   } catch (err) {
     console.log(err);
     res.status(500).json(server_error);
