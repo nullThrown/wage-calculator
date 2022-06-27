@@ -1,9 +1,9 @@
 import { Flex } from '@chakra-ui/react';
-import Card from '../base/Card';
-import QuatHeading from '../typography/QuatHeading';
-import TertHeading from '../typography/TertHeading';
-import StatRow from '../data/StatRow';
-import SimpleStat from '../data/SimpleStat';
+import Card from 'components/base/Card';
+import QuatHeading from 'components/typography/QuatHeading';
+import TertHeading from 'components/typography/TertHeading';
+import StatRow from 'components/data/StatRow';
+import SimpleStat from 'components/data/SimpleStat';
 const Month = () => {
   return (
     <Card as='section'>

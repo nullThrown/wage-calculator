@@ -1,9 +1,9 @@
-import Card from '../base/Card';
-import TertHeading from '../typography/TertHeading';
-import QuatHeading from '../typography/QuatHeading';
+import Card from '../../../components/base/Card';
+import TertHeading from '../../../components/typography/TertHeading';
+import QuatHeading from '../../../components/typography/QuatHeading';
 import { Flex } from '@chakra-ui/react';
-import StatRow from '../data/StatRow';
-import SimpleStat from '../data/SimpleStat';
+import StatRow from '../../../components/data/StatRow';
+import SimpleStat from '../../../components/data/SimpleStat';
 
 const Day = () => {
   return (
@@ -14,7 +14,7 @@ const Day = () => {
         <StatRow>
           <SimpleStat title='Hours Worked' amount='6.54' />
           <SimpleStat title='Total Earned' amount='134.24' symbolBefore='$' />
-          <SimpleStat title='Wages' amount='67.43' symbolBefore='$' />
+          <SimpleStat title='Wages' z amount='67.43' symbolBefore='$' />
           <SimpleStat
             title='Total Tips'
             amount='76.67'

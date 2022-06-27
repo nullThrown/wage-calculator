@@ -5,16 +5,16 @@ import {
   VStack,
   Box,
 } from '@chakra-ui/react';
-import MainContainer from '../components/base/Container';
-import MainHeading from '../components/typography/MainHeading';
-import AddEntryBtn from '../components/button/AddEntry';
-import Header from '../components/base/Header';
-import AddEntryForm from '../components/card/AddEntryForm';
-import Overview from '../components/card/Overview';
-import Day from '../components/card/Day';
-import Month from '../components/card/Month';
-import Shift from '../components/card/Shift';
-import SecHeading from '../components/typography/SecHeading';
+import MainContainer from 'components/base/Container';
+import MainHeading from 'components/typography/MainHeading';
+import AddEntryBtn from 'components/button/AddEntry';
+import Header from 'components/base/Header';
+import AddEntryForm from 'components/card/AddEntryForm';
+import Overview from 'features/overview/components/Overview';
+import Day from 'features/entries/components/Day';
+import Month from 'features/month/components/Month';
+import Shift from 'features/shift/components/Shift';
+import SecHeading from 'components/typography/SecHeading';
 
 const Home = () => {
   const { isOpen, onToggle } = useDisclosure();
