@@ -14,8 +14,6 @@ const {
 // ROUTE POST api/auth/register
 // DESC register a new user
 // ACCESS public
-
-// might need to initialize entries upon registering
 router.post('/register', async (req, res) => {
   const { username, email, password } = req.body;
   try {
