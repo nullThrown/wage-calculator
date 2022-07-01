@@ -1,13 +1,8 @@
-  CONFIG
-      *add configuration for both react-query and axios 
-       -look at personal-blog to determine that
-      *add storage object to util folder   
-      *add auth feature with same folder structure
-      *add respective api calls to features/<feat>/api
-    
-  react-query
-    *react-query useMutation 
-      -useMutation has two means of onsuccess etc. - onMutation hook call and .mutate method 
+  LOGIC
+    *how to organize and export features/components files
+    react-query
+      *react-query useMutation 
+        -useMutation has two means of onsuccess etc. - onMutation hook call and .mutate method 
 
     
     
@@ -21,20 +16,30 @@
 
   UI  
     GENERAL 
-      *Add company select to top of page
-        -company select needs more data -- position & something else 
+      *titles should be smaller and have less weight
+
+      *Company Select
+        -select element still needs to be populated from user react-q cache property 
+        -company display still needs to be return the filtered results of the company select state
+        -company display table will need to have a horizontal scroll -- common with tables!!
+      
+      *create landing page
+
       *create register page and component
         -email, username, password
         -next add company section 
       *create login page 
+
     OVERVIEW   
       *overview data need only be 3 data points
         -total per hour
         -tip amt per hour 
         -tip percentage
-    SINGLE entry
+
+    SINGLE ENTRY
       *create single entry section 
       *single entry will be populated by most recent entry 
+
     WEEK 
       *week component will be an array of 7 days initilized with current week
       *each day will be populated with respective entries -- company, time worked money made etc.. 
@@ -42,12 +47,15 @@
         -filter will have a list of weeks that the user can click on to populate the weeks section 
         -last week clicked with call API weeks endpoint to populate a new set of weeks 
         -will also need to cap the filter based on earliest entry
+
     MONTH      
       *will need month selector 
         -take this hook and component from budget app 
       *otherwise just a section for meta data about a given month 
+
     SHIFT 
-      *will need to be figured out in the future         
+      *will need to be figured out in the future 
+
    *place single entry component beneath overview 
     -requires info about company and date 
    *create week component  
@@ -57,8 +65,6 @@
 
     Back Burner  
       *extend theme for size prop
-        -titles should be smaller and sizing still needs to be responsive
-        -probably will require 4 different title components
 
 
 
