@@ -5,17 +5,12 @@
       *add auth feature with same folder structure
       *add respective api calls to features/<feat>/api
     
-    *look up react-query calls as custom hook
-    *add custom react queries to features/<feat>/hooks folder
-      -there should be a query for every API call
-      -data should be stored separately 
-        -user 
-        -overviewData
-        -monthData
-        -weekData
-        -shiftData  
-      -queries should be keyed in with their filters this allows a refetch when filters changes -- will need to toy around with this 
-      -useMutation for newEntry/UpdateEntry action must invalidate all entry data   
+  react-query
+    *react-query useMutation 
+      -useMutation has two means of onsuccess etc. - onMutation hook call and .mutate method 
+
+    
+    
     *add context to company filter select - filters for 'all', 'active', and single company  
       -this context variable will be accessed by all components that require it     
     *place providers into separate folder
