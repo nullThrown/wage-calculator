@@ -36,10 +36,10 @@ export const updateCompany = async (company) => {
     return err;
   }
 };
-export const setCompanyRemovedStatus = async (companyId, status) => {
+export const setCompanyRemovedStatus = async (companyID, status) => {
   try {
     const res = await axios.put('/user/company/remove/set', {
-      companyId,
+      companyID,
       status,
     });
     return res;
