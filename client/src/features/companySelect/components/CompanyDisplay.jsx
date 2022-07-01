@@ -18,11 +18,13 @@ const companies = [
   {
     name: 'Punch Bowl Social',
     startDate: '4-23-22',
-    status: false,
+    position: 'server',
+    active: false,
   },
   {
     name: 'Iron Cactus',
     startDate: '6-17-22',
+    position: 'server',
     active: true,
   },
 ];
@@ -38,16 +40,18 @@ const CompanyDisplay = () => {
             <Tr>
               <Th>Name</Th>
               <Th>Start Date</Th>
+              <Th>Position</Th>
               <Th>Status</Th>
             </Tr>
           </Thead>
           <Tbody>
             {companies.map((company, index) => {
-              const { name, startDate, active } = company;
+              const { name, startDate, position, active } = company;
               return (
                 <Tr bg={index % 2 === 1 ? 'rgba(240,240,240,.3)' : null}>
                   <Td>{name}</Td>
                   <Td>{startDate}</Td>
+                  <Td>{position}</Td>
                   <Td>
                     <Badge
                       colorScheme={active ? 'green' : 'red'}
