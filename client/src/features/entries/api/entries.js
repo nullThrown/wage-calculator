@@ -1,4 +1,3 @@
-import { AccordionDescendantsProvider } from '@chakra-ui/react';
 import axios from 'config/axios';
 
 export const createEntry = async (entry) => {
