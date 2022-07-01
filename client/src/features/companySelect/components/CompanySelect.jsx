@@ -1,6 +1,6 @@
-import { Select } from '@chakra-ui/react';
+import { Select, Box } from '@chakra-ui/react';
 import { useState } from 'react';
-
+import CompanyDisplay from './CompanyDisplay';
 const CompanySelect = () => {
   const [filters, setFilters] = useState([
     'all',
@@ -9,11 +9,14 @@ const CompanySelect = () => {
     'Iron Cactus',
   ]);
   return (
-    <Select placeholder='select filter' variant='filled'>
-      {filters.map((filter) => {
-        return <option value='filter'>{filter}</option>;
-      })}
-    </Select>
+    <Box>
+      <Select placeholder='select filter' variant='filled'>
+        {filters.map((filter) => {
+          return <option value={filter}>{filter}</option>;
+        })}
+      </Select>
+      <CompanyDisplay />
+    </Box>
   );
 };
 
