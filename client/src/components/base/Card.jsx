@@ -2,7 +2,7 @@ import { Box } from '@chakra-ui/react';
 const Card = ({ as, m, children }) => {
   return (
     <Box
-      maxW='700px'
+      maxW='1000px'
       w='100%'
       p='2em'
       borderRadius='10px'
