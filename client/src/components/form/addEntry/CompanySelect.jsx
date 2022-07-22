@@ -6,7 +6,7 @@ export const CompanySelect = ({ onChange, value }) => {
       onChange={onChange}
       value={value}
       name='company'>
-      <option value='Punch Bowl Social'>Punch Bowl Social</option>
+      <option value='Punch Bowl Social'>Iron Cactus</option>
       <option value='Target'>Target</option>
     </Select>
   );
