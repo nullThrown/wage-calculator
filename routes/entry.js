@@ -27,7 +27,8 @@ const {
   getActiveWeeklyEntries,
   getWeeklyEntriesByCompany,
 } = require('../queries/entry/week');
-
+const formatToShortDate = require('../util/formatToShortDate');
+const createWeekOfDates = require('../util/createWeekOfDates');
 // ROUTE POST api/entries/create
 // DESC create new earning's entry
 // ACCESS private
@@ -314,10 +315,15 @@ router.get('/week/:date/:filter', verifyToken, async (req, res) => {
         latestDate
       );
     }
+    // DatesShort property needs to be tested
     let entriesByWeek = weekPairs.map((week) => {
       return {
         startDate: week[0],
         endDate: week[1],
+        DatesShort: `${formatToShortDate(week[0])} - ${formatToShortDate(
+          week[1]
+        )}`,
+        weekOfDays: createWeekOfDates(week[0]),
         entries: [],
         calcData: {},
       };
