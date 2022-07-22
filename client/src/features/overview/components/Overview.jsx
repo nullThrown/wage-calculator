@@ -10,7 +10,6 @@ const Overview = () => {
     <Card as='section'>
       <TertHeading text='Overview' textAlign='center' />
       <Flex direction='column'>
-        <QuatHeading text='Averages' />
         <StatRow>
           <SimpleStat
             title='Total Per Hour'
@@ -18,17 +17,16 @@ const Overview = () => {
             helpText='wages and tips'
             symbolBefore='$'
           />
-          <SimpleStat title='tip amt per hour' amount='15.34' symbolAfter='%' />
+          <SimpleStat
+            title='Tip Amount Per Hour'
+            amount='16'
+            helpText='after tipout'
+            symbolBefore='$'
+          />
           <SimpleStat
             title='tip Percentage'
             amount='19'
             helpText='per bill'
-            symbolAfter='%'
-          />
-          <SimpleStat
-            title='True Tip Percentage'
-            amount='16'
-            helpText='after tipout'
             symbolAfter='%'
           />
         </StatRow>
