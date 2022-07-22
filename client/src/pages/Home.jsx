@@ -16,6 +16,7 @@ import Month from 'features/month/components/Month';
 import Shift from 'features/shift/components/Shift';
 import SecHeading from 'components/typography/SecHeading';
 import CompanySelect from 'features/companySelect/components/CompanySelect';
+import Week from 'features/entries/components/Week';
 const Home = () => {
   const { isOpen, onToggle } = useDisclosure();
   return (
@@ -34,6 +35,7 @@ const Home = () => {
             <CompanySelect />
             <Overview />
             <Day />
+            <Week />
             <Month />
             <Shift />
           </VStack>
