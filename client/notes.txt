@@ -16,7 +16,8 @@
 
   UI  
     GENERAL 
-      *titles should be smaller and have less weight
+      6.*titles should be smaller and have less weight
+        -title text should be a child -- not a prop
 
       *Company Select
         -select element still needs to be populated from user react-q cache property 
@@ -30,29 +31,46 @@
         -next add company section 
       *create login page 
 
-    OVERVIEW   
+    ✔1.OVERVIEW   
       *overview data need only be 3 data points
         -total per hour
         -tip amt per hour 
         -tip percentage
 
-    SINGLE ENTRY
+    2.SINGLE ENTRY
       *create single entry section 
       *single entry will be populated by most recent entry 
+        -date
+        -company
+        -position
+        
+        -hours worked
+        -total earned
+        -earned per hour 
+        -wages 
+        -total tips 
+        -credit tips
+        -cash tips  
+        -tip pct 
 
-    WEEK 
-      *week component will be an array of 7 days initilized with current week
+    3.WEEK 
+      *
       *each day will be populated with respective entries -- company, time worked money made etc.. 
         -each entry can be clicked on and will then populate single Entry section 
-        -filter will have a list of weeks that the user can click on to populate the weeks section 
         -last week clicked with call API weeks endpoint to populate a new set of weeks 
         -will also need to cap the filter based on earliest entry
 
-    MONTH      
+    4.MONTH      
       *will need month selector 
         -take this hook and component from budget app 
       *otherwise just a section for meta data about a given month 
-
+        -total earned 
+        -total earned per hour
+        -wages earned
+        -hours worked 
+        -tips earned 
+        -credit tips 
+        -cash tips 
     SHIFT 
       *will need to be figured out in the future 
 
