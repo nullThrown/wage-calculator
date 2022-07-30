@@ -4,12 +4,24 @@ const jwt = require('jsonwebtoken');
 const router = express.Router();
 const User = require('../models/User');
 const Entries = require('../models/Entries');
+const verifyToken = require('../middleware/auth');
 const {
   email_already_exists,
   server_error,
   resource_created,
   invalid_credentials,
+  token_valid,
 } = require('../constants/responseTypes');
+
+// ROUTE get api/auth
+// DESC check if token is valid
+// ACCESS public
+
+// verifyUser middleware will send a not_authorized response if token is invalid
+// otherwise, body of callback will run
+router.get('/', verifyToken, async (req, res) => {
+  res.status(200).json(token_valid);
+});
 
 // ROUTE POST api/auth/register
 // DESC register a new user
