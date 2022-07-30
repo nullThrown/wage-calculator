@@ -6,8 +6,9 @@ export const registerUser = async (user) => {
     const res = await axios.post('/auth/register', user);
     return res;
   } catch (err) {
-    console.log(err);
-    return err;
+    // console.log(err.response);
+    const errorMsg = !err.response ? 'connection_error' : err.response.data.msg;
+    return Promise.reject(new Error(errorMsg));
   }
 };
 
