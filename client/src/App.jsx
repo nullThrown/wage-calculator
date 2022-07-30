@@ -1,15 +1,19 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './pages/Home';
-import Test from './pages/Test';
-
+import { QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
+import AppRoutes from 'routes';
+import queryClient from 'config/queryClient';
+import { ChakraProvider, theme } from '@chakra-ui/react';
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route index element={<Home />} />
-        <Route path='/test' element={<Test />} />
-      </Routes>
-    </Router>
+    <QueryClientProvider client={queryClient}>
+      <ChakraProvider theme={theme}>
+        <Router>
+          <AppRoutes />
+        </Router>
+      </ChakraProvider>
+      <ReactQueryDevtools initialIsOpen={true} />
+    </QueryClientProvider>
   );
 }
 
