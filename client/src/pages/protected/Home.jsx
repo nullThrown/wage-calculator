@@ -9,7 +9,7 @@ import MainContainer from 'components/base/Container';
 import MainHeading from 'components/typography/MainHeading';
 import AddEntryBtn from 'components/button/AddEntry';
 import Header from 'components/base/Header';
-import AddEntryForm from 'components/card/AddEntryForm';
+import AddEntryForm from 'features/entries/components/AddEntryForm';
 import Overview from 'features/overview/components/Overview';
 import Day from 'features/entries/components/Day';
 import Month from 'features/month/components/Month';
