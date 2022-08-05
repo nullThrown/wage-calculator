@@ -1,4 +1,4 @@
-import Card from 'components/base/Card';
+import LargeCard from 'components/card/LargeCard';
 import TertHeading from 'components/typography/TertHeading';
 import QuatHeading from 'components/typography/QuatHeading';
 import { Flex } from '@chakra-ui/react';
@@ -7,7 +7,7 @@ import SimpleStat from 'components/data/SimpleStat';
 
 const Overview = () => {
   return (
-    <Card as='section'>
+    <LargeCard as='section'>
       <TertHeading text='Overview' textAlign='center' />
       <Flex direction='column'>
         <StatRow>
@@ -31,7 +31,7 @@ const Overview = () => {
           />
         </StatRow>
       </Flex>
-    </Card>
+    </LargeCard>
   );
 };
 export default Overview;
