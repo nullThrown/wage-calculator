@@ -1,4 +1,4 @@
-import Card from 'components/base/Card';
+import LargeCard from 'components/card/LargeCard';
 import TertHeading from 'components/typography/TertHeading';
 import QuatHeading from 'components/typography/QuatHeading';
 import StatRow from 'components/data/StatRow';
@@ -20,7 +20,7 @@ import {
 } from '@chakra-ui/react';
 const Day = () => {
   return (
-    <Card as='section'>
+    <LargeCard as='section'>
       <TertHeading text='Single Entry' textAlign='center' />
       <Flex direction='column' mt='2em'>
         <TableContainer m='1em'>
@@ -65,7 +65,7 @@ const Day = () => {
           <SimpleStat title='Tip Pct' amount='18' symbolAfter='%' />
         </StatRow>
       </Flex>
-    </Card>
+    </LargeCard>
   );
 };
 export default Day;
