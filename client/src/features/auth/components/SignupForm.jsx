@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   FormControl,
   FormLabel,
@@ -6,12 +7,12 @@ import {
   FormHelperText,
   Input,
   Flex,
-  Box,
   Button,
   Spinner,
 } from '@chakra-ui/react';
 import CenterContainer from 'components/base/CenterContainer';
 import MainHeading from 'components/typography/MainHeading';
+import SmallCard from 'components/card/SmallCard';
 import useRegisterUser from 'features/auth/hooks/useRegisterUser';
 import useSignupValidation from 'features/auth/hooks/useSignupVal';
 import ErrorText from 'components/typography/ErrorText';
@@ -28,6 +29,7 @@ const SignupForm = () => {
   const registerUser = useRegisterUser(user);
   const { emailError, usernameError, passwordError, setEmailError } =
     useSignupValidation(user);
+  const navigate = useNavigate();
 
   const changeHandler = (e) => {
     setUser(() => {
@@ -42,7 +44,9 @@ const SignupForm = () => {
     }
 
     return registerUser.mutate(user, {
-      onSuccess: (data, variables, context) => {},
+      onSuccess: (data, variables, context) => {
+        navigate('/signup-success');
+      },
       onError: (error, variables, context) => {
         console.log(error.message);
         const { message } = error;
@@ -67,12 +71,7 @@ const SignupForm = () => {
   }
   return (
     <CenterContainer>
-      <Box
-        as='form'
-        maxWidth='600px'
-        width='100%'
-        borderBottom='1px solid rgb(200,200,200)'
-        pb='.5em'>
+      <SmallCard as='form'>
         <MainHeading size='2xl' textAlign='center'>
           Sign Up
         </MainHeading>
@@ -147,7 +146,7 @@ const SignupForm = () => {
           onClick={handleSubmit}>
           Sign Up
         </Button>
-      </Box>
+      </SmallCard>
     </CenterContainer>
   );
 };
