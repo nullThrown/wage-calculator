@@ -23,8 +23,8 @@ export const addCompany = async (company) => {
     const res = await axios.post('/user/company/create', company);
     return res;
   } catch (err) {
-    console.log(err);
-    return err;
+    const errorMsg = !err.response ? 'connection_error' : err.response.data.msg;
+    return Promise.reject(new Error(errorMsg));
   }
 };
 export const updateCompany = async (company) => {
