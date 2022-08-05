@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import Card from 'components/base/Card';
+import LargeCard from 'components/card/LargeCard';
 import TertHeading from 'components/typography/TertHeading';
 import DateBox from './DateBox';
 import WeekSelect from './WeekSelect';
@@ -44,7 +44,7 @@ const Week = () => {
   }, [selectedWeekData]);
 
   return (
-    <Card as='section'>
+    <LargeCard as='section'>
       <TertHeading text='Week' textAlign='center' />
       <WeekSelect
         selectChangeHandler={selectChangeHandler}
@@ -61,7 +61,7 @@ const Week = () => {
           return <DateBox key={i} day={day} entries={entriesByDay} />;
         })}
       </HStack>
-    </Card>
+    </LargeCard>
   );
 };
 
