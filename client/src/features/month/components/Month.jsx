@@ -1,12 +1,12 @@
 import { Flex } from '@chakra-ui/react';
-import Card from 'components/base/Card';
+import LargeCard from 'components/card/LargeCard';
 import QuatHeading from 'components/typography/QuatHeading';
 import TertHeading from 'components/typography/TertHeading';
 import StatRow from 'components/data/StatRow';
 import SimpleStat from 'components/data/SimpleStat';
 const Month = () => {
   return (
-    <Card as='section'>
+    <LargeCard as='section'>
       <TertHeading text='Month' textAlign='center' />
       <Flex direction='column'>
         <QuatHeading text='Totals' />
@@ -35,7 +35,7 @@ const Month = () => {
           <SimpleStat title='Cash Tips' amount='232.34' />
         </StatRow>
       </Flex>
-    </Card>
+    </LargeCard>
   );
 };
 export default Month;
