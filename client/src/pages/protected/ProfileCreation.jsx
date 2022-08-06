@@ -28,62 +28,15 @@ import useAddCompanyVal from 'features/auth/hooks/useAddCompanyVal';
 import CompanyDisplay from 'features/user/components/addCompany/CompanyDisplay';
 import FinishInfoModal from 'features/user/components/addCompany/FinishInfoModal';
 
-//--- add transition effect to form
-
-//--- add event listener to Add Company btn that opens form
-
-//--- create form that takes in name, position, hourlyWage, & overtimeMultiplier
-
-//--- add Create Company button to form
-
-//--- btn will send react-query mutation to 'api/company/create-company'
-
-//--- if loading -- display loading icon in Add Company btn
-
-// if success
-//--- take returned newCompany and place it into company list
-//--- create toast that says success creation
-//--- clear form
-
-// if failure
-// determine what the failure was
-// --if server error -- display server error on Card
-// --if validation error -- display error
-
-// --add form validation
-// --company name must have len > 0
-// --position must have len > 0
-// --hourly wage is fine
-// --overtime multiplier is fine
-
-// create company Display component
-// --company display will be table similar to one found on home
-// --except with name, position, salary, multiplier & edit/delete btns
-// --add func to delete button
-// --delete btn will send DELETE request to 'api/company/delete'
-// if successful
-// --trigger setCompanyList hook to filter out deleted todo
-// --display toast that signifies successful action
-// if failure
-// --determine error
-// --display error
-
 // add func to edit button
-
+// edit button will populate form with created company
+// form will highlight message signifying editing state
 // if successful
-// replace company list item with updated fields
+// replace company list item with updated company
 // create toast that signifies successful action
 // if failure
 // determine error
 // display error
-
-// add Finish Button onto Add Company component
-// if (companyList === 0) btn will display modal that let users know they can
-//cont. add companies in profile
-// modal will give user desc. and two buttons
-// btn 1 - cancel
-// btn 2 - continue
-// btn will redirect user to '/home'
 
 const initialCompanyState = {
   name: '',
