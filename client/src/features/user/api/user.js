@@ -32,19 +32,16 @@ export const updateCompany = async (company) => {
     const res = await axios.put('/user/company/update', company);
     return res;
   } catch (err) {
-    console.log(err);
-    return err;
+    const errorMsg = !err.response ? 'connection_error' : err.response.data.msg;
+    return Promise.reject(new Error(errorMsg));
   }
 };
-export const setCompanyRemovedStatus = async (companyID, status) => {
+export const setCompanyRemovedStatus = async (body) => {
   try {
-    const res = await axios.put('/user/company/remove/set', {
-      companyID,
-      status,
-    });
+    const res = await axios.put('/user/company/remove/set', body);
     return res;
   } catch (err) {
-    console.log(err);
-    return err;
+    const errorMsg = !err.response ? 'connection_error' : err.response.data.msg;
+    return Promise.reject(new Error(errorMsg));
   }
 };
