@@ -9,7 +9,6 @@ import { useLocation } from 'react-router-dom';
 const UseAuth = () => {
   const [isAuth, setIsAuth] = useState(false);
   const location = useLocation();
-  console.log('this hook has ran');
   const fetchAuth = async () => {
     const token = storage.getToken();
     if (!token) return isAuth;
