@@ -6,6 +6,7 @@ const User = require('../models/User');
 const {
   email_already_exists,
   server_error,
+  resource_updated,
 } = require('../constants/responseTypes');
 const verifyToken = require('../middleware/auth');
 
@@ -114,21 +115,21 @@ router.put('/company/update', verifyToken, async (req, res) => {
 // DESC set a companies removed status from company list
 // ACCESS private
 router.put('/company/remove/set', verifyToken, async (req, res) => {
-  const { companyId, value } = req.body;
+  const { companyId, isRemoved } = req.body;
 
   try {
     const user = await User.findOneAndUpdate(
       { _id: req.user.id, 'companies._id': companyId },
       {
         $set: {
-          'companies.$.isRemoved': value,
+          'companies.$.isRemoved': isRemoved,
         },
       },
       {
         returnOriginal: false,
       }
     );
-    res.status(200).json(user);
+    res.status(200).json(resource_updated);
   } catch (err) {
     console.log(err);
     res.status(500).json(server_error);
