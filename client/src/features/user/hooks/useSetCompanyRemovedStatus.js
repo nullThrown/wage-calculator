@@ -1,8 +1,11 @@
 import { useMutation } from 'react-query';
 import { setCompanyRemovedStatus } from '../api/user';
 
-const useSetCompanyRemovedStatus = (companyID, status) =>
-  useMutation(() => setCompanyRemovedStatus({ companyID, status }));
-// invalidate user query
+const useSetCompanyRemovedStatus = (_id) => {
+  return useMutation((_id) =>
+    setCompanyRemovedStatus({ companyId: _id, isRemoved: true })
+  );
+  // invalidate user query
+};
 
 export default useSetCompanyRemovedStatus;
