@@ -1,4 +1,4 @@
-import { useState, useEfffect } from 'react';
+import { useState } from 'react';
 import CenterContainer from 'components/base/CenterContainer';
 import MainHeading from 'components/typography/MainHeading';
 import SmallCard from 'components/card/SmallCard';
@@ -8,7 +8,6 @@ import {
   Box,
   Flex,
   useDisclosure,
-  Collapse,
   Input,
   FormLabel,
   FormControl,
