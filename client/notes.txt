@@ -1,66 +1,34 @@
-  LOGIC
-    *how to organize and export features/components files
-    react-query
-      *react-query useMutation 
-        -useMutation has two means of onsuccess etc. - onMutation hook call and .mutate method 
+    STATE/CACHE DATA
+      *add state variable to company filter select - filters for 'all', 'active', and single company  
+        -pass state down as prop to all relevant components
 
-    
-    
-    *add context to company filter select - filters for 'all', 'active', and single company  
-      -this context variable will be accessed by all components that require it     
-    *place providers into separate folder
-      -look into bulletproof-react to solve this
-    *create routes folder for protected and unprotected routes 
-      -add 404 not found page route 
-      -look to personal blog for guidelines    
+      *place providers into separate folder
+      *add mutation to add Entry
+      *add react query hooks to all components 
+        -overview
+        -day
+        -week
+        -month
+        -pass filter as one of react-query call dependendies
+      
+      *select element still needs to be populated from user react-q cache property 
+      
+    GENERAL
+      *titles should be smaller and have less weight
+        -title text should be a child not a prop
+      *create landing page
 
-  UI  
-    GENERAL 
-      6.*titles should be smaller and have less weight
-        -title text should be a child -- not a prop
-
-      *Company Select
-        -select element still needs to be populated from user react-q cache property 
+    COMPANY SELECT
         -company display still needs to be return the filtered results of the company select state
         -company display table will need to have a horizontal scroll -- common with tables!!
       
-      *create landing page
 
-      *create register page and component
-        -email, username, password
-        -next add company section 
-      *create login page 
+    WEEK 
+        *clicked entry will populate single entry container
+        *add previous option to select 
+          -previous option will make API call for previous weeks  
 
-    ✔1.OVERVIEW   
-      *overview data need only be 3 data points
-        -total per hour
-        -tip amt per hour 
-        -tip percentage
-
-    2.SINGLE ENTRY
-      *create single entry section 
-      *single entry will be populated by most recent entry 
-        -date
-        -company
-        -position
-        
-        -hours worked
-        -total earned
-        -earned per hour 
-        -wages 
-        -total tips 
-        -credit tips
-        -cash tips  
-        -tip pct 
-
-    3.WEEK 
-      *
-      *each day will be populated with respective entries -- company, time worked money made etc.. 
-        -each entry can be clicked on and will then populate single Entry section 
-        -last week clicked with call API weeks endpoint to populate a new set of weeks 
-        -will also need to cap the filter based on earliest entry
-
-    4.MONTH      
+    MONTH      
       *will need month selector 
         -take this hook and component from budget app 
       *otherwise just a section for meta data about a given month 
@@ -74,131 +42,7 @@
     SHIFT 
       *will need to be figured out in the future 
 
-   *place single entry component beneath overview 
-    -requires info about company and date 
-   *create week component  
-   add month picker to month component 
-
-
-
-    Back Burner  
+    BACK BURNER  
       *extend theme for size prop
 
 
-
-   Conventions
-
-      Change Handlers 
-        *changeHandler -> callback to be invoked
-        *onChange -> prop name of callback to be passed down
-
-
-
-
-
-         auth 
-        *register user
-          method: POST, 
-          url: '/auth/register',
-          body: { username, email password }
-        *login user
-          method: POST, 
-          url: '/auth/login',
-          body: { email password }
-
-      user 
-        *get current logged in user
-          method: GET, 
-          url: '/user/me',
-          body: n/a
-          params: n/a    
-
-        *update current logged in user
-          method: PUT, 
-          url: '/user/me/update',
-          body: { username, email, password }
-          params: n/a    
-
-        *add company to company list
-          method: POST, 
-          url: '/user/company/create',
-          body: { name, position, hourlyWage, overtimeMultiplier }
-          params: n/a    
-       
-        *update company in company list
-          method: PUT, 
-          url: '/user/company/update',
-          body: { companyID, name, position, hourlyWage, overtimeMultiplier }
-          params: n/a    
-        
-        *set company removed status in company list
-          method: PUT, 
-          url: '/user/company/remove/set',
-          body: { companyID, companyValue }
-          params: n/a    
-      
-      entries 
-        *create entry
-          method: POST, 
-          url: '/entries/create',
-          body: 
-          {  
-            timeWorkedDec,
-            totalSales,
-            totalSalesApplicable,
-            creditTips,
-            cashTips,
-            tipOut,
-            shiftTime,
-            company,
-            position,
-            hourlyWage,
-            specialEvent,
-            shiftDate,
-          }
-        *update entry
-          method: POST, 
-          url: '/entries/update',
-          body: 
-          {  
-            timeWorkedDec,
-            totalSales,
-            totalSalesApplicable,
-            creditTips,
-            cashTips,
-            tipOut,
-            shiftTime,
-            company,
-            position,
-            hourlyWage,
-            specialEvent,
-            shiftDate,
-          }
-      overview 
-        *get overview data
-          method: GET, 
-          url: '/entries/overview/:filter',
-          body: n/a
-          params: filter --  
-       
-
-      month 
-        *get data by month
-          method: GET, 
-          url: '/entries/month/:year/:month/:filter',
-          body: n/a
-          params: year, month, filter 
-      
-      week 
-         *get entries & data by week
-          method: GET, 
-          url: '/entries/week/:date/:filter',
-          body: n/a
-          params: date -- 'today' if no date specified otherwise actual date should be passed in, filter 
-      shift 
-        this route needs to be created
-        *get shift data
-          method: GET, 
-          url: '/entries/shift',
-          body: n/a
-          params: filter? Filter might be needed but depends on implementation
