@@ -1,19 +1,19 @@
     STATE/CACHE DATA
-      *add state variable to company filter select - filters for 'all', 'active', and single company  
+      ✔*add state variable to company filter select - filters for 'all', 'active', and single company  
         -pass state down as prop to all relevant components
 
-      *place providers into separate folder
-      *add mutation to add Entry
+      *add mutation to add Entry form
       *add react query hooks to all components 
+        -pass filter as one of react-query call dependendies
         -overview
         -day
         -week
         -month
-        -pass filter as one of react-query call dependendies
       
       *select element still needs to be populated from user react-q cache property 
       
     GENERAL
+      *place providers into separate folder
       *titles should be smaller and have less weight
         -title text should be a child not a prop
       *create landing page
