@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   Collapse,
   useDisclosure,
@@ -18,6 +19,7 @@ import SecHeading from 'components/typography/SecHeading';
 import CompanySelect from 'features/companySelect/components/CompanySelect';
 import Week from 'features/entries/components/Week';
 const Home = () => {
+  const [filter, setFilter] = useState('all');
   const { isOpen, onToggle } = useDisclosure();
   return (
     <>
@@ -32,12 +34,12 @@ const Home = () => {
           <SecHeading text='Analytics' textAlign='center' />
           <Divider maxW='700px' />
           <VStack m='3em auto' w='100%' spacing='3em'>
-            <CompanySelect />
-            <Overview />
-            <Day />
-            <Week />
-            <Month />
-            <Shift />
+            <CompanySelect filter={filter} setFilter={setFilter} />
+            <Overview filter={filter} />
+            <Day filter={filter} />
+            <Week filter={filter} />
+            <Month filter={filter} />
+            <Shift filter={filter} />
           </VStack>
         </Box>
       </MainContainer>
