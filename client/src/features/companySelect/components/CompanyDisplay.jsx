@@ -4,16 +4,13 @@ import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
-  TableCaption,
   TableContainer,
   Text,
   Badge,
 } from '@chakra-ui/react';
-import TertHeading from 'components/typography/TertHeading';
 const companies = [
   {
     name: 'Punch Bowl Social',
@@ -48,7 +45,7 @@ const CompanyDisplay = () => {
             {companies.map((company, index) => {
               const { name, startDate, position, active } = company;
               return (
-                <Tr bg={index % 2 === 1 ? 'rgba(240,240,240,.3)' : null}>
+                <Tr bg={index % 2 === 1 ? 'rgba(240,240,240,.4)' : null}>
                   <Td>{name}</Td>
                   <Td>{startDate}</Td>
                   <Td>{position}</Td>
