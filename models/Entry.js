@@ -11,7 +11,7 @@ const EntrySchema = new Schema(
   {
     timeWorkedDec: requiredNum,
     totalSales: requiredNum,
-    totalSalesApplicable: requiredBool,
+    totalSalesApplicable: { type: Boolean },
     creditTips: requiredNum,
     cashTips: requiredNum,
     tipOut: requiredNum,
@@ -19,7 +19,7 @@ const EntrySchema = new Schema(
     company: { type: mongoose.Types.ObjectId },
     position: requiredStr,
     hourlyWage: requiredNum,
-    specialEvent: requiredBool,
+    specialEvent: { type: Boolean },
     shiftDate: requiredDate,
     totalTips: requiredNum,
     trueTotalTips: requiredNum,
