@@ -29,50 +29,71 @@ const {
 } = require('../queries/entry/week');
 const formatToShortDate = require('../util/formatToShortDate');
 const createWeekOfDates = require('../util/createWeekOfDates');
+
 // ROUTE POST api/entries/create
 // DESC create new earning's entry
 // ACCESS private
 router.post('/create', verifyToken, async (req, res) => {
-  const {
-    timeWorkedDec,
-    totalSales,
-    totalSalesApplicable,
-    creditTips,
-    cashTips,
-    tipOut,
-    shiftTime,
-    company,
-    position,
-    hourlyWage,
-    specialEvent,
-    shiftDate,
-  } = req.body;
-
-  const newEntry = {
-    timeWorkedDec,
-    totalSales,
-    totalSalesApplicable,
-    creditTips,
-    cashTips,
-    tipOut,
-    shiftTime,
-    company,
-    position,
-    hourlyWage,
-    specialEvent,
-    shiftDate,
-    totalTips: +creditTips + +cashTips,
-    trueTotalTips: +creditTips + +cashTips - +tipOut,
-    totalWages: +timeWorkedDec * +hourlyWage,
-    totalEarned: +creditTips + +cashTips + +timeWorkedDec * +hourlyWage,
-    trueTotalEarned:
-      +creditTips + +cashTips - tipOut + +timeWorkedDec * +hourlyWage,
-  };
-  if (totalSalesApplicable) {
-    newEntry.tipPct = (+creditTips + +cashTips) / +totalSales;
-    newEntry.trueTipPct = (+creditTips + +cashTips - +tipOut) / +totalSales;
-  }
   try {
+    const {
+      hoursWorked,
+      minutesWorked,
+      totalSales,
+      totalSalesApplicable,
+      creditTips,
+      cashTips,
+      tipOut,
+      shiftTime,
+      company,
+      specialEvent,
+      shiftDate,
+    } = req.body;
+
+    const timeWorkedDec = +hoursWorked + +minutesWorked / 60;
+
+    const userID = mongoose.Types.ObjectId(req.user.id);
+    const companyID = mongoose.Types.ObjectId(company);
+    const filteredCompany = await User.aggregate([
+      { $match: { _id: userID } },
+      {
+        $project: {
+          _id: 0,
+          companies: {
+            $filter: {
+              input: '$companies',
+              as: 'company',
+              cond: { $eq: ['$$company._id', companyID] },
+            },
+          },
+        },
+      },
+    ]);
+    const { hourlyWage, position } = filteredCompany[0].companies[0];
+
+    const newEntry = {
+      timeWorkedDec,
+      totalSales,
+      totalSalesApplicable,
+      creditTips,
+      cashTips,
+      tipOut,
+      shiftTime,
+      company,
+      position,
+      hourlyWage,
+      specialEvent,
+      shiftDate,
+      totalTips: +creditTips + +cashTips,
+      trueTotalTips: +creditTips + +cashTips - +tipOut,
+      totalWages: timeWorkedDec * +hourlyWage,
+      totalEarned: +creditTips + +cashTips + timeWorkedDec * +hourlyWage,
+      trueTotalEarned:
+        +creditTips + +cashTips - tipOut + timeWorkedDec * +hourlyWage,
+    };
+    if (totalSalesApplicable) {
+      newEntry.tipPct = (+creditTips + +cashTips) / +totalSales;
+      newEntry.trueTipPct = (+creditTips + +cashTips - +tipOut) / +totalSales;
+    }
     const entries = await Entries.findOneAndUpdate(
       { user: req.user.id },
       {
@@ -84,7 +105,7 @@ router.post('/create', verifyToken, async (req, res) => {
     res.status(201).json(entries.data[entries.data.length - 1]);
   } catch (err) {
     console.log(err);
-    res.status(500).json(server_error);
+    res.status(500).json({ ...server_error, error: err });
   }
 });
 
@@ -115,7 +136,6 @@ router.put('/update', verifyToken, async (req, res) => {
   const totalEarned = +creditTips + +cashTips + +timeWorkedDec * +hourlyWage;
   const trueTotalEarned =
     +creditTips + +cashTips - tipOut + +timeWorkedDec * +hourlyWage;
-  console.log(typeof totalSalesApplicable);
   let tipPct;
   let trueTipPct;
   if (JSON.parse(totalSalesApplicable.toLowerCase())) {
