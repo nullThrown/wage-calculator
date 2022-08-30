@@ -1,3 +1,8 @@
+    Todo 
+      Month API call is not returning data by particular month 
+      // check API endpoint structure  
+      // run tests with postman 
+    
     STATE/CACHE DATA
       ✔*add state variable to company filter select - filters for 'all', 'active', and single company  
         -pass state down as prop to all relevant components
