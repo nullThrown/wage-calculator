@@ -6,12 +6,19 @@ import WeekSelect from './WeekSelect';
 import { weekData } from './weekData';
 import { HStack } from '@chakra-ui/react';
 import EntryDisplay from 'features/entries/components/EntryDisplay';
+import { useQuery } from 'react-query';
+import { getEntriesByWeek } from '../api/entries';
 
-const Week = () => {
+const Week = ({ filter }) => {
   const [weekPairs, setWeekPairs] = useState([]);
   const [selectedWeek, setSelectedWeek] = useState('');
   const [selectedDays, setSelectedDays] = useState([]);
   const [selectedWeekData, setSelectedWeekData] = useState({});
+
+  // const { isLoading, error, data } = useQuery(
+  //   ['entries', 'week', 'today', filter],
+  //   getEntriesByWeek('today', filter)
+  // );
 
   const selectChangeHandler = (e) => setSelectedWeek(e.target.value);
 
