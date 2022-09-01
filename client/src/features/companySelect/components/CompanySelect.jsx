@@ -26,8 +26,12 @@ const CompanySelect = ({ filter, setFilter }) => {
         variant='filled'
         value={filter}
         onChange={onFilterChange}>
-        {filterOptions.map((filter) => {
-          return <option value={filter}>{filter}</option>;
+        {filterOptions.map((filter, i) => {
+          return (
+            <option key={i} value={filter}>
+              {filter}
+            </option>
+          );
         })}
       </Select>
       <CompanyDisplay />

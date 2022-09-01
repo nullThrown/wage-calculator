@@ -17,12 +17,14 @@ const companies = [
     startDate: '4-23-22',
     position: 'server',
     active: false,
+    id: '3456',
   },
   {
     name: 'Iron Cactus',
     startDate: '6-17-22',
     position: 'server',
     active: true,
+    id: '9454',
   },
 ];
 const CompanyDisplay = () => {
@@ -43,9 +45,9 @@ const CompanyDisplay = () => {
           </Thead>
           <Tbody>
             {companies.map((company, index) => {
-              const { name, startDate, position, active } = company;
+              const { name, startDate, position, active, id } = company;
               return (
-                <Tr bg={index % 2 === 1 ? 'rgba(240,240,240,.4)' : null}>
+                <Tr key={id} bg={index % 2 === 1 ? 'rgba(240,240,240,.4)' : ''}>
                   <Td>{name}</Td>
                   <Td>{startDate}</Td>
                   <Td>{position}</Td>
