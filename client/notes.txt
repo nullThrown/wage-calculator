@@ -1,7 +1,15 @@
     Todo 
-      Month API call is not returning data by particular month 
-      // check API endpoint structure  
-      // run tests with postman 
+    *have auth hook return user object and store it in react query 
+    *add title to filter select component -- make it a little more UX friendly
+    * populate filter with relevant companies
+    * change backend API endpoints to take in company name string as opposed to companyID
+    *combine week & single entry into single component 
+    *have week component populated with real data 
+      - week of select 
+      - date boxes
+    *date boxes -- make Vstack on lower screen width  
+    *populate single entry with latest date 
+    * brainstorm how to populate single entry upon date clicked
     
     STATE/CACHE DATA
       ✔*add state variable to company filter select - filters for 'all', 'active', and single company  
@@ -24,7 +32,7 @@
       *create landing page
 
     COMPANY SELECT
-        -company display still needs to be return the filtered results of the company select state
+        -company display still needs to return the filtered results of the company select state
         -company display table will need to have a horizontal scroll -- common with tables!!
       
 
