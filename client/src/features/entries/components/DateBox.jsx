@@ -6,7 +6,7 @@ const DateBox = ({ day, entries }) => {
     <Box w='120px' h='120px' border='1px solid gray' borderRadius='3px'>
       {day}
       {entries.map((entry) => (
-        <EntryDisplay entry={entry} />
+        <EntryDisplay key={entry._id} entry={entry} />
       ))}
     </Box>
   );
