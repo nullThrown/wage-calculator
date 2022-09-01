@@ -23,15 +23,25 @@ const Month = ({ filter }) => {
         <StatRow>
           <SimpleStat
             title='Total Earned'
-            amount={data.trueTotalEarned.toFixed(2)}
+            amount={data?.trueTotalEarned.toFixed(2)}
             helpText='wages and tips'
+            symbolBefore='$'
           />
           <SimpleStat
             title='Wages Earned'
-            amount={data.totalWages.toFixed(2)}
+            amount={data?.totalWages.toFixed(2)}
+            symbolBefore='$'
           />
-          <SimpleStat title='Credit Tips' amount={data.creditTips.toFixed(2)} />
-          <SimpleStat title='Cash Tips' amount={data.cashTips.toFixed(2)} />
+          <SimpleStat
+            title='Credit Tips'
+            amount={data?.creditTips.toFixed(2)}
+            symbolBefore='$'
+          />
+          <SimpleStat
+            title='Cash Tips'
+            amount={data?.cashTips.toFixed(2)}
+            symbolBefore='$'
+          />
         </StatRow>
       </Flex>
       <Flex direction='column'>
@@ -39,19 +49,20 @@ const Month = ({ filter }) => {
         <StatRow title='Totals'>
           <SimpleStat
             title='Total Avg. Per Hour'
-            symbolBefore='$'
-            amount={data.totalPerHour.toFixed(2)}
             helpText='wages and tips'
+            symbolBefore='$'
+            amount={data?.totalPerHour.toFixed(2)}
           />
           <SimpleStat
             title='Avg. tip per hour'
             symbol='$'
-            amount={data.tipPerHour.toFixed(2)}
+            amount={data?.tipPerHour.toFixed(2)}
+            symbolBefore='$'
           />
           <SimpleStat
             title='Avg. tip percentage'
+            amount={(data?.tipPct * 100).toFixed(2)}
             symbolAfter='%'
-            amount={(data.tipPct * 100).toFixed(2)}
           />
           <SimpleStat title='Cash Tips' />
         </StatRow>
