@@ -4,6 +4,7 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import AppRoutes from 'routes';
 import queryClient from 'config/queryClient';
 import { ChakraProvider, theme } from '@chakra-ui/react';
+
 function App() {
   return (
     <QueryClientProvider client={queryClient}>

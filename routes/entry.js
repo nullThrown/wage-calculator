@@ -237,10 +237,19 @@ router.get('/overview/:filter', verifyToken, async (req, res) => {
 // ACCESS private
 router.get('/month/:year/:month/:filter', verifyToken, async (req, res) => {
   // year = full year e.g., 2022
-  //month = 1-indexed, no lead 0, e.g., 1,2,3...12
-  const { year, month, filter } = req.params;
+  // month = 1-indexed, no lead 0, e.g., 1,2,3...12
+  // best to place leading zero on front-end
+  // no reason to have conditional that applies to single digit months
+  // could lead to more bugs in the future
+
+  let { year, month, filter } = req.params;
   try {
-    const startDate = new Date(`${year}-0${month}-01T00:00:00Z`);
+    if (month.length === 1) {
+      month = `0${month}`;
+    }
+    console.log(month);
+    const startDate = new Date(`${year}-${month}-01T00:00:00Z`);
+    console.log(startDate);
     const endDate = new Date(year, month, 0);
     endDate.setUTCHours(23, 59, 59, 999);
     const userID = mongoose.Types.ObjectId(req.user.id);
@@ -361,11 +370,13 @@ router.get('/week/:date/:filter', verifyToken, async (req, res) => {
       });
     });
     // populates calcData fields on entriesByWeek with calcData
-    entriesByWeek = entriesByWeek.map((week) => {
-      const calcData = calculateData(week.entries);
+    entriesByWeek = entriesByWeek
+      .map((week) => {
+        const calcData = calculateData(week.entries);
 
-      return { ...week, calcData };
-    });
+        return { ...week, calcData };
+      })
+      .reverse();
     res.status(200).json(entriesByWeek);
   } catch (err) {
     console.log(err);

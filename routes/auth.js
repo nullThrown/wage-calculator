@@ -13,14 +13,25 @@ const {
   token_valid,
 } = require('../constants/responseTypes');
 
-// ROUTE get api/auth
-// DESC check if token is valid
-// ACCESS public
-
 // verifyUser middleware will send a not_authorized response if token is invalid
 // otherwise, body of callback will run
 router.get('/', verifyToken, async (req, res) => {
   res.status(200).json(token_valid);
+});
+
+// ROUTE get api/auth/me
+// DESC get user with token
+// ACCESS public
+router.get('/me', verifyToken, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ msg: 'user_not_found' });
+    }
+    return res.status(200).json(user);
+  } catch (err) {
+    res.status(500).json(server_error);
+  }
 });
 
 // ROUTE POST api/auth/register

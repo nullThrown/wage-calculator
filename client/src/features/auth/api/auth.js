@@ -21,3 +21,12 @@ export const loginUser = async (user) => {
     return err;
   }
 };
+
+export const getUser = async () => {
+  try {
+    const { data } = await axios.get('/auth/me');
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};

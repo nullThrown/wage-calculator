@@ -4,21 +4,22 @@ import QuatHeading from 'components/typography/QuatHeading';
 import StatRow from 'components/data/StatRow';
 import SimpleStat from 'components/data/SimpleStat';
 import {
-  Box,
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
-  TableCaption,
   TableContainer,
-  Text,
-  Badge,
   Flex,
 } from '@chakra-ui/react';
-const Day = () => {
+import { useQuery } from 'react-query';
+import { getEntriesByWeek } from '../api/entries';
+
+const Day = ({ filter, date }) => {
+  // const getWeekData = useQuery(['entries', date, filter], () =>
+  //   getEntriesByWeek(date, filter)
+  // );
   return (
     <LargeCard as='section'>
       <TertHeading text='Single Entry' textAlign='center' />

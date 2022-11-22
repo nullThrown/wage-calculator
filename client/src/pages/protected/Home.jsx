@@ -18,9 +18,14 @@ import Shift from 'features/shift/components/Shift';
 import SecHeading from 'components/typography/SecHeading';
 import CompanySelect from 'features/companySelect/components/CompanySelect';
 import Week from 'features/entries/components/Week';
+import Entries from 'features/entries/components/Entries';
+import { useQuery } from 'react-query';
+import { getUser } from 'features/auth/api/auth';
 const Home = () => {
   const [filter, setFilter] = useState('all');
   const { isOpen, onToggle } = useDisclosure();
+
+  const user = useQuery(['user'], getUser);
   return (
     <>
       <Header />
@@ -36,8 +41,9 @@ const Home = () => {
           <VStack m='3em auto' w='100%' spacing='3em'>
             <CompanySelect filter={filter} setFilter={setFilter} />
             <Overview filter={filter} />
-            <Day filter={filter} />
-            <Week filter={filter} />
+            <Entries filter={filter} />
+            {/* <Day filter={filter} />
+            <Week filter={filter} /> */}
             <Month filter={filter} />
             <Shift filter={filter} />
           </VStack>

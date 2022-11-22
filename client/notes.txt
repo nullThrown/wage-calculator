@@ -1,6 +1,6 @@
     Todo 
     *have auth hook return user object and store it in react query 
-    *add title to filter select component -- make it a little more UX friendly
+      *add title to filter select component -- make it a little more UX friendly
     * populate filter with relevant companies
     * change backend API endpoints to take in company name string as opposed to companyID
     *combine week & single entry into single component 
