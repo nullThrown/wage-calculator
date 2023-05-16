@@ -59,3 +59,75 @@
       *extend theme for size prop
 
 
+
+
+NEW NOTES AFTER HIATUS
+read: previous notes, while mostly imcomprehensible, will stay up 
+new notes will be added and new to do items will be created from bottom-up
+
+*
+  Problem: user register function does not give access to user signup success page 
+  Desc: if a user is not authenticated -- private routes are not accessible 
+  Solution: register function will create and send jwt token to front end. 
+    once authenticated user will be redirected to signupsuccess page    
+
+*
+  Problem: Edit Entry (within Add Entry form) fill button does not work 
+  Desc: fill button click does not populate form with proper date, does not close modal
+  Solution: Unsure
+
+*
+  Problem: Edit Entry modal overlay does not close upon fill,cancel (btn), X(btn), esc(key press), click off 
+  Solution: find reddit comment from previously asked question
+
+
+*
+Problem: Add Entry function does not create all fields specified in Entry model 
+Solution: rework Add Entry function 
+
+*
+Problem: Add Entry function - company select - needs to be or point towards an object id 
+of that specific company or position
+Solution: match company id and position to company array within node server - grab object id in backend 
+
+*
+add entry - remove afternoon radio select item 
+
+
+*
+problem: filter companies select does not seem to work at all 
+-blank option 
+-active/all select doesn't seem to do anything 
+-specific company option seems to crash app
+
+*
+problem: overview section doesn't have proper title 
+
+*
+problem: overview 'Tip amount per hour' is useless data piece
+
+*
+problem: Day section does not have a title
+
+*
+problem: Day section is not intuitively linked to week section 
+
+*
+problem: Day section requires its own day picker
+
+*
+problem: Week section does not have updated weeks 
+
+*
+problem: Week section calendar specific shifts does not fit 
+
+*
+problem: Week section calendar specific shift needs to be pop up 
+
+*
+problem: Month section does not have a title 
+
+*
+problem: shift section needs to be created
+
+
