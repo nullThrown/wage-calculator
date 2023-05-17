@@ -4,27 +4,23 @@ import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
-  TableCaption,
   TableContainer,
   Text,
-  Badge,
   Button,
   useToast,
 } from '@chakra-ui/react';
-import useSetCompanyRemovedStatus from 'features/user/hooks/useSetCompanyRemovedStatus';
+import useDeleteCompany from 'features/user/hooks/usedeleteCompany';
 
 const CompanyDisplay = ({ companyList, setCompanyList }) => {
-  const setCompanyRemovedStatus = useSetCompanyRemovedStatus();
-  console.log(setCompanyRemovedStatus);
+  const deleteCompany = useDeleteCompany();
   const toast = useToast();
 
-  const handleEditCompany = () => {};
+  // const handleEditCompany = () => {};
   const handleDeleteCompany = (_id) => {
-    setCompanyRemovedStatus.mutate(_id, {
+    deleteCompany.mutate(_id, {
       onSuccess: (data, variables, context) => {
         setCompanyList((prev) => {
           return prev.filter((company) => company._id !== _id);
