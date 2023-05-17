@@ -5,6 +5,8 @@ const router = express.Router();
 const User = require('../models/User');
 const Entries = require('../models/Entries');
 const verifyToken = require('../middleware/auth');
+const createJwtToken = require('../util/createJwtToken');
+
 const {
   email_already_exists,
   server_error,
@@ -51,7 +53,28 @@ router.post('/register', async (req, res) => {
       const entries = new Entries({ user: user._id });
       await user.save();
       await entries.save();
-      res.status(201).json(resource_created);
+
+      // authsecret
+      const payload = {
+        user: {
+          id: user.id,
+        },
+      };
+      jwt.sign(
+        payload,
+        process.env.JWTSECRET,
+        { expiresIn: '20d' },
+        (err, token) => {
+          if (err) {
+            console.log(err);
+            return res.status(500).json({ msg: 'jwt sign failed' });
+          }
+          res.json({
+            ...resource_created,
+            token,
+          });
+        }
+      );
     }
   } catch (err) {
     console.log(err);
