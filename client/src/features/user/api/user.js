@@ -36,6 +36,15 @@ export const updateCompany = async (company) => {
     return Promise.reject(new Error(errorMsg));
   }
 };
+export const deleteCompany = async (_id) => {
+  try {
+    const res = await axios.delete(`/user/company/delete/${_id}`);
+    return res;
+  } catch (err) {
+    const errorMsg = !err.response ? 'connection_error' : err.response.data.msg;
+    return Promise.reject(new Error(errorMsg));
+  }
+};
 export const setCompanyRemovedStatus = async (body) => {
   try {
     const res = await axios.put('/user/company/remove/set', body);
