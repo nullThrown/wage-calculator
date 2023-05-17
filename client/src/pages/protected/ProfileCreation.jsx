@@ -73,7 +73,7 @@ const ProfileCreation = () => {
         onSuccess: (data, variables, context) => {
           setCompanyList([...companyList, data.data]);
           toast({
-            title: 'company Added Successfully!',
+            title: 'Company Added Successfully!',
             status: 'success',
             duration: 5000,
             isClosable: true,
@@ -170,7 +170,7 @@ const ProfileCreation = () => {
               </NumberInputStepper>
             </NumberInput>
             <FormHelperText>
-              If hourly wage is increased by 50% -- set to 1.5.
+              If hourly wage is increased by 50% set to 1.5.
             </FormHelperText>
           </FormControl>
           {(addCompany.error?.message === 'connection_error' ||
