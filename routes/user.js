@@ -82,7 +82,7 @@ router.post('/company/create', verifyToken, async (req, res) => {
   }
 });
 
-// ROUTE GET api/user/company/update
+// ROUTE PUT api/user/company/update
 // DESC update a company from company list
 // ACCESS private
 router.put('/company/update', verifyToken, async (req, res) => {
@@ -129,6 +129,32 @@ router.put('/company/remove/set', verifyToken, async (req, res) => {
         returnOriginal: false,
       }
     );
+    res.status(200).json(resource_updated);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(server_error);
+  }
+});
+
+// ROUTE DELETE api/user/company/delete
+// DESC delete company from company list
+// ACCESS private
+router.delete('/company/delete/:companyId', verifyToken, async (req, res) => {
+  const { companyId } = req.params;
+
+  try {
+    const user = await User.findOneAndUpdate(
+      { _id: req.user.id },
+      {
+        $pull: {
+          companies: { _id: companyId },
+        },
+      },
+      {
+        returnOriginal: false,
+      }
+    );
+    console.log(user);
     res.status(200).json(resource_updated);
   } catch (err) {
     console.log(err);
