@@ -75,7 +75,7 @@ router.post('/company/create', verifyToken, async (req, res) => {
       },
       { returnOriginal: false }
     );
-    res.status(201).json(user.companies[user.companies.length - 1]);
+    res.status(201).json(user.companies);
   } catch (err) {
     console.log(err);
     res.status(500).json(server_error);
@@ -86,12 +86,10 @@ router.post('/company/create', verifyToken, async (req, res) => {
 // DESC update a company from company list
 // ACCESS private
 router.put('/company/update', verifyToken, async (req, res) => {
-  const { companyId, name, position, hourlyWage, overtimeMultiplier } =
-    req.body;
-
+  const { _id, name, position, hourlyWage, overtimeMultiplier } = req.body;
   try {
     const user = await User.findOneAndUpdate(
-      { _id: req.user.id, 'companies._id': companyId },
+      { _id: req.user.id, 'companies._id': _id },
       {
         $set: {
           'companies.$.name': name,
@@ -104,7 +102,7 @@ router.put('/company/update', verifyToken, async (req, res) => {
         returnOriginal: false,
       }
     );
-    res.status(200).json(user);
+    res.status(200).json(user.companies);
   } catch (err) {
     console.log(err);
     res.status(500).json(server_error);
@@ -154,7 +152,6 @@ router.delete('/company/delete/:companyId', verifyToken, async (req, res) => {
         returnOriginal: false,
       }
     );
-    console.log(user);
     res.status(200).json(resource_updated);
   } catch (err) {
     console.log(err);
