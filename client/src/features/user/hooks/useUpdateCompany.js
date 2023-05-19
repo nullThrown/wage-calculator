@@ -1,7 +1,8 @@
 import { useMutation } from 'react-query';
 import { updateCompany } from '../api/user';
 
-const useUpdateCompany = (company) => useMutation(() => updateCompany(company));
+const useUpdateCompany = (updatedCompany) =>
+  useMutation((updatedCompany) => updateCompany(updatedCompany));
 // invalidate user query
 
 export default useUpdateCompany;
