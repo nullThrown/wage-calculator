@@ -14,7 +14,11 @@ import {
 } from '@chakra-ui/react';
 import useDeleteCompany from 'features/user/hooks/usedeleteCompany';
 
-const CompanyDisplay = ({ companyList, setCompanyList }) => {
+const CompanyDisplay = ({
+  companyList,
+  setCompanyList,
+  handleSetFormToEditMode,
+}) => {
   const deleteCompany = useDeleteCompany();
   const toast = useToast();
 
@@ -81,7 +85,11 @@ const CompanyDisplay = ({ companyList, setCompanyList }) => {
                   <Td>$ {hourlyWage}</Td>
                   <Td>
                     {overtimeMultiplier}
-                    <Button ml='2em' size='xs' variant='link'>
+                    <Button
+                      ml='2em'
+                      size='xs'
+                      variant='link'
+                      onClick={() => handleSetFormToEditMode(company)}>
                       Edit
                     </Button>
                     <Button
