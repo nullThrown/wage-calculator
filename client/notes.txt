@@ -84,17 +84,29 @@ problem: tip note at bottom of component has extra symbols in it '--'
 ✔*
 problem: added companies section 'edit' button does not seem to function well
 
-*
+✔*
 problem:Del added company button should actually delete company from DB instead 
 of setting isRemoved field to true
 
-*
+✔* partially complete will need more unofficial testing 
 problem:companies are being deleted locally and causing a discrepencancy with actual DB
 solution: company list must be populated from DB -- not from local state!!
- 
+
+*
+problem: company list initial data should be pulled from DB not created locally 
+what if user reloads page? or steps away for a while?
+
 *
 problem: content is being cut off at the top -- add margin 
+margin is not working. Will need to do more research
 
+*
+problem: edit button needs functionality 
+solution: upon edit press - populate form with company to be edited, send update req to DB, populate companyList component with updated companies
+
+*
+problem: 'are you sure you want to continue' modal bugs out 
+solution: something is wrong with the chakra ui modal 
 *
 problem: add text to further explain that user can have two positions for the same Company
 if they wish to have separate data for each position
