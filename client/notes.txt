@@ -65,6 +65,19 @@ NEW NOTES AFTER HIATUS
 read: previous notes, while mostly imcomprehensible, will stay up 
 new notes will be added and new to do items will be created from bottom-up
 
+GENERAL 
+
+*
+problem: features/user -- add two new folders here: registration, profile 
+registration will take all the API call's, components, hooks, relevant to registration etc. 
+
+*
+problem: rework entire components and features folders -- determine which components should be placed in what folders 
+
+*
+problem: continue separating profile creation page into separate component files
+
+
 *SIGN UP  
 
   ✔*
@@ -76,17 +89,9 @@ new notes will be added and new to do items will be created from bottom-up
 *ADD COMPANY 
 
 ✔*
-problem: 'Company added successfully' toast  grammar error
-
-✔*
-problem: tip note at bottom of component has extra symbols in it '--'
-
-✔*
 problem: added companies section 'edit' button does not seem to function well
 
-✔*
-problem:Del added company button should actually delete company from DB instead 
-of setting isRemoved field to true
+
 
 ✔* partially complete will need more unofficial testing 
 problem:companies are being deleted locally and causing a discrepencancy with actual DB
@@ -101,12 +106,23 @@ problem: content is being cut off at the top -- add margin
 margin is not working. Will need to do more research
 
 *
+problem: ProfileCreation page needs to be cleaned up 
+components need to be moved from this page into their respective folders
+
+*
+problem: Edit Company and Cancel buttons are not inline
+
+*
+problem: in ProfileCreation Edit and Add btns should be 
+
+✔*
 problem: edit button needs functionality 
 solution: upon edit press - populate form with company to be edited, send update req to DB, populate companyList component with updated companies
 
 *
 problem: 'are you sure you want to continue' modal bugs out 
 solution: something is wrong with the chakra ui modal 
+
 *
 problem: add text to further explain that user can have two positions for the same Company
 if they wish to have separate data for each position
