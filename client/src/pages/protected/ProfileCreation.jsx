@@ -28,28 +28,6 @@ import useUpdateCompany from 'features/user/hooks/useUpdateCompany';
 import CompanyDisplay from 'features/user/components/addCompany/CompanyDisplay';
 import FinishInfoModal from 'features/user/components/addCompany/FinishInfoModal';
 
-// add func to edit button
-// edit button will populate form with created company
-// form will highlight message signifying editing state
-// if successful
-// replace company list item with updated company
-// create toast that signifies successful action
-// if failure
-// determine error
-// display error
-
-// !! HandleUpdateCompany is not receiving any data.. how to pass up data from CompanyDisplay component
-// create local state variable editing mode <Boolean> set to false
-// create addition mutation that edits selected company from list
-// create api call that updates particular company
-// if editing mode == true
-// populate form with company to be edited
-// alter add company button to 'edit button company'
-// 'edit company' button calls company update mutation
-// re populates companyDisplay with new data
-// add additional button to cancel editing mode
-// cancel edit button will set local variable 'editing mode' to false
-
 // undefined value is used when edit mode is set == true
 const initialCompanyState = {
   name: '',
@@ -59,8 +37,10 @@ const initialCompanyState = {
   _id: undefined,
 };
 const ProfileCreation = () => {
+  // rename to formData
   const [newCompany, setNewCompany] = useState(initialCompanyState);
   const [companyList, setCompanyList] = useState([]);
+  //renamed to isValidationError
   const [displayErrors, setDisplayErrors] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
 
@@ -87,10 +67,9 @@ const ProfileCreation = () => {
       setDisplayErrors(true);
     } else {
       // should local state be updated with a mutation?
-      // should local state not be used at all in lieu of a proper quiery?
+      // should local state not be used at all in lieu of a proper query?
       addCompany.mutate(newCompany, {
         onSuccess: (data, variables, context) => {
-          console.log(data.data);
           setCompanyList(data.data);
           toast({
             title: 'Company Added Successfully!',
@@ -116,7 +95,7 @@ const ProfileCreation = () => {
       onSuccess: (data, variables, context) => {
         setCompanyList(data.data);
         toast({
-          title: 'Company Updated Successfully',
+          title: 'Company Updated Successfully!',
           status: 'success',
           duration: '5000',
           isClosable: true,
@@ -131,11 +110,12 @@ const ProfileCreation = () => {
     });
   };
 
-  const handleSetFormToEditMode = (companyToBeUpdated) => {
+  const handleSetEditMode = (companyToBeUpdated) => {
     setIsEditMode(true);
     setNewCompany(companyToBeUpdated);
   };
-  const handleCancelFormToEditMode = () => {
+
+  const handleCancelEditMode = () => {
     setIsEditMode(false);
     setNewCompany(initialCompanyState);
   };
@@ -150,133 +130,148 @@ const ProfileCreation = () => {
   };
 
   return (
-    <Box as='main'>
-      <CenterContainer bg='grey' className='test'>
-        <FinishInfoModal
-          isOpen={modalHook.isOpen}
-          onClose={modalHook.onClose}
-        />
-        <SmallCard>
-          <MainHeading textAlign='center'>Add Company</MainHeading>
-          <Text mt='15px' textAlign='center'>
-            Add a company to your profile to begin creating earning's reports
-            towards.
-          </Text>
-          <CompanyDisplay
-            companyList={companyList}
-            setCompanyList={setCompanyList}
-            handleSetFormToEditMode={handleSetFormToEditMode}
-          />
-
-          <Box as='form' m='30px 0 0' boxShadow='5px 5px 10px rgb(220,220,220)'>
-            <FormControl isInvalid={isNameError & displayErrors}>
-              <FormLabel htmlFor='name'>Company Name</FormLabel>
-              <Input
-                name='name'
-                id='name'
-                value={newCompany.name}
-                onChange={handleTextChange}></Input>
-              <FormErrorMessage>Please add a company name.</FormErrorMessage>
-            </FormControl>
-            <FormControl isInvalid={isPositionError & displayErrors}>
-              <FormLabel htmlFor='position'>Position</FormLabel>
-              <Input
-                name='position'
-                id='position'
-                value={newCompany.position}
-                onChange={handleTextChange}></Input>
-              <FormErrorMessage>Please add a position.</FormErrorMessage>
-              <FormHelperText>i.e., server, bartender, etc.</FormHelperText>
-            </FormControl>
-            <FormControl>
-              <FormLabel htmlFor='hourlywage'>Hourly Wage</FormLabel>
-              <NumberInput
-                name='hourlyWage'
-                id='hourlyWage'
-                min={0}
-                step={1}
-                precision={2}
-                value={newCompany.hourlyWage}
-                onChange={(value) => handleNumberChange(value, 'hourlyWage')}>
-                <NumberInputField />
-                <NumberInputStepper>
-                  <NumberIncrementStepper />
-                  <NumberDecrementStepper />
-                </NumberInputStepper>
-              </NumberInput>
-            </FormControl>
-            <FormControl>
-              <FormLabel htmlFor='overtimeMultiplier'>
-                Overtime Multiplier
-              </FormLabel>
-              <NumberInput
-                name='overtimeMultiplier'
-                id='overtimeMultiplier'
-                min={1}
-                step={0.1}
-                precision={2}
-                value={newCompany.overtimeMultiplier}
-                onChange={(value) =>
-                  handleNumberChange(value, 'overtimeMultiplier')
-                }>
-                <NumberInputField />
-                <NumberInputStepper>
-                  <NumberIncrementStepper />
-                  <NumberDecrementStepper />
-                </NumberInputStepper>
-              </NumberInput>
-              <FormHelperText>
-                If hourly wage is increased by 50% set to 1.5.
-              </FormHelperText>
-            </FormControl>
-            {(addCompany.error?.message === 'connection_error' ||
-              addCompany.error?.message === 'server_error') && (
-              <ErrorText m='.8em 0 0'>
-                Something went wrong :) Please Try again
-              </ErrorText>
-            )}
-            <Flex justifyContent='center'>
-              {!isEditMode ? (
-                <Button
-                  type='submit'
-                  colorScheme='green'
-                  textAlign='center'
-                  m='30px auto 15px'
-                  isLoading={addCompany.isLoading ? true : false}
-                  loadingText='Adding'
-                  onClick={handleAddCompany}>
-                  Add Company
-                </Button>
-              ) : (
-                <Button
-                  type='submit'
-                  colorscheme='grey'
-                  textAlign='center'
-                  m='30px auto 15px'
-                  isLoading={updateCompany.isLoading ? true : false}
-                  loadingText='Updating'
-                  onClick={(e) => handleUpdateCompany(e, newCompany)}>
-                  Edit Company
-                </Button>
+    <>
+      <FinishInfoModal isOpen={modalHook.isOpen} onClose={modalHook.onClose} />
+      <Box as='main'>
+        <CenterContainer bg='grey' className='test'>
+          <SmallCard>
+            {/* separate this into component called header */}
+            <MainHeading textAlign='center'>Add Company</MainHeading>
+            <Text mt='15px' textAlign='center'>
+              Add a company to your profile to begin creating earning's reports
+              towards.
+            </Text>
+            {/*  */}
+            <CompanyDisplay
+              companyList={companyList}
+              setCompanyList={setCompanyList}
+              handleSetEditMode={handleSetEditMode}
+            />
+            {/* separate this into component called Form */}
+            <Box
+              as='form'
+              m='30px 0 0'
+              boxShadow='5px 5px 10px rgb(220,220,220)'>
+              {/* separate this into component called NameInput */}
+              <FormControl isInvalid={isNameError & displayErrors}>
+                <FormLabel htmlFor='name'>Company Name</FormLabel>
+                <Input
+                  name='name'
+                  id='name'
+                  value={newCompany.name}
+                  onChange={handleTextChange}></Input>
+                <FormErrorMessage>Please add a company name.</FormErrorMessage>
+              </FormControl>
+              {/*  */}
+              {/* separate this into component called PositionInput */}
+              <FormControl isInvalid={isPositionError & displayErrors}>
+                <FormLabel htmlFor='position'>Position</FormLabel>
+                <Input
+                  name='position'
+                  id='position'
+                  value={newCompany.position}
+                  onChange={handleTextChange}></Input>
+                <FormErrorMessage>Please add a position.</FormErrorMessage>
+                <FormHelperText>i.e., server, bartender, etc.</FormHelperText>
+              </FormControl>
+              {/*  */}
+              {/* separate this into component called WageInput */}
+              <FormControl>
+                <FormLabel htmlFor='hourlywage'>Hourly Wage</FormLabel>
+                <NumberInput
+                  name='hourlyWage'
+                  id='hourlyWage'
+                  min={0}
+                  step={1}
+                  precision={2}
+                  value={newCompany.hourlyWage}
+                  onChange={(value) => handleNumberChange(value, 'hourlyWage')}>
+                  <NumberInputField />
+                  <NumberInputStepper>
+                    <NumberIncrementStepper />
+                    <NumberDecrementStepper />
+                  </NumberInputStepper>
+                </NumberInput>
+              </FormControl>
+              {/*  */}
+              {/* separate this into component called OvertimeInput */}
+              <FormControl>
+                <FormLabel htmlFor='overtimeMultiplier'>
+                  Overtime Multiplier
+                </FormLabel>
+                <NumberInput
+                  name='overtimeMultiplier'
+                  id='overtimeMultiplier'
+                  min={1}
+                  step={0.1}
+                  precision={2}
+                  value={newCompany.overtimeMultiplier}
+                  onChange={(value) =>
+                    handleNumberChange(value, 'overtimeMultiplier')
+                  }>
+                  <NumberInputField />
+                  <NumberInputStepper>
+                    <NumberIncrementStepper />
+                    <NumberDecrementStepper />
+                  </NumberInputStepper>
+                </NumberInput>
+                <FormHelperText>
+                  If hourly wage is increased by 50% set to 1.5.
+                </FormHelperText>
+              </FormControl>
+              {/*  */}
+              {/* updateCompany.error should check this as well */}
+              {(addCompany.error?.message === 'connection_error' ||
+                addCompany.error?.message === 'server_error') && (
+                // separate this ErrorText into typography folder
+                <ErrorText m='.8em 0 0'>
+                  Something went wrong :) Please Try again
+                </ErrorText>
               )}
-              {isEditMode && (
-                <Button
-                  type='button'
-                  colorscheme='red'
-                  onClick={handleCancelFormToEditMode}>
-                  Cancel
-                </Button>
-              )}
+              {/* separate buttons into components/buttons folder  */}
+              <Flex justifyContent='center'>
+                {!isEditMode ? (
+                  <Button
+                    type='submit'
+                    colorScheme='green'
+                    textAlign='center'
+                    m='30px auto 15px'
+                    isLoading={addCompany.isLoading ? true : false}
+                    loadingText='Adding'
+                    onClick={handleAddCompany}>
+                    Add Company
+                  </Button>
+                ) : (
+                  <Button
+                    type='submit'
+                    colorScheme='yellow'
+                    textAlign='center'
+                    m='30px auto 15px'
+                    isLoading={updateCompany.isLoading ? true : false}
+                    loadingText='Updating'
+                    onClick={(e) => handleUpdateCompany(e, newCompany)}>
+                    Edit Company
+                  </Button>
+                )}
+                {isEditMode && (
+                  <Button
+                    type='button'
+                    colorScheme='red'
+                    onClick={handleCancelEditMode}>
+                    Cancel
+                  </Button>
+                )}
+              </Flex>
+            </Box>
+            <Flex justify='center' mt='4em'>
+              <Button colorScheme='telegram' size='lg' onClick={handleFinish}>
+                Finish
+              </Button>
             </Flex>
-          </Box>
-          <Flex justify='center' mt='4em'>
-            <Button colorScheme='telegram' size='lg' onClick={handleFinish}>
-              Finish
-            </Button>
-          </Flex>
-        </SmallCard>
-      </CenterContainer>
-    </Box>
+          </SmallCard>
+        </CenterContainer>
+      </Box>
+    </>
   );
 };
 
