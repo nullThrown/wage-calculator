@@ -22,6 +22,7 @@ export const loginUser = async (user) => {
   }
 };
 
+// place in user feature
 export const getUser = async () => {
   try {
     const { data } = await axios.get('/auth/me');
