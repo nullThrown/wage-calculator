@@ -4,7 +4,7 @@ import React from 'react';
 const CenterContainer = ({ children }) => {
   return (
     <Flex
-      height='100vh'
+      min-height='100vh'
       width='100%'
       flexDirection='column'
       justify='center'
