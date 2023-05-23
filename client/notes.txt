@@ -66,8 +66,6 @@ read: previous notes, while mostly imcomprehensible, will stay up
 new notes will be added and new to do items will be created from bottom-up
 
 GENERAL 
-*
-problem: Form component will require work. Where to place all of the handlers and hooks, then complete cleanup of ProfileCreation page which should be fairly bare.
 
 *
 problem: features/user -- add two new folders here: registration, profile 
