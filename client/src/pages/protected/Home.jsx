@@ -5,7 +5,10 @@ import {
   Divider,
   VStack,
   Box,
+  Spinner,
+  Center,
 } from '@chakra-ui/react';
+import ErrorText from 'components/typography/ErrorText';
 import MainContainer from 'components/base/Container';
 import MainHeading from 'components/typography/MainHeading';
 import AddEntryBtn from 'components/button/AddEntry';
@@ -21,16 +24,34 @@ import Week from 'features/entries/components/Week';
 import Entries from 'features/entries/components/Entries';
 import { useQuery } from 'react-query';
 import { getUser } from 'features/auth/api/auth';
+import CenterContainer from 'components/base/CenterContainer';
 const Home = () => {
   const [filter, setFilter] = useState('all');
-  const { isOpen, onToggle } = useDisclosure();
 
-  const user = useQuery(['user'], getUser);
+  const { isOpen, onToggle } = useDisclosure();
+  const { isLoading, isError, data } = useQuery(['user'], getUser);
+
+  if (isLoading) {
+    return (
+      <CenterContainer>
+        <Spinner mt='6em' />
+      </CenterContainer>
+    );
+  }
+  if (isError) {
+    return (
+      <CenterContainer>
+        <ErrorText m='6em 0 0 0'>
+          Something went wrong : ( Please try again.
+        </ErrorText>
+      </CenterContainer>
+    );
+  }
   return (
     <>
       <Header />
       <MainContainer>
-        <MainHeading text='Welcome, <username>' />
+        <MainHeading>Welcome, {data.username}</MainHeading>
         <AddEntryBtn onToggle={onToggle} />
         <Collapse in={isOpen} animateOpacity>
           <AddEntryForm onToggle={onToggle} />
@@ -39,12 +60,18 @@ const Home = () => {
           <SecHeading text='Analytics' textAlign='center' />
           <Divider maxW='700px' />
           <VStack m='3em auto' w='100%' spacing='3em'>
-            <CompanySelect filter={filter} setFilter={setFilter} />
-            <Overview filter={filter} />
+            <CompanySelect
+              filter={filter}
+              setFilter={setFilter}
+              companyList={data.companies}
+            />
+            {/* completely breaks page */}
+            {/* <Overview filter={filter} /> */}
             <Entries filter={filter} />
-            {/* <Day filter={filter} />
-            <Week filter={filter} /> */}
-            <Month filter={filter} />
+            <Day filter={filter} />
+            <Week filter={filter} />
+            {/* completely breaks page */}
+            {/* <Month filter={filter} /> */}
             <Shift filter={filter} />
           </VStack>
         </Box>
