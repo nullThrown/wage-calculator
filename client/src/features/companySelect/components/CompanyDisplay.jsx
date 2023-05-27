@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Box,
   Table,
@@ -11,23 +10,13 @@ import {
   Text,
   Badge,
 } from '@chakra-ui/react';
-const companies = [
-  {
-    name: 'Punch Bowl Social',
-    startDate: '4-23-22',
-    position: 'server',
-    active: false,
-    id: '3456',
-  },
-  {
-    name: 'Iron Cactus',
-    startDate: '6-17-22',
-    position: 'server',
-    active: true,
-    id: '9454',
-  },
-];
-const CompanyDisplay = () => {
+import formatReadableDate from 'util/formatReadableDate';
+import useGetFilteredCompanies from '../hooks/useGetFilteredCompanies';
+
+const CompanyDisplay = ({ filter }) => {
+  const { isLoading, isError, filteredCompanies } =
+    useGetFilteredCompanies(filter);
+
   return (
     <Box mt='2em'>
       <Text textAlign='center' fontSize='lg'>
@@ -44,18 +33,20 @@ const CompanyDisplay = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {companies.map((company, index) => {
-              const { name, startDate, position, active, id } = company;
+            {filteredCompanies?.map((company, index) => {
+              const { name, startDate, position, _id, isActive } = company;
               return (
-                <Tr key={id} bg={index % 2 === 1 ? 'rgba(240,240,240,.4)' : ''}>
+                <Tr
+                  key={_id}
+                  bg={index % 2 === 1 ? 'rgba(240,240,240,.4)' : null}>
                   <Td>{name}</Td>
-                  <Td>{startDate}</Td>
+                  <Td>{formatReadableDate(startDate)}</Td>
                   <Td>{position}</Td>
                   <Td>
                     <Badge
-                      colorScheme={active ? 'green' : 'red'}
+                      colorScheme={isActive ? 'green' : 'red'}
                       borderRadius='5px'>
-                      {active ? 'active' : 'not active'}
+                      {isActive ? 'active' : 'not active'}
                     </Badge>
                   </Td>
                 </Tr>
