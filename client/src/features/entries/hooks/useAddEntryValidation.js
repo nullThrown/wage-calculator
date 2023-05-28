@@ -6,12 +6,12 @@ const useAddEntryValidation = (newEntry) => {
   const [isTimeWorkedZero, setIsTimeWorkedZero] = useState(false);
 
   useEffect(() => {
-    if (hoursWorked + minutesWorked < 0) {
+    if (hoursWorked + minutesWorked <= 0) {
       setIsTimeWorkedZero(true);
     } else {
-      setIsTimeWorkedZero(true);
+      setIsTimeWorkedZero(false);
     }
-  });
+  }, [hoursWorked, minutesWorked]);
 
   return { isTimeWorkedZero };
 };
