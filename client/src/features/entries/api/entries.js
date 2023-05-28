@@ -2,6 +2,7 @@ import axios from 'config/axios';
 
 export const createEntry = async (entry) => {
   try {
+    entry = { ...entry, shiftDate: Date.now() };
     const { data } = await axios.post('/entries/create', entry);
     return data;
   } catch (err) {
