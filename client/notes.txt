@@ -79,7 +79,10 @@ problem: useAddSignupVal.js file (path: features/auth/hooks) should be placed in
 *
 problem: validation hooks must be complete word 'val' -> 'validation' otherwise to confusing. Could mean value. 
 
-    
+*
+problem: either have inputs be a separate component or individual for each
+
+
 
 ADD COMPANY 
 
@@ -111,28 +114,39 @@ problem: page crashes without any data...
 tofixed method is running on 'null' value
 solution: do not attempt to process data if none exists 
 
+
+
+ADD ENTRY
+
+
+✔* temporary solution implemented 
+problem: date picker pushes the local date forwards a few hours -- could be caused by a switching of timeZones
+
+*
+problem: shift radio group & company select require titles 
+
+*
+problem: total sales applicable checkbox should be added to form -- check DB if should be checked or not checked 
+
+*
+problem: special event checkbox should also be added
+
+*
+problem: tooltips should be added to confusing inputs
+
+
+*
+problem: handler names need to conform to standard
+
+*
+problem: on success after add entry needs to produce success icon as well as oppurtunity to 
+add another entry or close 
+
+*
+problem:
+Add entry arrow symbol needs to flip upon button press
+
 EDIT ENTRY
-*
-problem: requires validation for entire file 
-
-*
-problem: copy validation technique from Addcompany in Profile Creation 
-
-*
-problem: either have inputs be a separate component or individual for each
-
-*
-problem:
-
-*
-problem:
-
-*
-problem:
-
-*
-problem:
-
 *
   Problem: Edit Entry (within Add Entry form) fill button does not work 
   Desc: fill button click does not populate form with proper date, does not close modal
@@ -152,8 +166,7 @@ Problem: Add Entry function - company select - needs to be or point towards an o
 of that specific company or position
 Solution: match company id and position to company array within node server - grab object id in backend 
 
-*
-add entry - remove afternoon radio select item 
+
 
 
 *
