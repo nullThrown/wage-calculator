@@ -1,5 +1,12 @@
-import { useState } from 'react';
-import { Box, Divider, Flex, Grid, useDisclosure } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
+import {
+  Box,
+  Divider,
+  Flex,
+  Grid,
+  useDisclosure,
+  FormErrorMessage,
+} from '@chakra-ui/react';
 import DatePicker from 'react-datepicker';
 import TertHeading from 'components/typography/TertHeading';
 import QuatHeading from 'components/typography/QuatHeading';
@@ -13,10 +20,8 @@ import EditEntryModal from 'components/modal/EditEntry';
 import ErrorText from 'components/typography/ErrorText';
 import { formatDollar, parseDollar } from 'util/format';
 import useCreateEntry from '../hooks/useCreateEntry';
-// remove mutation inside of component
-// import useMutation hook from ../hooks
-// rework mutation lifecycle UI updates
-// create two separate handlers -- numbers, other inputs
+import useAddEntryValidation from '../hooks/useAddEntryValidation';
+import useGetCompanies from 'features/companySelect/hooks/useGetCompanies';
 
 const AddEntryForm = ({ onToggle }) => {
   const [newEntry, setNewEntry] = useState({
@@ -27,25 +32,39 @@ const AddEntryForm = ({ onToggle }) => {
     cashTips: 0,
     tipOut: 0,
     shiftTime: 'morning',
-    company: '',
+    companyId: '',
     specialEvent: false,
+    totalSalesApplicable: true,
     shiftDate: new Date(),
   });
-  // input change handler takes the element value as its first arg to onChange callback
-  // Number Input components in Chakra use this convention and this is a workaround that passes in the name attribute value explicitly
+  const [isValidationError, setIsValidationError] = useState(false);
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isTimeWorkedZero } = useAddEntryValidation(newEntry);
+  const { isLoading, isError, companyList } = useGetCompanies();
+
+  const createEntry = useCreateEntry();
+
   const changeHandler = (value, name) =>
     setNewEntry({ ...newEntry, [name]: value });
 
   const companyChangeHandler = (e) =>
-    setNewEntry({ ...newEntry, company: e.target.value });
+    setNewEntry({ ...newEntry, companyId: e.target.value });
 
   const submitHandler = (e) => {
     e.preventDefault();
-    createEntry.mutate(newEntry);
+    if (isTimeWorkedZero) {
+      setIsValidationError(true);
+    } else {
+      createEntry.mutate(newEntry);
+    }
   };
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const createEntry = useCreateEntry();
+  // newEntry.companyId does not populate until company select handler is fired
+  // this effect allows the companyId to populate to the first company in list(company initially selected)
+  useEffect(() => {
+    setNewEntry({ ...newEntry, companyId: companyList[0]._id });
+  }, [companyList[0]._id]);
 
   return (
     <LargeCard as='form' m='1em 0 0 0'>
@@ -67,6 +86,9 @@ const AddEntryForm = ({ onToggle }) => {
       <Flex direction='column' align='start' m='1em 0'>
         <QuatHeading text='Totals' />
         <Divider mt='.2em' />
+        {isValidationError && isTimeWorkedZero && (
+          <ErrorText>Must have at least 1 minute of time worked.</ErrorText>
+        )}
         <Grid
           gap='10px'
           templateColumns='repeat(2, 25%) 50%'
@@ -76,6 +98,7 @@ const AddEntryForm = ({ onToggle }) => {
           <NumInput
             title='Hours Worked'
             name='hoursWorked'
+            isInvalid={isValidationError && isTimeWorkedZero}
             value={newEntry.hoursWorked}
             precision={0}
             min={0}
@@ -85,6 +108,7 @@ const AddEntryForm = ({ onToggle }) => {
           <NumInput
             title='Minutes Worked'
             name='minutesWorked'
+            isInvalid={isValidationError && isTimeWorkedZero}
             value={newEntry.minutesWorked}
             precision={0}
             min={0}
@@ -140,25 +164,26 @@ const AddEntryForm = ({ onToggle }) => {
         <Divider />
       </Flex>
 
-      <Flex direction='column' align='start' m='1em 0'>
-        <QuatHeading text='Shift' />
-        <Divider mt='.2em' />
-        <Grid
-          gap='40px'
-          templateColumns='repeat(2,1fr)'
-          alignItems='center'
-          m='.4em 0'>
-          <ShiftRadioGroup
-            onChange={(value) => changeHandler(value, 'shiftTime')}
-            value={newEntry.shiftTime}
-          />
-          <CompanySelect
-            onChange={companyChangeHandler}
-            value={newEntry.company}
-          />
-        </Grid>
-        <Divider />
-      </Flex>
+      {/* <Flex direction='column' align='start' m='1em 0'> */}
+      <QuatHeading text='Shift' />
+      <Divider mt='.2em' />
+      <Grid
+        gap='20px'
+        templateColumns='repeat(2,1fr)'
+        alignItems='center'
+        m='.4em 0'>
+        <ShiftRadioGroup
+          onChange={(value) => changeHandler(value, 'shiftTime')}
+          value={newEntry.shiftTime}
+        />
+        <CompanySelect
+          onChange={companyChangeHandler}
+          companyId={newEntry.companyId}
+          companyList={companyList}
+        />
+      </Grid>
+      <Divider />
+      {/* </Flex> */}
 
       <SubmitEntry onClick={submitHandler} />
     </LargeCard>
