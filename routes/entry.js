@@ -44,17 +44,23 @@ router.post('/create', verifyToken, async (req, res) => {
       cashTips,
       tipOut,
       shiftTime,
-      company,
+      companyId,
       specialEvent,
-      shiftDate,
     } = req.body;
 
+    let timestamp = req.body.shiftDate;
+
+    console.log(timestamp);
+    // works but sets the date to local time zone
+    // this should set the zone to whichever date the node server is running on
+    // solution: convert to the timestamp to the date it orginally specified
+    shiftDate = new Date(timestamp).toLocaleDateString('en-us');
     const timeWorkedDec = +hoursWorked + +minutesWorked / 60;
 
-    const userID = mongoose.Types.ObjectId(req.user.id);
-    const companyID = mongoose.Types.ObjectId(company);
+    const userId = mongoose.Types.ObjectId(req.user.id);
+    const companyObjectId = mongoose.Types.ObjectId(companyId);
     const filteredCompany = await User.aggregate([
-      { $match: { _id: userID } },
+      { $match: { _id: userId } },
       {
         $project: {
           _id: 0,
@@ -62,14 +68,13 @@ router.post('/create', verifyToken, async (req, res) => {
             $filter: {
               input: '$companies',
               as: 'company',
-              cond: { $eq: ['$$company._id', companyID] },
+              cond: { $eq: ['$$company._id', companyObjectId] },
             },
           },
         },
       },
     ]);
     const { hourlyWage, position } = filteredCompany[0].companies[0];
-
     const newEntry = {
       timeWorkedDec,
       totalSales,
@@ -78,7 +83,7 @@ router.post('/create', verifyToken, async (req, res) => {
       cashTips,
       tipOut,
       shiftTime,
-      company,
+      companyId,
       position,
       hourlyWage,
       specialEvent,
