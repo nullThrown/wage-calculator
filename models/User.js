@@ -17,11 +17,12 @@ const UserSchema = new Schema(
       {
         name: requiredStr,
         position: requiredStr,
-        active: requiredBool,
+        isActive: requiredBool,
         hourlyWage: requiredNum,
         overtimeMultiplier: requiredNum,
         startDate: currentTime,
         endDate: { type: Date },
+        totalSalesApplicable: requiredBool,
         isRemoved: { type: Boolean, default: false },
       },
     ],
