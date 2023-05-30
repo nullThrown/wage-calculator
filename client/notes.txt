@@ -65,6 +65,8 @@ NEW NOTES AFTER HIATUS
 read: previous notes, while mostly imcomprehensible, will stay up 
 new notes will be added and new to do items will be created from bottom-up
 
+
+
 GENERAL 
 
 *
@@ -81,6 +83,25 @@ problem: validation hooks must be complete word 'val' -> 'validation' otherwise 
 
 *
 problem: either have inputs be a separate component or individual for each
+
+*
+problem: axios stringify & node server convert request body date times into different timezone 
+many date times need to reflect local time zones. 
+solution: create system that preserves local time zones. 
+
+*
+problem: input components created both as an abstract general component (path: components/form/) and as individual inputs 
+for specific components 
+solution: all inputs should be created from the general NumInput/TextInput components 
+
+*
+problem: create 'something went wrong error message" as distinct component 
+
+*
+problem: two components ErrorMsg & ErrorText should be combined into single component
+
+*
+problem: certain feature specific components are placed in the general component folder
 
 
 
@@ -105,38 +126,30 @@ problem: Edit Company and Cancel buttons are not inline
 *
 problem: 'are you sure you want to continue' modal bugs out. Something is wrong with the chakra ui modal 
 
+*
+problem: add company on ProfileCreation page should have option to permanently set totalSalesApplicable = false/true
 
 
 HOME
-
-*
-problem: page crashes without any data... 
-tofixed method is running on 'null' value
-solution: do not attempt to process data if none exists 
 
 
 
 ADD ENTRY
 
-
-✔* temporary solution implemented 
-problem: date picker pushes the local date forwards a few hours -- could be caused by a switching of timeZones
+*
+problem: company switch (company select) does not effect Total Sales Applicable value
 
 *
-problem: shift radio group & company select require titles 
-
-*
-problem: total sales applicable checkbox should be added to form -- check DB if should be checked or not checked 
-
-*
-problem: special event checkbox should also be added
+problem: if totalSalesApplicable = false, disable Total Sales input   
 
 *
 problem: tooltips should be added to confusing inputs
-
+-total sales "the amount sold.. helps us determine a tip percentage."
+-total Sales Applicable "if the amount that you sold is known, check the box." 
+-special event "party, banquet, etc. This allows us to determine earnings on both regular and special shifts."  
 
 *
-problem: handler names need to conform to standard
+problem: combine handlers into single fn
 
 *
 problem: on success after add entry needs to produce success icon as well as oppurtunity to 
@@ -145,6 +158,11 @@ add another entry or close
 *
 problem:
 Add entry arrow symbol needs to flip upon button press
+
+
+*
+problem: Total Sales Applicable value needs to change upon CompanySelect value as well as manual control
+
 
 EDIT ENTRY
 *
