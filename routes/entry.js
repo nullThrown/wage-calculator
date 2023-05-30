@@ -75,6 +75,7 @@ router.post('/create', verifyToken, async (req, res) => {
       },
     ]);
     const { hourlyWage, position } = filteredCompany[0].companies[0];
+
     const newEntry = {
       timeWorkedDec,
       totalSales,
@@ -83,7 +84,7 @@ router.post('/create', verifyToken, async (req, res) => {
       cashTips,
       tipOut,
       shiftTime,
-      companyId,
+      company: companyObjectId,
       position,
       hourlyWage,
       specialEvent,
