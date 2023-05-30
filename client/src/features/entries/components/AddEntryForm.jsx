@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   Box,
   Divider,
@@ -6,6 +6,9 @@ import {
   Grid,
   useDisclosure,
   FormErrorMessage,
+  FormLabel,
+  Tooltip,
+  Spinner,
 } from '@chakra-ui/react';
 import DatePicker from 'react-datepicker';
 import TertHeading from 'components/typography/TertHeading';
@@ -22,6 +25,7 @@ import { formatDollar, parseDollar } from 'util/format';
 import useCreateEntry from '../hooks/useCreateEntry';
 import useAddEntryValidation from '../hooks/useAddEntryValidation';
 import useGetCompanies from 'features/companySelect/hooks/useGetCompanies';
+import ShiftCheckboxGroup from 'features/entries/components/ShiftCheckboxGroup';
 
 const AddEntryForm = ({ onToggle }) => {
   const [newEntry, setNewEntry] = useState({
@@ -34,10 +38,14 @@ const AddEntryForm = ({ onToggle }) => {
     shiftTime: 'morning',
     companyId: '',
     specialEvent: false,
-    totalSalesApplicable: true,
+    totalSalesApplicable: null,
     shiftDate: new Date(),
   });
   const [isValidationError, setIsValidationError] = useState(false);
+  // const [formDimensions, setFormDimensions] = useState([null, null]);
+  const [formHeight, setformHeight] = useState(null);
+  const [formWidth, setFormWidth] = useState(null);
+  const formRef = useRef(null);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isTimeWorkedZero } = useAddEntryValidation(newEntry);
@@ -45,10 +53,10 @@ const AddEntryForm = ({ onToggle }) => {
 
   const createEntry = useCreateEntry();
 
-  const changeHandler = (value, name) =>
+  const handleNumberChange = (value, name) =>
     setNewEntry({ ...newEntry, [name]: value });
 
-  const companyChangeHandler = (e) =>
+  const handleCompanyChange = (e) =>
     setNewEntry({ ...newEntry, companyId: e.target.value });
 
   const submitHandler = (e) => {
@@ -63,28 +71,70 @@ const AddEntryForm = ({ onToggle }) => {
   // newEntry.companyId does not populate until company select handler is fired
   // this effect allows the companyId to populate to the first company in list(company initially selected)
   useEffect(() => {
-    setNewEntry({ ...newEntry, companyId: companyList[0]._id });
-  }, [companyList[0]._id]);
+    setNewEntry({
+      ...newEntry,
+      companyId: companyList[0]._id,
+      totalSalesApplicable: companyList[0].totalSalesApplicable,
+    });
+  }, [companyList[0]._id, companyList[0].totalSalesApplicable]);
 
+  // useEffect(() => {
+  //   setFormDimensions([
+  //     formRef.current.clientHeight,
+  //     formRef.current.clientWidth,
+  //   ]);
+  // }, []);
+
+  useEffect(() => {
+    console.log('Add Entry Formed Rendered');
+    setformHeight(formRef.current?.clientHeight);
+    setFormWidth(formRef.current?.clientWidth);
+  }, [formRef]);
+
+  // useEffect(() => {
+  //   console.log(companyList);
+  //   console.log(newEntry.companyId);
+  //   setNewEntry(() => {
+  //     const currentlySelectedCompany = companyList?.find(
+  //       (company) => company._id === newEntry.companyId
+  //     );
+  //     console.log(currentlySelectedCompany);
+  //     // return currentlySelectedCompany._id;
+  //   });
+  // }, [newEntry.companyId]);
+  if (createEntry.isLoading) {
+    return (
+      <LargeCard>
+        <Spinner></Spinner>
+      </LargeCard>
+    );
+  }
   return (
-    <LargeCard as='form' m='1em 0 0 0'>
+    <LargeCard as='form' m='1em 0 0 0' ref={formRef}>
       <TertHeading text="Add Earning's Report" textAlign='center' />
       <Flex m='1em' justify='center'>
         <EditEntryBtn onClick={onOpen} />
         <EditEntryModal isOpen={isOpen} onClose={onClose} />
       </Flex>
+
       <Flex direction='column' justify='center' m='1em 0'>
-        <QuatHeading text='Date' />
         <Divider mt='.2em' />
-        <Box m='.4em 0'>
-          <DatePicker
-            selected={newEntry.shiftDate}
-            onChange={(date) => setNewEntry({ ...newEntry, shiftDate: date })}
-            maxDate={new Date()}></DatePicker>
-        </Box>
+        <Grid m='.4em 0' templateColumns='33% 67%'>
+          <Flex flexDirection='column'>
+            <FormLabel opacity='.85'>Shift Date</FormLabel>
+            <DatePicker
+              selected={newEntry.shiftDate}
+              onChange={(date) => setNewEntry({ ...newEntry, shiftDate: date })}
+              maxDate={new Date()}></DatePicker>
+          </Flex>
+          <ShiftCheckboxGroup
+            totalSalesApplicable={newEntry.totalSalesApplicable}
+            specialEvent={newEntry.specialEvent}
+            onChange={handleNumberChange}
+          />
+        </Grid>
       </Flex>
       <Flex direction='column' align='start' m='1em 0'>
-        <QuatHeading text='Totals' />
         <Divider mt='.2em' />
         {isValidationError && isTimeWorkedZero && (
           <ErrorText>Must have at least 1 minute of time worked.</ErrorText>
@@ -103,7 +153,7 @@ const AddEntryForm = ({ onToggle }) => {
             precision={0}
             min={0}
             max={24}
-            onChange={(value) => changeHandler(value, 'hoursWorked')}
+            onChange={(value) => handleNumberChange(value, 'hoursWorked')}
           />
           <NumInput
             title='Minutes Worked'
@@ -114,8 +164,9 @@ const AddEntryForm = ({ onToggle }) => {
             min={0}
             max={59}
             step={5}
-            onChange={(value) => changeHandler(value, 'minutesWorked')}
+            onChange={(value) => handleNumberChange(value, 'minutesWorked')}
           />
+
           <NumInput
             title='Total Sales'
             name='totalSales'
@@ -123,7 +174,7 @@ const AddEntryForm = ({ onToggle }) => {
             precision={2}
             min={0}
             onChange={(value) =>
-              changeHandler(parseDollar(value), 'totalSales')
+              handleNumberChange(parseDollar(value), 'totalSales')
             }
           />
         </Grid>
@@ -141,7 +192,7 @@ const AddEntryForm = ({ onToggle }) => {
             precision={2}
             min={0}
             onChange={(value) =>
-              changeHandler(parseDollar(value), 'creditTips')
+              handleNumberChange(parseDollar(value), 'creditTips')
             }
           />
           <NumInput
@@ -150,7 +201,9 @@ const AddEntryForm = ({ onToggle }) => {
             value={formatDollar(newEntry.cashTips)}
             precision={2}
             min={0}
-            onChange={(value) => changeHandler(parseDollar(value), 'cashTips')}
+            onChange={(value) =>
+              handleNumberChange(parseDollar(value), 'cashTips')
+            }
           />
           <NumInput
             title='Tip Out'
@@ -158,32 +211,32 @@ const AddEntryForm = ({ onToggle }) => {
             value={formatDollar(newEntry.tipOut)}
             precision={2}
             min={0}
-            onChange={(value) => changeHandler(parseDollar(value), 'tipOut')}
+            onChange={(value) =>
+              handleNumberChange(parseDollar(value), 'tipOut')
+            }
           />
         </Grid>
         <Divider />
       </Flex>
 
-      {/* <Flex direction='column' align='start' m='1em 0'> */}
       <QuatHeading text='Shift' />
       <Divider mt='.2em' />
       <Grid
         gap='20px'
         templateColumns='repeat(2,1fr)'
-        alignItems='center'
+        alignItems='start'
         m='.4em 0'>
         <ShiftRadioGroup
-          onChange={(value) => changeHandler(value, 'shiftTime')}
+          onChange={(value) => handleNumberChange(value, 'shiftTime')}
           value={newEntry.shiftTime}
         />
         <CompanySelect
-          onChange={companyChangeHandler}
+          onChange={handleCompanyChange}
           companyId={newEntry.companyId}
           companyList={companyList}
         />
       </Grid>
       <Divider />
-      {/* </Flex> */}
 
       <SubmitEntry onClick={submitHandler} />
     </LargeCard>
@@ -191,9 +244,3 @@ const AddEntryForm = ({ onToggle }) => {
 };
 
 export default AddEntryForm;
-
-// useEffect(() => {
-//   const { hoursWorked, minutesWorked } = newEntry;
-//   const timeWorkedDec = +minutesWorked / 60 + +hoursWorked;
-//   setNewEntry({ ...newEntry, timeWorkedDec: timeWorkedDec });
-// }, [newEntry.hoursWorked, newEntry.minutesWorked]);
