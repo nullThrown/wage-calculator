@@ -6,7 +6,6 @@ import {
   VStack,
   Box,
   Spinner,
-  Center,
 } from '@chakra-ui/react';
 import ErrorText from 'components/typography/ErrorText';
 import MainContainer from 'components/base/Container';
@@ -47,6 +46,7 @@ const Home = () => {
       </CenterContainer>
     );
   }
+
   return (
     <>
       <Header />
