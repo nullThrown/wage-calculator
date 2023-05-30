@@ -50,6 +50,7 @@ const SignupForm = () => {
       onError: (error, variables, context) => {
         console.log(error.message);
         const { message } = error;
+        // simplify this
         setServerError(() => {
           if (message === 'connection_error' || message === 'server_error') {
             return true;
