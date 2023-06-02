@@ -50,7 +50,6 @@ router.post('/create', verifyToken, async (req, res) => {
 
     let timestamp = req.body.shiftDate;
 
-    console.log(timestamp);
     // works but sets the date to local time zone
     // this should set the zone to whichever date the node server is running on
     // solution: convert to the timestamp to the date it orginally specified
@@ -231,6 +230,7 @@ router.get('/overview/:filter', verifyToken, async (req, res) => {
       entries = await getAllEntriesByCompany(userID, companyID);
     }
     const overviewData = calculateData(entries[0].data);
+    console.log(overviewData);
     res.status(200).json(overviewData);
   } catch (err) {
     console.log(err);
@@ -306,7 +306,8 @@ router.get('/month/:year/:month/:filter', verifyToken, async (req, res) => {
 // ACCESS private
 router.get('/week/:date/:filter', verifyToken, async (req, res) => {
   let { date, filter } = req.params;
-
+  console.log(date);
+  console.log(filter);
   try {
     if (date === 'today') {
       date = new Date();
