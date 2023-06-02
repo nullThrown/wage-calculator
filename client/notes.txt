@@ -132,6 +132,9 @@ problem: add company on ProfileCreation page should have option to permanently s
 
 HOME
 
+*
+problem: All API calls on the home page should produce one loading state 
+if any one API call fails, the entire page should render 'something went wrong' component
 
 
 ADD ENTRY
@@ -186,30 +189,91 @@ Solution: match company id and position to company array within node server - gr
 
 
 
+OVERVIEW 
 
 *
-problem: overview section doesn't have proper title 
+problem: onLoading and onError UI states are not rendered
 
 *
-problem: overview 'Tip amount per hour' is useless data piece
+problem: find more interesting data to display to the user 
+
 
 *
-problem: Day section does not have a title
+problem:
 
 *
-problem: Day section is not intuitively linked to week section 
+problem:
 
 *
-problem: Day section requires its own day picker
+problem:
 
 *
-problem: Week section does not have updated weeks 
+problem:
+
+
+
+DAY 
 
 *
-problem: Week section calendar specific shifts does not fit 
+problem entry data needs to be pulled from separate API 
+pull all entries back a year 
+if user selects date prior to 1 year of most recent date within entries data pool 
+create new API request
 
 *
-problem: Week section calendar specific shift needs to be pop up 
+problem: is not intuitively linked to week section 
+
+*
+problem: requires its own day picker
+
+*
+problem: remove base data & add queries 
+
+*
+problem: requires a tag upon that describes if entry was last input 
+
+
+*
+problem: add date picker - set to current date 
+have current date present all shifts worked for that day
+allow user to select which shifts' data gets presented to the stats section
+
+*
+problem:
+
+*
+problem:
+
+*
+problem:
+
+
+WEEK
+
+*
+problem: weeks need to be updated from the API call 
+
+*
+problem:a shift preview should provide option to send data to Day statistics view
+
+*
+problem: figure out if entries should be stored in weeks array in node server 
+or if front end should take in the raw entries and run the week grouping fn on the front end
+
+*
+problem: Week section calendar specific shifts needs rework -- only display company name 
+popover display a few more pieces of data and a populate button will send info to single entry stats view
+
+*
+problem:
+
+*
+problem:
+
+*
+problem:
+
+
 
 *
 problem: Month section does not have a title 
@@ -217,4 +281,8 @@ problem: Month section does not have a title
 *
 problem: shift section needs to be created
 
+
+
+
+/********** BACK END **********/
 
