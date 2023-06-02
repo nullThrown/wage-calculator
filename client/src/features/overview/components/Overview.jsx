@@ -1,11 +1,10 @@
 import LargeCard from 'components/card/LargeCard';
 import TertHeading from 'components/typography/TertHeading';
-import { Flex, useFocusEffect } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import StatRow from 'components/data/StatRow';
 import SimpleStat from 'components/data/SimpleStat';
 import { useQuery } from 'react-query';
 import { getOverviewData } from '../api/overview';
-import { useEffect } from 'react';
 
 const Overview = ({ filter }) => {
   const { isLoading, isError, data } = useQuery(
@@ -13,13 +12,9 @@ const Overview = ({ filter }) => {
     () => getOverviewData(filter)
   );
 
-  // useEffect(() => {
-  //   console.log(useOverview);
-  // }, [useOverview]);
-
   return (
     <LargeCard as='section'>
-      <TertHeading text='Overview' textAlign='center' />
+      <TertHeading textAlign='center'>Overview</TertHeading>
       <Flex direction='column'>
         <StatRow>
           <SimpleStat
