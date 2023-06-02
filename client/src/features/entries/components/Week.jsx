@@ -22,6 +22,8 @@ const Week = ({ filter }) => {
 
   const selectChangeHandler = (e) => setSelectedWeek(e.target.value);
 
+  // might not need a useEffect for this
+  // the data is not coming from an outside source i.e., not asynchronous
   useEffect(() => {
     setWeekPairs(() => {
       return weekData.map((week) => {
