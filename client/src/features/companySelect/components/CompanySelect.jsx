@@ -22,7 +22,7 @@ const CompanySelect = ({ filter, setFilter }) => {
         </option>
         {companyList.map((company) => {
           return (
-            <option key={company._id} value={company.name}>
+            <option key={company._id} value={company._id}>
               {company.name}
             </option>
           );
