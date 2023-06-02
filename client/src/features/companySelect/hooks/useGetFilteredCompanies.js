@@ -13,7 +13,7 @@ const useGetFilteredCompanies = (filter) => {
     );
   } else {
     filteredCompanies = data?.companies.filter(
-      (company) => company.name === filter
+      (company) => company._id === filter
     );
   }
   return { isLoading, isError, filteredCompanies };
