@@ -66,13 +66,13 @@ const Home = () => {
               companyList={data.companies}
             />
             {/* completely breaks page */}
-            {/* <Overview filter={filter} /> */}
+            <Overview filter={filter} />
             <Entries filter={filter} />
-            <Day filter={filter} />
-            <Week filter={filter} />
+            {/* <Day filter={filter} /> */}
+            {/* <Week filter={filter} /> */}
             {/* completely breaks page */}
             {/* <Month filter={filter} /> */}
-            <Shift filter={filter} />
+            {/* <Shift filter={filter} /> */}
           </VStack>
         </Box>
       </MainContainer>
