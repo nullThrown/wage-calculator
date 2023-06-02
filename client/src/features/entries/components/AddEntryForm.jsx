@@ -45,7 +45,7 @@ const AddEntryForm = ({ onToggle }) => {
   // const [formDimensions, setFormDimensions] = useState([null, null]);
   const [formHeight, setformHeight] = useState(null);
   const [formWidth, setFormWidth] = useState(null);
-  const formRef = useRef(null);
+  // const formRef = useRef(null);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isTimeWorkedZero } = useAddEntryValidation(newEntry);
@@ -85,11 +85,10 @@ const AddEntryForm = ({ onToggle }) => {
   //   ]);
   // }, []);
 
-  useEffect(() => {
-    console.log('Add Entry Formed Rendered');
-    setformHeight(formRef.current?.clientHeight);
-    setFormWidth(formRef.current?.clientWidth);
-  }, [formRef]);
+  // useEffect(() => {
+  //   setformHeight(formRef.current?.clientHeight);
+  //   setFormWidth(formRef.current?.clientWidth);
+  // }, [formRef]);
 
   // useEffect(() => {
   //   console.log(companyList);
@@ -110,7 +109,7 @@ const AddEntryForm = ({ onToggle }) => {
     );
   }
   return (
-    <LargeCard as='form' m='1em 0 0 0' ref={formRef}>
+    <LargeCard as='form' m='1em 0 0 0'>
       <TertHeading text="Add Earning's Report" textAlign='center' />
       <Flex m='1em' justify='center'>
         <EditEntryBtn onClick={onOpen} />
