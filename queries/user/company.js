@@ -10,7 +10,7 @@ const getActiveCompanies = async (userID) => {
           $filter: {
             input: '$companies',
             as: 'company',
-            cond: { $eq: ['$$company.active', true] },
+            cond: { $eq: ['$$company.isActive', true] },
           },
         },
       },
