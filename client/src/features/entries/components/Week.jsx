@@ -52,7 +52,7 @@ const Week = ({ filter, entries, isLoading, isError }) => {
 
   return (
     <LargeCard as='section'>
-      <TertHeading text='Week' textAlign='center' />
+      <TertHeading textAlign='center'>Week</TertHeading>
       <WeekSelect
         selectChangeHandler={selectChangeHandler}
         selectedWeek={selectedWeek}
