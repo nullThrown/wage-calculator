@@ -17,10 +17,6 @@ import { useQuery } from 'react-query';
 import { getEntriesByWeek } from '../api/entries';
 
 const Day = ({ filter, date }) => {
-  const getWeekData = useQuery(['entries', date, filter], () =>
-    getEntriesByWeek(date, filter)
-  );
-
   return (
     <LargeCard as='section'>
       <TertHeading textAlign='center'>Single Entry</TertHeading>
