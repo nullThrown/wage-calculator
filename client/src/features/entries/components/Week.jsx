@@ -3,42 +3,32 @@ import LargeCard from 'components/card/LargeCard';
 import TertHeading from 'components/typography/TertHeading';
 import DateBox from './DateBox';
 import WeekSelect from './WeekSelect';
-import { weekData } from './weekData';
-import { HStack } from '@chakra-ui/react';
-import EntryDisplay from 'features/entries/components/EntryDisplay';
-import { useQuery } from 'react-query';
-import { getEntriesByWeek } from '../api/entries';
-
-const Week = ({ filter }) => {
+import { HStack, Spinner } from '@chakra-ui/react';
+import ErrorText from 'components/typography/ErrorText';
+// this whole state could be simplified with a useReducer fn
+const Week = ({ filter, entries, isLoading, isError }) => {
   const [weekPairs, setWeekPairs] = useState([]);
   const [selectedWeek, setSelectedWeek] = useState('');
-  const [selectedDays, setSelectedDays] = useState([]);
   const [selectedWeekData, setSelectedWeekData] = useState({});
-
-  // const { isLoading, error, data } = useQuery(
-  //   ['entries', 'week', 'today', filter],
-  //   getEntriesByWeek('today', filter)
-  // );
+  const [selectedDays, setSelectedDays] = useState([]);
 
   const selectChangeHandler = (e) => setSelectedWeek(e.target.value);
 
-  // might not need a useEffect for this
-  // the data is not coming from an outside source i.e., not asynchronous
   useEffect(() => {
     setWeekPairs(() => {
-      return weekData.map((week) => {
+      return entries?.map((week) => {
         return week.datesShort;
       });
     });
-  }, [weekData]);
+  }, [entries]);
 
   useEffect(() => {
-    setSelectedWeek(weekData[0].datesShort);
-  }, [weekData]);
+    setSelectedWeek(entries?.[0].datesShort);
+  }, [entries]);
 
   useEffect(() => {
     setSelectedWeekData(() =>
-      weekData.find((week) => week.datesShort === selectedWeek)
+      entries?.find((week) => week.datesShort === selectedWeek)
     );
   }, [selectedWeek]);
 
@@ -51,6 +41,14 @@ const Week = ({ filter }) => {
       })
     );
   }, [selectedWeekData]);
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  if (isError) {
+    return <ErrorText>Something went wrong : (. Please try again.</ErrorText>;
+  }
 
   return (
     <LargeCard as='section'>
