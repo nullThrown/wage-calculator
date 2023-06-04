@@ -70,6 +70,13 @@ new notes will be added and new to do items will be created from bottom-up
 GENERAL 
 
 *
+problem: entry items coming from API need to have both a company Id as well as a company name
+solution: mongoose join (populate) method 
+
+*
+problem: create format time util function that converts time from a decimal into a hours + minutes worked
+
+*
 problem: rework entire components and features folders -- determine which components should be placed in what folders 
 
 *
@@ -251,6 +258,9 @@ problem:
 WEEK
 
 *
+problem: EntryDisplay box needs access to company name
+
+*
 problem:a shift preview should provide option to send data to Day statistics view
 
 *
@@ -263,7 +273,8 @@ problem: week date box requires 'day' text i.g., 'sunday', 'saturday', 'monday'
 problem: day displayed does not match the weekPairs data. select dates: (9-15) DateBox dates: (8-14)  
 
 *
-problem: Week needs to display its data 
+problem: Week needs to display its data -- wait until full combover of front-end components is acheived
+Too many components will get used that I don't fully understand yet
 
 *
 problem: shifts are not being placed in the correct days
@@ -271,6 +282,8 @@ problem: shifts are not being placed in the correct days
 *
 problem: weekpairs in Week component is a poor name. It's not a pair its just a week.
 
+*
+problem: Week Shift popover 'view' button needs to populate single entry data
 
 
 MONTH 
