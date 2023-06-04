@@ -312,7 +312,7 @@ router.get('/week/:date/:filter', verifyToken, async (req, res) => {
     if (date === 'today') {
       date = new Date();
     }
-    const weekPairs = findWeekPairs(date, 4);
+    const weekPairs = findWeekPairs(date, 26);
     const earliestDate = weekPairs[0][0];
     const latestDate = weekPairs[weekPairs.length - 1][1];
     const userID = mongoose.Types.ObjectId(req.user.id);
@@ -356,7 +356,7 @@ router.get('/week/:date/:filter', verifyToken, async (req, res) => {
       return {
         startDate: week[0],
         endDate: week[1],
-        DatesShort: `${formatToShortDate(week[0])} - ${formatToShortDate(
+        datesShort: `${formatToShortDate(week[0])} - ${formatToShortDate(
           week[1]
         )}`,
         weekOfDays: createWeekOfDates(week[0]),
