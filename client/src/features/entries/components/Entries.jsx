@@ -22,7 +22,13 @@ const Entries = ({ filter }) => {
         isLoading={isLoading}
         isError={isError}
       />
-      <Week filter={filter} entries={data} date={date} />
+      <Week
+        filter={filter}
+        isLoading={isLoading}
+        isError={isError}
+        entries={data}
+        date={date}
+      />
     </>
   );
 };
