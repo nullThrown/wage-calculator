@@ -251,32 +251,36 @@ problem:
 WEEK
 
 *
-problem: weeks need to be updated from the API call 
-
-*
 problem:a shift preview should provide option to send data to Day statistics view
 
 *
-problem: figure out if entries should be stored in weeks array in node server 
-or if front end should take in the raw entries and run the week grouping fn on the front end
+problem: popover display a few more pieces of data and a populate button will send info to single entry stats view
 
 *
-problem: Week section calendar specific shifts needs rework -- only display company name 
-popover display a few more pieces of data and a populate button will send info to single entry stats view
+problem: week date box requires 'day' text i.g., 'sunday', 'saturday', 'monday'
 
 *
-problem:
+problem: day displayed does not match the weekPairs data. select dates: (9-15) DateBox dates: (8-14)  
 
 *
-problem:
+problem: Week needs to display its data 
 
 *
-problem:
+problem: shifts are not being placed in the correct days
+
+*
+problem: weekpairs in Week component is a poor name. It's not a pair its just a week.
 
 
+
+MONTH 
 
 *
 problem: Month section does not have a title 
+
+
+
+SHIFT
 
 *
 problem: shift section needs to be created
