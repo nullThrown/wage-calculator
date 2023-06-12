@@ -2,8 +2,9 @@ import Week from 'features/entries/components/Week';
 import Day from 'features/entries/components/Day';
 import { useEffect, useState } from 'react';
 import useGetEntriesByWeek from '../hooks/useGetWeeklyEntries';
+
 const Entries = ({ filter }) => {
-  const [date, getDate] = useState(
+  const [date, setDate] = useState(
     new Date()
       .toLocaleDateString('en-US', {
         year: 'numeric',
@@ -18,7 +19,7 @@ const Entries = ({ filter }) => {
     <>
       <Day
         filter={filter}
-        date={date}
+        entries={data}
         isLoading={isLoading}
         isError={isError}
       />
