@@ -222,6 +222,11 @@ problem:
 DAY 
 
 *
+problem: might need to separate useGetWeekDates query into both day and week components 
+partially because there are two date variables that are conflicting -- one for selecting weekData 
+and one for selecting data for a particular day in Day component
+
+*
 problem entry data needs to be pulled from separate API 
 pull all entries back a year 
 if user selects date prior to 1 year of most recent date within entries data pool 
@@ -231,14 +236,7 @@ create new API request
 problem: is not intuitively linked to week section 
 
 *
-problem: requires its own day picker
-
-*
-problem: remove base data & add queries 
-
-*
 problem: requires a tag upon that describes if entry was last input 
-
 
 *
 problem: add date picker - set to current date 
