@@ -13,13 +13,32 @@ import {
   TableContainer,
   Flex,
 } from '@chakra-ui/react';
-import { useQuery } from 'react-query';
-import { getEntriesByWeek } from '../api/entries';
+import DatePicker from 'react-datepicker';
+import { useEffect, useState } from 'react';
 
-const Day = ({ filter, date }) => {
+const Day = ({ filter, isLoading, isError, entries }) => {
+  const [date, setDate] = useState(null);
+  const [currentlySelectedEntries, setCurrentlySelectedEntries] = useState([]);
+
+  useEffect(() => {
+    // this logic is only useful upon initial mount
+    // once component has mounted
+    // changes to the currentlySelectedEntries
+    // loop through entries
+    // if entries.entries.length > 0
+    // find last entry (latest)
+    // push into currentlySelectedEntries
+    // loop down array and compare day/month/year to last entry
+    // if latest === current, push entry into currently selected entries
+  }, [entries]);
+
   return (
     <LargeCard as='section'>
       <TertHeading textAlign='center'>Single Entry</TertHeading>
+      <DatePicker
+        selected={date}
+        onChange={(date) => setDate(date)}
+        maxDate={new Date()}></DatePicker>
       <Flex direction='column' mt='2em'>
         <TableContainer m='1em'>
           <Table>
