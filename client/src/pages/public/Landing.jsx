@@ -1,16 +1,10 @@
 import React from 'react';
-import {
-  Text,
-  ButtonGroup,
-  VStack,
-  Link as RouterLink,
-} from '@chakra-ui/react';
+import { Text, VStack, Link as RouterLink, HStack } from '@chakra-ui/react';
 import MainHeading from 'components/typography/MainHeading';
 import Header from 'components/base/Header';
 import MainContainer from 'components/base/Container';
-import Login from 'components/button/Login';
-import Signup from 'components/button/Signup';
-import { Link } from 'react-router-dom';
+import Login from 'components/link/Login';
+import Signup from 'components/link/Signup';
 const Landing = () => {
   return (
     <>
@@ -37,14 +31,10 @@ const Landing = () => {
             to work deriving data that helps you make sense of your salary.
           </Text>
         </VStack>
-        <ButtonGroup>
-          <Link as={RouterLink} to='/login'>
-            <Login />
-          </Link>
-          <Link as={RouterLink} to='/signup'>
-            <Signup />
-          </Link>
-        </ButtonGroup>
+        <HStack>
+          <Login />
+          <Signup />
+        </HStack>
       </MainContainer>
     </>
   );
