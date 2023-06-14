@@ -1,5 +1,6 @@
 *add a services folder (path: src/services) to handle plain JavaScript modules (e.g., localStorage.js )
-
+*create single component for button 
+or perhaps separate them them into a few
 
 
 */components/form/NumInput.jsx - make univeral to all forms that take numbers 

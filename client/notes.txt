@@ -80,8 +80,6 @@ solution: mongoose join (populate) method
 *
 problem: create format time util function that converts time from a decimal into a hours + minutes worked
 
-*
-problem: rework entire components and features folders -- determine which components should be placed in what folders 
 
 *
 problem: useAddCompanyVal.js file (path: features/auth/hooks) should be placed in user/hooks/validation folder
