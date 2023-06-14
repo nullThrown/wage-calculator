@@ -10,9 +10,9 @@ import {
 import ErrorText from 'components/typography/ErrorText';
 import MainContainer from 'components/base/Container';
 import MainHeading from 'components/typography/MainHeading';
-import AddEntryBtn from 'components/button/AddEntry';
+import AddEntryBtn from 'features/entries/components/addEntry/AddEntryAccordianBtn';
 import Header from 'components/base/Header';
-import AddEntryForm from 'features/entries/components/AddEntryForm';
+import AddEntryForm from 'features/entries/components/addEntry/AddEntryForm';
 import Overview from 'features/overview/components/Overview';
 import Day from 'features/entries/components/Day';
 import Month from 'features/month/components/Month';
