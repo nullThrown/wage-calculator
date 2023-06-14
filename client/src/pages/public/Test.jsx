@@ -1,9 +1,9 @@
 import TestContainer from 'components/base/TestContainer';
-import CompanySelect from 'features/companySelect/components/CompanySelect';
+import SomethingWentWrong from 'components/typography/SomethingWentWrong';
 const Test = () => {
   return (
     <TestContainer>
-      <CompanySelect />
+      <SomethingWentWrong refresh />
     </TestContainer>
   );
 };
