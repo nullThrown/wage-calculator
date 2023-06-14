@@ -70,6 +70,10 @@ new notes will be added and new to do items will be created from bottom-up
 GENERAL 
 
 *
+problem: DefaultText component should be modifed by the chakra ui extend themes section 
+There is no reason to have a separate component for that.
+
+*
 problem: entry items coming from API need to have both a company Id as well as a company name
 solution: mongoose join (populate) method 
 
