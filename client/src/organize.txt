@@ -1,0 +1,8 @@
+*add a services folder (path: src/services) to handle plain JavaScript modules (e.g., localStorage.js )
+
+
+
+*/components/form/NumInput.jsx - make univeral to all forms that take numbers 
+*/components/form/TextInput.jsx - add content to this and make universal where applicable 
+
+
