@@ -9,7 +9,7 @@ import {
   Box,
 } from '@chakra-ui/react';
 import CenterContainer from 'components/base/CenterContainer';
-import ErrorMsg from 'components/typography/ErrorMsg';
+import ErrorText from 'components/typography/ErrorText';
 import { useQuery, useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { loginUser } from 'features/auth/api/auth';
@@ -65,7 +65,9 @@ export const LoginForm = () => {
           name='password'
           onChange={onInputChange}
         />
-        <Box mt='.5em'>{mutation.isError && <ErrorMsg msg='' />}</Box>
+        <Box mt='.5em'>
+          {mutation.isError && <ErrorText>There was a error : (</ErrorText>}
+        </Box>
         <Flex justifyContent='center' mt='1em'>
           <Button
             type='submit'
