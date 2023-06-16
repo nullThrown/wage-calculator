@@ -1,9 +1,17 @@
 *add a services folder (path: src/services) to handle plain JavaScript modules (e.g., localStorage.js )
-*create single component for button 
-or perhaps separate them them into a few
+
+*remove button components from separate files -- no reason to have them there
 
 
 */components/form/NumInput.jsx - make univeral to all forms that take numbers 
 */components/form/TextInput.jsx - add content to this and make universal where applicable 
+ 
+ Input Locations
+*<LoginForm/> - path: features/auth/components/
+*<SignupForm/> - path: features/auth/components/
+*<ProfileCreationForm/> - path: features/user/components/registration/addCompany/Form
+*<AddEntryForm/> - path: features/entries/components/addEntry/
+
+Login page needs refactoring
 
 
