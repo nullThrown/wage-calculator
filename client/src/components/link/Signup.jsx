@@ -1,8 +1,8 @@
-import { Link, Link as RouterLink } from '@chakra-ui/react';
-// import { Link } from 'react-router-dom';
+import { Link } from '@chakra-ui/react';
+import { Link as RouterLink } from 'react-router-dom';
 const Signup = () => {
   return (
-    <Link as='RouterLink' to='/signup'>
+    <Link as={RouterLink} to='/signup'>
       Signup
     </Link>
   );
