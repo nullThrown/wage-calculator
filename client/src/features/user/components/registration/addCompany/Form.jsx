@@ -1,9 +1,5 @@
 import { useState } from 'react';
 import { Box, Flex, ButtonGroup, useToast } from '@chakra-ui/react';
-import NameInput from './NameInput';
-import PositionInput from './PositionInput';
-import WageInput from './WageInput';
-import OvertimeInput from './OvertimeInput';
 import ErrorText from 'components/typography/ErrorText';
 import EditCompanyBtn from './EditCompanyBtn';
 import CancelEditBtn from './CancelEditBtn';
@@ -11,6 +7,8 @@ import AddCompanyBtn from './AddCompanyBtn';
 import useAddCompany from 'features/user/hooks/useAddCompany';
 import useUpdateCompany from 'features/user/hooks/useUpdateCompany';
 import useAddCompanyVal from 'features/auth/hooks/useAddCompanyVal';
+import TextInput from 'components/form/TextInput';
+import NumInput from 'components/form/NumInput';
 
 const Form = ({
   initialCompanyState,
@@ -28,12 +26,12 @@ const Form = ({
   const updateCompany = useUpdateCompany();
   const { isNameError, isPositionError } = useAddCompanyVal(formData);
 
-  const handleNumberChange = (value, name) => {
+  const handleTextChange = (e) => {
+    const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleTextChange = (e) => {
-    const { name, value } = e.target;
+  const handleNumberChange = (value, name) => {
     setFormData({ ...formData, [name]: value });
   };
 
@@ -43,9 +41,6 @@ const Form = ({
     if (isNameError || isPositionError) {
       setisValidationError(true);
     } else {
-      // local state be updated with a mutation?
-
-      // form
       addCompany.mutate(formData, {
         onSuccess: (data, variables, context) => {
           setCompanyList(data.data);
@@ -68,7 +63,6 @@ const Form = ({
 
   const handleUpdateCompany = (e, updatedCompany) => {
     e.preventDefault();
-    console.log(updatedCompany);
     updateCompany.mutate(updatedCompany, {
       onSuccess: (data, variables, context) => {
         setCompanyList(data.data);
@@ -90,25 +84,43 @@ const Form = ({
 
   return (
     <Box as='form' m='30px 0 0' boxShadow='5px 5px 10px rgb(220,220,220)'>
-      <NameInput
-        isNameError={isNameError}
-        isValidationError={isValidationError}
-        formData={formData}
-        handleTextChange={handleTextChange}
+      <TextInput
+        title='Company Name'
+        name='name'
+        value={formData.name}
+        onChange={handleTextChange}
+        isInvalid={isNameError & isValidationError}
+        errorMsg='Please add a company name'
       />
 
-      <PositionInput
-        isPositionError={isPositionError}
-        isValidationError={isValidationError}
-        formData={formData}
-        handleTextChange={handleTextChange}
+      <TextInput
+        title='Position'
+        name='position'
+        value={formData.position}
+        onChange={handleTextChange}
+        helperText='e.g., server, bartender, etc.'
+        isInvalid={isPositionError & isValidationError}
+        errorMsg='Please add a position'
       />
-
-      <WageInput formData={formData} handleNumberChange={handleNumberChange} />
-
-      <OvertimeInput
-        formData={formData}
-        handleNumberChange={handleNumberChange}
+      <NumInput
+        title='Hourly Wage'
+        name='hourlyWage'
+        value={formData.hourlyWage}
+        onChange={handleNumberChange}
+        precision={2}
+        min={0}
+        stepper
+      />
+      <NumInput
+        title='Overtime Multiplier'
+        name='overtimeMultiplier'
+        value={formData.overtimeMultiplier}
+        onChange={handleNumberChange}
+        helperText='if hourly wage is increased by %50, set to 1.5'
+        precision={1}
+        min={1}
+        stepper
+        step={0.1}
       />
 
       {/* updateCompany.error should check this as well */}
