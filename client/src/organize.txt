@@ -7,11 +7,12 @@
 */components/form/TextInput.jsx - add content to this and make universal where applicable 
  
  Input Locations
-*<LoginForm/> - path: features/auth/components/
-*<SignupForm/> - path: features/auth/components/
-*<ProfileCreationForm/> - path: features/user/components/registration/addCompany/Form
-*<AddEntryForm/> - path: features/entries/components/addEntry/
+✔*<LoginForm/> - path: features/auth/components/
+✔*<SignupForm/> - path: features/auth/components/
+✔*<ProfileCreationForm/> - path: features/user/components/registration/addCompany/Form
+✔*<AddEntryForm/> - path: features/entries/components/addEntry/
 
+*double check all forms 
 Login page needs refactoring
 
 
