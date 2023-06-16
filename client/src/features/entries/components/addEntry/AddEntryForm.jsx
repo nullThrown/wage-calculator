@@ -1,13 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
-  Box,
   Divider,
   Flex,
   Grid,
   useDisclosure,
-  FormErrorMessage,
   FormLabel,
-  Tooltip,
   Spinner,
 } from '@chakra-ui/react';
 import DatePicker from 'react-datepicker';
@@ -42,10 +39,6 @@ const AddEntryForm = ({ onToggle }) => {
     shiftDate: new Date(),
   });
   const [isValidationError, setIsValidationError] = useState(false);
-  // const [formDimensions, setFormDimensions] = useState([null, null]);
-  const [formHeight, setformHeight] = useState(null);
-  const [formWidth, setFormWidth] = useState(null);
-  // const formRef = useRef(null);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isTimeWorkedZero } = useAddEntryValidation(newEntry);
@@ -78,29 +71,6 @@ const AddEntryForm = ({ onToggle }) => {
     });
   }, [companyList[0]._id, companyList[0].totalSalesApplicable]);
 
-  // useEffect(() => {
-  //   setFormDimensions([
-  //     formRef.current.clientHeight,
-  //     formRef.current.clientWidth,
-  //   ]);
-  // }, []);
-
-  // useEffect(() => {
-  //   setformHeight(formRef.current?.clientHeight);
-  //   setFormWidth(formRef.current?.clientWidth);
-  // }, [formRef]);
-
-  // useEffect(() => {
-  //   console.log(companyList);
-  //   console.log(newEntry.companyId);
-  //   setNewEntry(() => {
-  //     const currentlySelectedCompany = companyList?.find(
-  //       (company) => company._id === newEntry.companyId
-  //     );
-  //     console.log(currentlySelectedCompany);
-  //     // return currentlySelectedCompany._id;
-  //   });
-  // }, [newEntry.companyId]);
   if (createEntry.isLoading) {
     return (
       <LargeCard>
@@ -147,34 +117,34 @@ const AddEntryForm = ({ onToggle }) => {
           <NumInput
             title='Hours Worked'
             name='hoursWorked'
-            isInvalid={isValidationError && isTimeWorkedZero}
             value={newEntry.hoursWorked}
+            onChange={handleNumberChange}
+            isInvalid={isValidationError && isTimeWorkedZero}
+            errorMsg='Must have at least 1 minute of time worked'
             precision={0}
             min={0}
-            max={24}
-            onChange={(value) => handleNumberChange(value, 'hoursWorked')}
+            max={23}
           />
           <NumInput
             title='Minutes Worked'
             name='minutesWorked'
-            isInvalid={isValidationError && isTimeWorkedZero}
             value={newEntry.minutesWorked}
+            onChange={handleNumberChange}
+            isInvalid={isValidationError && isTimeWorkedZero}
             precision={0}
             min={0}
             max={59}
-            step={5}
-            onChange={(value) => handleNumberChange(value, 'minutesWorked')}
           />
 
           <NumInput
             title='Total Sales'
             name='totalSales'
             value={formatDollar(newEntry.totalSales)}
-            precision={2}
-            min={0}
             onChange={(value) =>
               handleNumberChange(parseDollar(value), 'totalSales')
             }
+            precision={2}
+            min={0}
           />
         </Grid>
         <Divider />
@@ -188,31 +158,31 @@ const AddEntryForm = ({ onToggle }) => {
             title='Credit Tips'
             name='creditTips'
             value={formatDollar(newEntry.creditTips)}
-            precision={2}
-            min={0}
             onChange={(value) =>
               handleNumberChange(parseDollar(value), 'creditTips')
             }
+            precision={2}
+            min={0}
           />
           <NumInput
             title='Cash Tips'
             name='cashTips'
             value={formatDollar(newEntry.cashTips)}
-            precision={2}
-            min={0}
             onChange={(value) =>
               handleNumberChange(parseDollar(value), 'cashTips')
             }
+            precision={2}
+            min={0}
           />
           <NumInput
             title='Tip Out'
             name='tipOut'
             value={formatDollar(newEntry.tipOut)}
-            precision={2}
-            min={0}
             onChange={(value) =>
               handleNumberChange(parseDollar(value), 'tipOut')
             }
+            precision={2}
+            min={0}
           />
         </Grid>
         <Divider />
@@ -226,8 +196,8 @@ const AddEntryForm = ({ onToggle }) => {
         alignItems='start'
         m='.4em 0'>
         <ShiftRadioGroup
-          onChange={(value) => handleNumberChange(value, 'shiftTime')}
           value={newEntry.shiftTime}
+          onChange={(value) => handleNumberChange(value, 'shiftTime')}
         />
         <CompanySelect
           onChange={handleCompanyChange}
