@@ -10,13 +10,16 @@ import {
 } from '@chakra-ui/react';
 import CenterContainer from 'components/base/CenterContainer';
 import ErrorText from 'components/typography/ErrorText';
-import { useQuery, useMutation } from 'react-query';
+import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { loginUser } from 'features/auth/api/auth';
 import storage from 'util/storage';
+import SmallCard from 'components/card/SmallCard';
+import TextInput from 'components/form/TextInput';
 
 export const LoginForm = () => {
   const navigate = useNavigate();
+
   const [user, setUser] = useState({
     email: '',
     password: '',
@@ -26,8 +29,8 @@ export const LoginForm = () => {
       return loginUser(user);
     },
     {
-      onError: (data, variables, context) => {
-        console.log('mutation was failure:', data);
+      onError: (error, variables, context) => {
+        console.log('mutation was failure:', error);
       },
       onSuccess: (data, variables, context) => {
         storage.setToken(data.data.token);
@@ -35,39 +38,35 @@ export const LoginForm = () => {
       },
     }
   );
-  const onInputChange = (e) => {
+  const handleInputChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
   return (
-    // <Flex justify='center' height='100vh' mt='10em'>
     <CenterContainer>
-      <FormControl
-        as='form'
-        boxShadow='2px 2px 10px rgba(0,0,0, .2)'
-        maxW='540px'
-        width='96%'
-        padding='2em 4em'
-        alignSelf='start'>
+      <SmallCard as='form'>
         <Heading size='lg' fontWeight='400' textAlign='center' color='teal.900'>
           Login
         </Heading>
-        <FormLabel htmlFor='email' color='teal'>
-          email
-        </FormLabel>
-        <Input id='email' type='email' name='email' onChange={onInputChange} />
-        <FormLabel htmlFor='password' mt='1em' color='teal'>
-          Password
-        </FormLabel>
-        <Input
-          id='password'
-          type='password'
-          name='password'
-          onChange={onInputChange}
+        <TextInput
+          title='Email'
+          name='email'
+          type='email'
+          onChange={handleInputChange}
+          isInvalid={mutation.isError}
+          errorMsg={'something went wrong :('}
         />
-        <Box mt='.5em'>
+        <TextInput
+          title='Password'
+          name='password'
+          type='password'
+          onChange={handleInputChange}
+          isInvalid={mutation.isError}
+        />
+
+        {/* <Box mt='.5em'>
           {mutation.isError && <ErrorText>There was a error : (</ErrorText>}
-        </Box>
+        </Box> */}
         <Flex justifyContent='center' mt='1em'>
           <Button
             type='submit'
@@ -81,9 +80,8 @@ export const LoginForm = () => {
             Login
           </Button>
         </Flex>
-      </FormControl>
+      </SmallCard>
     </CenterContainer>
-    // </Flex>
   );
 };
 export default LoginForm;

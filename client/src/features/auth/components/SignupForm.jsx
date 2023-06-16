@@ -1,21 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
-  FormHelperText,
-  Input,
-  Flex,
-  Button,
-  Spinner,
-} from '@chakra-ui/react';
+import { Flex, Button, Spinner } from '@chakra-ui/react';
 import CenterContainer from 'components/base/CenterContainer';
 import MainHeading from 'components/typography/MainHeading';
 import SmallCard from 'components/card/SmallCard';
 import useRegisterUser from 'features/auth/hooks/useRegisterUser';
 import useSignupValidation from 'features/auth/hooks/useSignupVal';
 import ErrorText from 'components/typography/ErrorText';
+import TextInput from 'components/form/TextInput';
 
 const SignupForm = () => {
   const [user, setUser] = useState({
@@ -24,14 +16,14 @@ const SignupForm = () => {
     password: '',
   });
   const [displayErrors, setDisplayErrors] = useState(false);
-  const [serverError, setServerError] = useState(false);
+  const [serverError, setServerError] = useState(null);
 
   const registerUser = useRegisterUser(user);
   const { emailError, usernameError, passwordError, setEmailError } =
     useSignupValidation(user);
   const navigate = useNavigate();
 
-  const changeHandler = (e) => {
+  const handleInputChange = (e) => {
     setUser(() => {
       return { ...user, [e.target.name]: e.target.value };
     });
@@ -78,58 +70,38 @@ const SignupForm = () => {
         </MainHeading>
 
         <Flex flexDirection='column'>
-          <FormControl mt='.5em' isInvalid={emailError & displayErrors}>
-            <FormLabel htmlFor='email' variant='flushed'>
-              Email
-            </FormLabel>
-            <Input
-              type='email'
-              id='email'
-              name='email'
-              value={user.email}
-              onChange={changeHandler}
-            />
-            {emailError & displayErrors ? (
-              <FormErrorMessage>
-                Email is either invalid or in use.
-              </FormErrorMessage>
-            ) : null}
-          </FormControl>
-          <FormControl mt='.5em' isInvalid={usernameError & displayErrors}>
-            <FormLabel htmlFor='userName' variant='flushed'>
-              Username
-            </FormLabel>
-            <Input
-              type='text'
-              id='username'
-              name='username'
-              value={user.username}
-              onChange={changeHandler}
-            />
-            <FormErrorMessage>Must have a username.</FormErrorMessage>
-          </FormControl>
-          <FormControl mt='.5em' isInvalid={passwordError & displayErrors}>
-            <FormLabel htmlFor='password' variant='flushed'>
-              password
-            </FormLabel>
-            <Input
-              type='password'
-              id='password'
-              name='password'
-              value={user.password}
-              onChange={changeHandler}
-            />
-            {/* password error == false & displayErrors == false */}
-            {passwordError & displayErrors ? (
-              <FormErrorMessage>
-                Password must be atleast 8 characters long.
-              </FormErrorMessage>
-            ) : (
-              <FormHelperText>
-                Password must be atleast 8 characters long.
-              </FormHelperText>
-            )}
-          </FormControl>
+          <TextInput
+            title='Email'
+            name='email'
+            type='email'
+            value={user.email}
+            onChange={handleInputChange}
+            isInvalid={emailError & displayErrors}
+            errorMsg='Email is either invalid or in use'
+          />
+          <TextInput
+            title='Username'
+            name='username'
+            value={user.username}
+            onChange={handleInputChange}
+            isInvalid={usernameError & displayErrors}
+            errorMsg='Must have a username'
+          />
+
+          <TextInput
+            title='password'
+            name='password'
+            type='password'
+            value={user.password}
+            onChange={handleInputChange}
+            isInvalid={passwordError & displayErrors}
+            errorMsg='Password must be at least 8 characters'
+            helperText={
+              passwordError & displayErrors
+                ? null
+                : 'Password must be at least 8 characters'
+            }
+          />
         </Flex>
         {serverError && (
           <ErrorText m='10px 0'>
