@@ -4,41 +4,56 @@ import {
   NumberInputField,
   FormControl,
   FormErrorMessage,
+  NumberInputStepper,
+  NumberIncrementStepper,
+  NumberDecrementStepper,
+  FormHelperText,
 } from '@chakra-ui/react';
 
 const NumInput = ({
-  name,
   title,
-  isRequired,
-  isInvalid,
-  errorMsg,
+  name,
   value,
   onChange,
+  isRequired,
+  helperText,
+  errorMsg,
+  isInvalid,
+  defaultValue,
+  placeholder,
   precision,
-  step,
   min,
   max,
+  stepper,
+  step,
 }) => {
   return (
-    <FormControl m='.7em 0' isRequired={isRequired} isInvalid={isInvalid}>
+    <FormControl isRequired={isRequired} isInvalid={isInvalid}>
       <FormLabel opacity='.85' htmlFor={name}>
         {title}
       </FormLabel>
       <NumberInput
-        defaultValue={0}
-        placeholder='0.00'
+        defaultValue={defaultValue}
+        placeholder={placeholder}
         precision={precision}
         step={step}
         min={min}
         max={max}
         focusBorderColor='blue.400'
         value={value}
-        onChange={onChange}
+        onChange={(value) => onChange(value, name)}
         id={name}
         name={name}>
         <NumberInputField />
+        {stepper && (
+          <NumberInputStepper>
+            <NumberIncrementStepper />
+            <NumberDecrementStepper />
+          </NumberInputStepper>
+        )}
       </NumberInput>
-      <FormErrorMessage>{errorMsg}</FormErrorMessage>
+      {helperText && <FormHelperText>{helperText}</FormHelperText>}
+      {errorMsg && <FormErrorMessage>{errorMsg}</FormErrorMessage>}
     </FormControl>
   );
 };
