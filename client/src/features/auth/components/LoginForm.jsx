@@ -1,15 +1,6 @@
 import React, { useState } from 'react';
-import {
-  FormControl,
-  FormLabel,
-  Input,
-  Heading,
-  Button,
-  Flex,
-  Box,
-} from '@chakra-ui/react';
+import { Heading, Button, Flex } from '@chakra-ui/react';
 import CenterContainer from 'components/base/CenterContainer';
-import ErrorText from 'components/typography/ErrorText';
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { loginUser } from 'features/auth/api/auth';
@@ -64,9 +55,6 @@ export const LoginForm = () => {
           isInvalid={mutation.isError}
         />
 
-        {/* <Box mt='.5em'>
-          {mutation.isError && <ErrorText>There was a error : (</ErrorText>}
-        </Box> */}
         <Flex justifyContent='center' mt='1em'>
           <Button
             type='submit'
