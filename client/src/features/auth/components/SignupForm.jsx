@@ -6,9 +6,8 @@ import MainHeading from 'components/typography/MainHeading';
 import SmallCard from 'components/card/SmallCard';
 import useRegisterUser from 'features/auth/hooks/useRegisterUser';
 import useSignupValidation from 'features/auth/hooks/useSignupVal';
-import ErrorText from 'components/typography/ErrorText';
 import TextInput from 'components/form/TextInput';
-
+import SomethingWentWrong from 'components/typography/SomethingWentWrong.jsx';
 const SignupForm = () => {
   const [user, setUser] = useState({
     email: '',
@@ -103,11 +102,7 @@ const SignupForm = () => {
             }
           />
         </Flex>
-        {serverError && (
-          <ErrorText m='10px 0'>
-            Something went wrong :( please try again
-          </ErrorText>
-        )}
+        {serverError && <SomethingWentWrong />}
         <Button
           type='submit'
           color='teal.800'
