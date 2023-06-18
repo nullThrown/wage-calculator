@@ -7,10 +7,8 @@ import {
   Box,
   Spinner,
 } from '@chakra-ui/react';
-import ErrorText from 'components/typography/ErrorText';
 import MainContainer from 'components/base/Container';
 import MainHeading from 'components/typography/MainHeading';
-import AddEntryBtn from 'features/entries/components/addEntry/AddEntryAccordianBtn';
 import Header from 'components/base/Header';
 import AddEntryForm from 'features/entries/components/addEntry/AddEntryForm';
 import Overview from 'features/overview/components/Overview';
@@ -24,6 +22,8 @@ import Entries from 'features/entries/components/Entries';
 import { useQuery } from 'react-query';
 import { getUser } from 'features/auth/api/auth';
 import CenterContainer from 'components/base/CenterContainer';
+import SomethingWentWrong from 'components/typography/SomethingWentWrong';
+import AddEntryAccordianBtn from 'components/button/AddEntryAccordianBtn';
 const Home = () => {
   const [filter, setFilter] = useState('all');
 
@@ -40,9 +40,7 @@ const Home = () => {
   if (isError) {
     return (
       <CenterContainer>
-        <ErrorText m='6em 0 0 0'>
-          Something went wrong : ( Please try again.
-        </ErrorText>
+        <SomethingWentWrong />
       </CenterContainer>
     );
   }
@@ -52,7 +50,7 @@ const Home = () => {
       <Header />
       <MainContainer>
         <MainHeading>Welcome, {data.username}</MainHeading>
-        <AddEntryBtn onToggle={onToggle} />
+        <AddEntryAccordianBtn onToggle={onToggle} />
         <Collapse in={isOpen} animateOpacity>
           <AddEntryForm onToggle={onToggle} />
         </Collapse>
@@ -65,7 +63,6 @@ const Home = () => {
               setFilter={setFilter}
               companyList={data.companies}
             />
-            {/* completely breaks page */}
             <Overview filter={filter} />
             <Entries filter={filter} />
             {/* <Day filter={filter} /> */}
