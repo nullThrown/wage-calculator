@@ -8,6 +8,7 @@ import useRegisterUser from 'features/auth/hooks/useRegisterUser';
 import useSignupValidation from 'features/auth/hooks/useSignupVal';
 import TextInput from 'components/form/TextInput';
 import SomethingWentWrong from 'components/typography/SomethingWentWrong.jsx';
+import SignupBtn from 'components/button/SignupBtn';
 const SignupForm = () => {
   const [user, setUser] = useState({
     email: '',
@@ -103,17 +104,7 @@ const SignupForm = () => {
           />
         </Flex>
         {serverError && <SomethingWentWrong />}
-        <Button
-          type='submit'
-          color='teal.800'
-          colorScheme='teal'
-          variant='outline'
-          display='block'
-          m='1.4em auto 0'
-          textAlign='center'
-          onClick={handleSubmit}>
-          Sign Up
-        </Button>
+        <SignupBtn handleSubmit={handleSubmit} />
       </SmallCard>
     </CenterContainer>
   );
