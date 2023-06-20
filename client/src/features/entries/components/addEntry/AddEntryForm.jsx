@@ -13,16 +13,15 @@ import QuatHeading from 'components/typography/QuatHeading';
 import NumInput from 'components/form/NumInput';
 import ShiftRadioGroup from 'features/entries/components/addEntry/ShiftRadioGroup';
 import LargeCard from 'components/card/LargeCard';
-import SubmitEntry from 'features/entries/components/addEntry/SubmitEntryBtn';
 import CompanySelect from 'features/entries/components/addEntry/CompanySelect';
-import EditEntryBtn from 'features/entries/components/editEntry/EditEntryBtn';
 import EditEntryModal from 'features/entries/components/editEntry/EditEntryModal';
-import ErrorText from 'components/typography/ErrorText';
 import { formatDollar, parseDollar } from 'util/format';
 import useCreateEntry from '../../hooks/useCreateEntry';
 import useAddEntryValidation from '../../hooks/useAddEntryValidation';
 import useGetCompanies from 'features/companySelect/hooks/useGetCompanies';
 import ShiftCheckboxGroup from 'features/entries/components/ShiftCheckboxGroup';
+import SubmitEntryBtn from 'components/button/SubmitEntryBtn';
+import EditEntryBtn from 'components/button/EditEntryBtn';
 
 const AddEntryForm = ({ onToggle }) => {
   const [newEntry, setNewEntry] = useState({
@@ -52,7 +51,7 @@ const AddEntryForm = ({ onToggle }) => {
   const handleCompanyChange = (e) =>
     setNewEntry({ ...newEntry, companyId: e.target.value });
 
-  const submitHandler = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (isTimeWorkedZero) {
       setIsValidationError(true);
@@ -82,7 +81,7 @@ const AddEntryForm = ({ onToggle }) => {
     <LargeCard as='form' m='1em 0 0 0'>
       <TertHeading text="Add Earning's Report" textAlign='center' />
       <Flex m='1em' justify='center'>
-        <EditEntryBtn onClick={onOpen} />
+        <EditEntryBtn onOpen={onOpen} />
         <EditEntryModal isOpen={isOpen} onClose={onClose} />
       </Flex>
 
@@ -105,9 +104,7 @@ const AddEntryForm = ({ onToggle }) => {
       </Flex>
       <Flex direction='column' align='start' m='1em 0'>
         <Divider mt='.2em' />
-        {isValidationError && isTimeWorkedZero && (
-          <ErrorText>Must have at least 1 minute of time worked.</ErrorText>
-        )}
+
         <Grid
           gap='10px'
           templateColumns='repeat(2, 25%) 50%'
@@ -207,7 +204,7 @@ const AddEntryForm = ({ onToggle }) => {
       </Grid>
       <Divider />
 
-      <SubmitEntry onClick={submitHandler} />
+      <SubmitEntryBtn handleSubmit={handleSubmit} />
     </LargeCard>
   );
 };
