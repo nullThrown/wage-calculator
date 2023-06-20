@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import CompanyDisplay from 'features/user/components/registration/addCompany/CompanyDisplay';
 import FinishInfoModal from 'features/user/components/registration/addCompany/FinishInfoModal';
 import Form from 'features/user/components/registration/addCompany/Form';
+import FinishProfileSetupBtn from 'components/button/FinishProfileSetupBtn';
 
 const initialCompanyState = {
   name: '',
@@ -68,9 +69,7 @@ const ProfileCreation = () => {
             />
 
             <Flex justify='center' mt='4em'>
-              <Button colorScheme='telegram' size='lg' onClick={handleFinish}>
-                Finish
-              </Button>
+              <FinishProfileSetupBtn handleFinish={handleFinish} />
             </Flex>
           </SmallCard>
         </CenterContainer>
