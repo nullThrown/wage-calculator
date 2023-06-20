@@ -69,6 +69,21 @@ new notes will be added and new to do items will be created from bottom-up
 
 GENERAL 
 
+*add a services folder (path: src/services) to handle plain JavaScript modules (e.g., localStorage.js )
+- add initial state objects here 
+
+*
+problem: remove button components from separate files -- no reason to have them there
+
+*
+problem:  create generic react-query error handler
+  
+*
+problem: place toasts in separate component folder
+
+*
+problem: find all 'something went wrong error message" and replace with component 
+
 *
 problem: DefaultText component should be modifed by the chakra ui extend themes section 
 There is no reason to have a separate component for that.
@@ -79,7 +94,6 @@ solution: mongoose join (populate) method
 
 *
 problem: create format time util function that converts time from a decimal into a hours + minutes worked
-
 
 *
 problem: useAddCompanyVal.js file (path: features/auth/hooks) should be placed in user/hooks/validation folder
@@ -97,20 +111,6 @@ problem: either have inputs be a separate component or individual for each
 problem: axios stringify & node server convert request body date times into different timezone 
 many date times need to reflect local time zones. 
 solution: create system that preserves local time zones. 
-
-*
-problem: input components created both as an abstract general component (path: components/form/) and as individual inputs 
-for specific components 
-solution: all inputs should be created from the general NumInput/TextInput components 
-
-*
-problem: create 'something went wrong error message" as distinct component 
-
-*
-problem: two components ErrorMsg & ErrorText should be combined into single component
-
-*
-problem: certain feature specific components are placed in the general component folder
 
 
 
