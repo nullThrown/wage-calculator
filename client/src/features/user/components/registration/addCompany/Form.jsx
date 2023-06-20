@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import { Box, Flex, ButtonGroup, useToast } from '@chakra-ui/react';
 import ErrorText from 'components/typography/ErrorText';
-import EditCompanyBtn from './EditCompanyBtn';
-import CancelEditBtn from './CancelEditBtn';
-import AddCompanyBtn from './AddCompanyBtn';
 import useAddCompany from 'features/user/hooks/useAddCompany';
 import useUpdateCompany from 'features/user/hooks/useUpdateCompany';
 import useAddCompanyVal from 'features/auth/hooks/useAddCompanyVal';
 import TextInput from 'components/form/TextInput';
 import NumInput from 'components/form/NumInput';
-
+import CancelEditBtn from 'components/button/CancelEditBtn';
+import EditCompanyBtn from 'components/button/EditCompanyBtn';
+import AddCompanyBtn from 'components/button/AddCompanyBtn';
+import { successToast, errorToast } from 'components/toast/toast';
 const Form = ({
   initialCompanyState,
   formData,
@@ -44,13 +44,7 @@ const Form = ({
       addCompany.mutate(formData, {
         onSuccess: (data, variables, context) => {
           setCompanyList(data.data);
-          toast({
-            title: 'Company Added Successfully!',
-            status: 'success',
-            duration: 5000,
-            isClosable: true,
-            position: 'top',
-          });
+          toast({ ...successToast, title: 'Company Added Successfully!' });
           setFormData(initialCompanyState);
         },
         onError: (error, variables, context) => {
@@ -61,18 +55,12 @@ const Form = ({
     }
   };
 
-  const handleUpdateCompany = (e, updatedCompany) => {
+  const handleUpdateCompany = (e) => {
     e.preventDefault();
-    updateCompany.mutate(updatedCompany, {
+    updateCompany.mutate(formData, {
       onSuccess: (data, variables, context) => {
         setCompanyList(data.data);
-        toast({
-          title: 'Company Updated Successfully!',
-          status: 'success',
-          duration: '5000',
-          isClosable: true,
-          position: 'top',
-        });
+        toast({ ...successToast, title: 'Company Updated Successfully!' });
         setIsEditMode(false);
         setFormData(initialCompanyState);
       },
@@ -136,15 +124,14 @@ const Form = ({
         {isEditMode ? (
           <ButtonGroup gap='3'>
             <EditCompanyBtn
-              updateCompany={updateCompany}
               handleUpdateCompany={handleUpdateCompany}
-              formData={formData}
+              isLoading={updateCompany.isLoading}
             />
             <CancelEditBtn handleCancelEditMode={handleCancelEditMode} />
           </ButtonGroup>
         ) : (
           <AddCompanyBtn
-            addCompany={addCompany}
+            isLoading={addCompany.isLoading}
             handleAddCompany={handleAddCompany}
           />
         )}
