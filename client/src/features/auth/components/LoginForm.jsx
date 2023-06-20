@@ -1,25 +1,30 @@
 import React, { useState } from 'react';
-import { Heading, Button, Flex } from '@chakra-ui/react';
+import { Heading, Flex } from '@chakra-ui/react';
 import CenterContainer from 'components/base/CenterContainer';
-import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import { loginUser } from 'features/auth/api/auth';
 import storage from 'util/storage';
 import SmallCard from 'components/card/SmallCard';
 import TextInput from 'components/form/TextInput';
+import LoginBtn from 'components/button/LoginBtn';
+import useLoginUser from '../hooks/useLoginUser';
 
 export const LoginForm = () => {
-  const navigate = useNavigate();
-
   const [user, setUser] = useState({
     email: '',
     password: '',
   });
-  const mutation = useMutation(
-    (user) => {
-      return loginUser(user);
-    },
-    {
+
+  const navigate = useNavigate();
+  const loginUser = useLoginUser(user);
+
+  const handleInputChange = (e) => {
+    setUser({ ...user, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    return loginUser.mutate(user, {
       onError: (error, variables, context) => {
         console.log('mutation was failure:', error);
       },
@@ -27,10 +32,7 @@ export const LoginForm = () => {
         storage.setToken(data.data.token);
         navigate('/home');
       },
-    }
-  );
-  const handleInputChange = (e) => {
-    setUser({ ...user, [e.target.name]: e.target.value });
+    });
   };
 
   return (
@@ -44,7 +46,7 @@ export const LoginForm = () => {
           name='email'
           type='email'
           onChange={handleInputChange}
-          isInvalid={mutation.isError}
+          isInvalid={loginUser.isError}
           errorMsg={'something went wrong :('}
         />
         <TextInput
@@ -52,21 +54,14 @@ export const LoginForm = () => {
           name='password'
           type='password'
           onChange={handleInputChange}
-          isInvalid={mutation.isError}
+          isInvalid={loginUser.isError}
         />
 
         <Flex justifyContent='center' mt='1em'>
-          <Button
-            type='submit'
-            variant='outline'
-            color='black'
-            colorScheme='blackAlpha'
-            isLoading={mutation.isLoading}
-            onClick={() => {
-              mutation.mutate(user);
-            }}>
-            Login
-          </Button>
+          <LoginBtn
+            isLoading={loginUser.isLoading}
+            handleSubmit={handleSubmit}
+          />
         </Flex>
       </SmallCard>
     </CenterContainer>
