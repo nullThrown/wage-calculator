@@ -26,7 +26,7 @@ const useAuth = () => {
       const res = await axios.get('/auth');
       setIsAuth(() => res.data.msg === 'token_valid');
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
   useEffect(() => {
