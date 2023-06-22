@@ -2,12 +2,17 @@ import React, { useState } from 'react';
 import { Heading, Flex } from '@chakra-ui/react';
 import CenterContainer from 'components/base/CenterContainer';
 import { useNavigate } from 'react-router-dom';
-import storage from 'util/storage';
 import SmallCard from 'components/card/SmallCard';
 import TextInput from 'components/form/TextInput';
 import LoginBtn from 'components/button/LoginBtn';
 import useLoginUser from '../hooks/useLoginUser';
-
+import { useToast } from '@chakra-ui/react';
+import { errorToast } from 'components/toast/toast';
+import {
+  invalid_credentials,
+  connection_error,
+  server_error,
+} from 'constants/api/error';
 export const LoginForm = () => {
   const [user, setUser] = useState({
     email: '',
@@ -15,6 +20,7 @@ export const LoginForm = () => {
   });
 
   const navigate = useNavigate();
+  const toast = useToast();
   const loginUser = useLoginUser(user);
 
   const handleInputChange = (e) => {
@@ -26,10 +32,19 @@ export const LoginForm = () => {
 
     return loginUser.mutate(user, {
       onError: (error, variables, context) => {
-        console.log('mutation was failure:', error);
+        const { message } = error;
+        switch (message) {
+          case invalid_credentials:
+            console.log(invalid_credentials);
+            break;
+
+          case server_error:
+          case connection_error:
+            toast({ ...errorToast });
+            break;
+        }
       },
       onSuccess: (data, variables, context) => {
-        storage.setToken(data.data.token);
         navigate('/home');
       },
     });
@@ -46,7 +61,7 @@ export const LoginForm = () => {
           name='email'
           type='email'
           onChange={handleInputChange}
-          isInvalid={loginUser.isError}
+          isInvalid={isValidationError}
           errorMsg={'something went wrong :('}
         />
         <TextInput
@@ -54,7 +69,7 @@ export const LoginForm = () => {
           name='password'
           type='password'
           onChange={handleInputChange}
-          isInvalid={loginUser.isError}
+          isInvalid={isValidationError}
         />
 
         <Flex justifyContent='center' mt='1em'>
