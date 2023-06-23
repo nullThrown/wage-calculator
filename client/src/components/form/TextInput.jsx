@@ -12,12 +12,16 @@ const TextInput = ({
   value,
   onChange,
   helperText,
+  isRequired,
   isInvalid,
   isDisabled,
   errorMsg,
 }) => {
   return (
-    <FormControl isInvalid={isInvalid} isDisabled={isDisabled}>
+    <FormControl
+      isInvalid={isInvalid}
+      isDisabled={isDisabled}
+      isRequired={isRequired}>
       <FormLabel htmlFor={name} opacity='.85'>
         {title}
       </FormLabel>
