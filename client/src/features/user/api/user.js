@@ -1,4 +1,5 @@
 import axios from 'config/axios';
+import { connection_error } from 'constants/api/error';
 
 export const getUser = async () => {
   try {
@@ -23,7 +24,7 @@ export const addCompany = async (company) => {
     const res = await axios.post('/user/company/create', company);
     return res;
   } catch (err) {
-    const errorMsg = !err.response ? 'connection_error' : err.response.data.msg;
+    const errorMsg = !err.response ? connection_error : err.response.data.msg;
     return Promise.reject(new Error(errorMsg));
   }
 };
