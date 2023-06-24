@@ -1,4 +1,5 @@
 import axios from 'config/axios';
+import { connection_error } from 'constants/api/error';
 
 export const createEntry = async (entry) => {
   try {
@@ -6,8 +7,8 @@ export const createEntry = async (entry) => {
     const { data } = await axios.post('/entries/create', entry);
     return data;
   } catch (err) {
-    console.log(err);
-    return err;
+    const errorMsg = !err.response ? connection_error : err.response.data.msg;
+    return Promise.reject(new Error(errorMsg));
   }
 };
 
