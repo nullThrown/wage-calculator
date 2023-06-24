@@ -1,14 +1,20 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Flex, Button, Spinner } from '@chakra-ui/react';
+import { Flex, useToast } from '@chakra-ui/react';
 import CenterContainer from 'components/base/CenterContainer';
 import MainHeading from 'components/typography/MainHeading';
 import SmallCard from 'components/card/SmallCard';
 import useRegisterUser from 'features/auth/hooks/useRegisterUser';
 import useSignupValidation from 'features/auth/hooks/useSignupVal';
 import TextInput from 'components/form/TextInput';
-import SomethingWentWrong from 'components/typography/SomethingWentWrong.jsx';
 import SignupBtn from 'components/button/SignupBtn';
+import {
+  connection_error,
+  email_already_exists,
+  server_error,
+} from 'constants/api/error';
+import { errorToast } from 'components/toast/toast';
+
 const SignupForm = () => {
   const [user, setUser] = useState({
     email: '',
@@ -16,12 +22,12 @@ const SignupForm = () => {
     password: '',
   });
   const [displayErrors, setDisplayErrors] = useState(false);
-  const [serverError, setServerError] = useState(null);
 
-  const registerUser = useRegisterUser(user);
+  const navigate = useNavigate();
+  const toast = useToast();
   const { emailError, usernameError, passwordError, setEmailError } =
     useSignupValidation(user);
-  const navigate = useNavigate();
+  const registerUser = useRegisterUser(user);
 
   const handleInputChange = (e) => {
     setUser(() => {
@@ -40,28 +46,16 @@ const SignupForm = () => {
         navigate('/signup-success');
       },
       onError: (error, variables, context) => {
-        console.log(error.message);
         const { message } = error;
-        // simplify this
-        setServerError(() => {
-          if (message === 'connection_error' || message === 'server_error') {
-            return true;
-          } else {
-            return false;
-          }
-        });
-        setEmailError(() => message === 'email_already_exists');
+        if (message === email_already_exists) {
+          setEmailError(true);
+        } else if (message === server_error || message === connection_error) {
+          toast({ ...errorToast });
+        }
       },
     });
   };
 
-  if (registerUser.isLoading) {
-    return (
-      <CenterContainer>
-        <Spinner size='lg' color='teal.500' />
-      </CenterContainer>
-    );
-  }
   return (
     <CenterContainer>
       <SmallCard as='form'>
@@ -103,8 +97,10 @@ const SignupForm = () => {
             }
           />
         </Flex>
-        {serverError && <SomethingWentWrong />}
-        <SignupBtn handleSubmit={handleSubmit} />
+        <SignupBtn
+          isLoading={registerUser.isLoading}
+          handleSubmit={handleSubmit}
+        />
       </SmallCard>
     </CenterContainer>
   );

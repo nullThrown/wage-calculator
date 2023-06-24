@@ -13,11 +13,20 @@ import {
   connection_error,
   server_error,
 } from 'constants/api/error';
+import ErrorText from 'components/typography/ErrorText';
+
+const initialErrorValue = {
+  isError: false,
+  type: null,
+  desc: null,
+};
+
 export const LoginForm = () => {
   const [user, setUser] = useState({
     email: '',
     password: '',
   });
+  const [error, setError] = useState(initialErrorValue);
 
   const navigate = useNavigate();
   const toast = useToast();
@@ -29,19 +38,21 @@ export const LoginForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    if (user.email.length === 0 || user.password.length === 0) {
+      return;
+    }
     return loginUser.mutate(user, {
       onError: (error, variables, context) => {
         const { message } = error;
-        switch (message) {
-          case invalid_credentials:
-            console.log(invalid_credentials);
-            break;
-
-          case server_error:
-          case connection_error:
-            toast({ ...errorToast });
-            break;
+        if (message === invalid_credentials) {
+          setError({
+            isError: true,
+            type: invalid_credentials,
+            desc: 'Invalid credentials',
+          });
+        } else if (message === server_error || message === connection_error) {
+          setError(initialErrorValue);
+          toast({ ...errorToast });
         }
       },
       onSuccess: (data, variables, context) => {
@@ -56,20 +67,20 @@ export const LoginForm = () => {
         <Heading size='lg' fontWeight='400' textAlign='center' color='teal.900'>
           Login
         </Heading>
+        {error.isError && <ErrorText>{error.desc}</ErrorText>}
         <TextInput
           title='Email'
           name='email'
           type='email'
           onChange={handleInputChange}
-          isInvalid={isValidationError}
-          errorMsg={'something went wrong :('}
+          isInvalid={error.isError}
         />
         <TextInput
           title='Password'
           name='password'
           type='password'
           onChange={handleInputChange}
-          isInvalid={isValidationError}
+          isInvalid={error.isError}
         />
 
         <Flex justifyContent='center' mt='1em'>
