@@ -10,6 +10,7 @@ import CancelEditBtn from 'components/button/CancelEditBtn';
 import EditCompanyBtn from 'components/button/EditCompanyBtn';
 import AddCompanyBtn from 'components/button/AddCompanyBtn';
 import { successToast, errorToast } from 'components/toast/toast';
+import { connection_error, server_error } from 'constants/api/error';
 const Form = ({
   initialCompanyState,
   formData,
@@ -48,7 +49,10 @@ const Form = ({
           setFormData(initialCompanyState);
         },
         onError: (error, variables, context) => {
-          console.log(error.message);
+          const { message } = error;
+          if (message === server_error || message === connection_error) {
+            toast({ ...errorToast });
+          }
         },
       });
       setisValidationError(false);
@@ -65,7 +69,10 @@ const Form = ({
         setFormData(initialCompanyState);
       },
       onError: (error, variables, context) => {
-        console.log(error);
+        const { message } = error;
+        if (message === server_error || message === connection_error) {
+          toast({ ...errorToast });
+        }
       },
     });
   };
@@ -80,7 +87,6 @@ const Form = ({
         isInvalid={isNameError & isValidationError}
         errorMsg='Please add a company name'
       />
-
       <TextInput
         title='Position'
         name='position'
@@ -110,15 +116,6 @@ const Form = ({
         stepper
         step={0.1}
       />
-
-      {/* updateCompany.error should check this as well */}
-      {(addCompany.error?.message === 'connection_error' ||
-        addCompany.error?.message === 'server_error') && (
-        // separate this ErrorText into typography folder
-        <ErrorText m='.8em 0 0'>
-          Something went wrong :) Please Try again
-        </ErrorText>
-      )}
 
       <Flex justifyContent='center'>
         {isEditMode ? (
