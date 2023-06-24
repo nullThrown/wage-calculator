@@ -1,8 +1,7 @@
 import { useMutation, useQuery } from 'react-query';
-import { addCompany } from '../api/user';
+import { addCompany } from 'features/user/api/user';
 
-const useAddCompany = (company) =>
-  useMutation((company) => addCompany(company));
+const useAddCompany = () => useMutation((company) => addCompany(company));
 // invalidate user query
 
 export default useAddCompany;
