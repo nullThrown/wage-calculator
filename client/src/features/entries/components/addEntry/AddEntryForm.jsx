@@ -5,7 +5,7 @@ import {
   Grid,
   useDisclosure,
   FormLabel,
-  Spinner,
+  useToast,
 } from '@chakra-ui/react';
 import DatePicker from 'react-datepicker';
 import TertHeading from 'components/typography/TertHeading';
@@ -22,27 +22,29 @@ import useGetCompanies from 'features/companySelect/hooks/useGetCompanies';
 import ShiftCheckboxGroup from 'features/entries/components/ShiftCheckboxGroup';
 import SubmitEntryBtn from 'components/button/SubmitEntryBtn';
 import EditEntryBtn from 'components/button/EditEntryBtn';
-
+import { errorToast, successToast } from 'components/toast/toast';
+import { connection_error, server_error } from 'constants/api/error';
+const initialEntryValue = {
+  hoursWorked: 0,
+  minutesWorked: 0,
+  totalSales: 0,
+  creditTips: 0,
+  cashTips: 0,
+  tipOut: 0,
+  shiftTime: 'morning',
+  companyId: '',
+  specialEvent: false,
+  totalSalesApplicable: null,
+  shiftDate: new Date(),
+};
 const AddEntryForm = ({ onToggle }) => {
-  const [newEntry, setNewEntry] = useState({
-    hoursWorked: 0,
-    minutesWorked: 0,
-    totalSales: 0,
-    creditTips: 0,
-    cashTips: 0,
-    tipOut: 0,
-    shiftTime: 'morning',
-    companyId: '',
-    specialEvent: false,
-    totalSalesApplicable: null,
-    shiftDate: new Date(),
-  });
+  const [newEntry, setNewEntry] = useState(initialEntryValue);
   const [isValidationError, setIsValidationError] = useState(false);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isTimeWorkedZero } = useAddEntryValidation(newEntry);
   const { isLoading, isError, companyList } = useGetCompanies();
-
+  const toast = useToast();
   const createEntry = useCreateEntry();
 
   const handleNumberChange = (value, name) =>
@@ -56,7 +58,19 @@ const AddEntryForm = ({ onToggle }) => {
     if (isTimeWorkedZero) {
       setIsValidationError(true);
     } else {
-      createEntry.mutate(newEntry);
+      setIsValidationError(false);
+      createEntry.mutate(newEntry, {
+        onSuccess: (data, variables, context) => {
+          setNewEntry(initialEntryValue);
+          toast({ ...successToast, title: 'New entry added' });
+        },
+        onError: (error, variables, context) => {
+          const { message } = error;
+          if (message === server_error || message === connection_error) {
+            toast({ ...errorToast });
+          }
+        },
+      });
     }
   };
 
@@ -70,13 +84,6 @@ const AddEntryForm = ({ onToggle }) => {
     });
   }, [companyList[0]._id, companyList[0].totalSalesApplicable]);
 
-  if (createEntry.isLoading) {
-    return (
-      <LargeCard>
-        <Spinner></Spinner>
-      </LargeCard>
-    );
-  }
   return (
     <LargeCard as='form' m='1em 0 0 0'>
       <TertHeading text="Add Earning's Report" textAlign='center' />
@@ -204,7 +211,10 @@ const AddEntryForm = ({ onToggle }) => {
       </Grid>
       <Divider />
 
-      <SubmitEntryBtn handleSubmit={handleSubmit} />
+      <SubmitEntryBtn
+        handleSubmit={handleSubmit}
+        isLoading={createEntry.isLoading}
+      />
     </LargeCard>
   );
 };
