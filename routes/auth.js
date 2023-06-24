@@ -54,7 +54,6 @@ router.post('/register', async (req, res) => {
       await user.save();
       await entries.save();
 
-      // authsecret
       const payload = {
         user: {
           id: user.id,
