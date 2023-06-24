@@ -14,6 +14,7 @@ import SetCompanyToEditBtn from 'components/button/SetCompanyToEditBtn';
 import DeleteCompanyBtn from 'components/button/DeleteCompanyBtn';
 import { successToast, errorToast } from 'components/toast/toast';
 import useDeleteCompany from 'features/user/hooks/usedeleteCompany';
+import { connection_error, server_error } from 'constants/api/error';
 
 const CompanyDisplay = ({ companyList, setCompanyList, handleSetEditMode }) => {
   const deleteCompany = useDeleteCompany();
@@ -28,7 +29,10 @@ const CompanyDisplay = ({ companyList, setCompanyList, handleSetEditMode }) => {
         toast({ ...successToast, title: 'Company removed Successfully!' });
       },
       onError: (error, variables, context) => {
-        toast({ ...errorToast, title: 'Company removed Unsuccessfully' });
+        const { message } = error;
+        if (message === server_error || message === connection_error) {
+          toast({ ...errorToast });
+        }
       },
     });
   };
