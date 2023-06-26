@@ -22,12 +22,12 @@ export const updateEntry = async (entry) => {
   }
 };
 
-export const getEntriesByWeek = async (date, filter) => {
+export const getEntriesByWeek = async (filter, date) => {
   try {
-    const { data } = await axios.get(`/entries/week/${date}/${filter}`);
+    const { data } = await axios.get(`/entries/week/${filter}/${date}`);
     return data;
   } catch (err) {
-    console.log(err);
-    return err;
+    const errorMsg = !err.response ? connection_error : err.response.data.msg;
+    return Promise.reject(new Error(errorMsg));
   }
 };
