@@ -18,7 +18,6 @@ import EditEntryModal from 'features/entries/components/editEntry/EditEntryModal
 import { formatDollar, parseDollar } from 'util/format';
 import useCreateEntry from '../../hooks/useCreateEntry';
 import useAddEntryValidation from '../../hooks/useAddEntryValidation';
-import useGetCompanies from 'features/companySelect/hooks/useGetCompanies';
 import ShiftCheckboxGroup from 'features/entries/components/ShiftCheckboxGroup';
 import SubmitEntryBtn from 'components/button/SubmitEntryBtn';
 import EditEntryBtn from 'components/button/EditEntryBtn';
@@ -32,7 +31,7 @@ const initialEntryValue = {
   cashTips: 0,
   tipOut: 0,
   shiftTime: 'morning',
-  companyId: '',
+  companyId: null,
   specialEvent: false,
   totalSalesApplicable: null,
   shiftDate: new Date(),
@@ -43,7 +42,6 @@ const AddEntryForm = ({ onToggle }) => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isTimeWorkedZero } = useAddEntryValidation(newEntry);
-  const { isLoading, isError, companyList } = useGetCompanies();
   const toast = useToast();
   const createEntry = useCreateEntry();
 
@@ -76,13 +74,13 @@ const AddEntryForm = ({ onToggle }) => {
 
   // newEntry.companyId does not populate until company select handler is fired
   // this effect allows the companyId to populate to the first company in list(company initially selected)
-  useEffect(() => {
-    setNewEntry({
-      ...newEntry,
-      companyId: companyList[0]._id,
-      totalSalesApplicable: companyList[0].totalSalesApplicable,
-    });
-  }, [companyList[0]._id, companyList[0].totalSalesApplicable]);
+  // useEffect(() => {
+  //   setNewEntry({
+  //     ...newEntry,
+  //     companyId: companyList[0]._id,
+  //     totalSalesApplicable: companyList[0].totalSalesApplicable,
+  //   });
+  // }, [companyList[0]._id, companyList[0].totalSalesApplicable]);
 
   return (
     <LargeCard as='form' m='1em 0 0 0'>
@@ -206,7 +204,6 @@ const AddEntryForm = ({ onToggle }) => {
         <CompanySelect
           onChange={handleCompanyChange}
           companyId={newEntry.companyId}
-          companyList={companyList}
         />
       </Grid>
       <Divider />
