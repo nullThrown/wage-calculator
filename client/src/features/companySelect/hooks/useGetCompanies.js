@@ -1,8 +1,12 @@
 import { useQuery } from 'react-query';
-import { getUser } from 'features/user/api/user';
+import { getCompanies } from 'features/user/api/user';
+
 const useGetCompanies = () => {
-  const { data, isLoading, isError } = useQuery(['user'], getUser);
-  const companyList = data?.companies;
+  const {
+    data: companyList,
+    isLoading,
+    isError,
+  } = useQuery(['companies'], getCompanies);
 
   return { isLoading, isError, companyList };
 };
