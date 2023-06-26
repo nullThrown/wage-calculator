@@ -9,23 +9,28 @@ import {
   TableContainer,
   Text,
   useToast,
+  Spinner,
 } from '@chakra-ui/react';
 import SetCompanyToEditBtn from 'components/button/SetCompanyToEditBtn';
 import DeleteCompanyBtn from 'components/button/DeleteCompanyBtn';
 import { successToast, errorToast } from 'components/toast/toast';
 import useDeleteCompany from 'features/user/hooks/usedeleteCompany';
 import { connection_error, server_error } from 'constants/api/error';
+import { useQueryClient } from 'react-query';
+import useGetCompanies from 'features/companySelect/hooks/useGetCompanies';
+import SomethingWentWrong from 'components/typography/SomethingWentWrong';
 
-const CompanyDisplay = ({ companyList, setCompanyList, handleSetEditMode }) => {
+const CompanyDisplay = ({ handleSetEditMode }) => {
   const deleteCompany = useDeleteCompany();
   const toast = useToast();
+  const { isLoading, isError, companyList } = useGetCompanies();
+  const queryClient = useQueryClient();
 
   const handleDeleteCompany = (_id) => {
     deleteCompany.mutate(_id, {
       onSuccess: (data, variables, context) => {
-        setCompanyList((prev) => {
-          return prev.filter((company) => company._id !== _id);
-        });
+        queryClient.setQueryData(['companies'], data);
+
         toast({ ...successToast, title: 'Company removed Successfully!' });
       },
       onError: (error, variables, context) => {
@@ -36,6 +41,13 @@ const CompanyDisplay = ({ companyList, setCompanyList, handleSetEditMode }) => {
       },
     });
   };
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+  if (isError) {
+    return <SomethingWentWrong />;
+  }
   return (
     <Box mt='2em'>
       <Text textAlign='center' fontSize='lg' fontWeight='600'>
@@ -52,7 +64,7 @@ const CompanyDisplay = ({ companyList, setCompanyList, handleSetEditMode }) => {
             </Tr>
           </Thead>
           <Tbody>
-            {companyList.length === 0 && (
+            {companyList?.length === 0 && (
               <Tr>
                 <Td>-</Td>
                 <Td>-</Td>
@@ -60,7 +72,7 @@ const CompanyDisplay = ({ companyList, setCompanyList, handleSetEditMode }) => {
                 <Td>-</Td>
               </Tr>
             )}
-            {companyList.map((company, index) => {
+            {companyList?.map((company, index) => {
               const { name, position, hourlyWage, overtimeMultiplier, _id } =
                 company;
               return (
