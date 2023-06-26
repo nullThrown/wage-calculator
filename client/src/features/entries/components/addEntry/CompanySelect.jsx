@@ -1,5 +1,17 @@
 import { Select, Flex, FormLabel } from '@chakra-ui/react';
-export const CompanySelect = ({ onChange, companyId, companyList }) => {
+import useGetCompanies from 'features/companySelect/hooks/useGetCompanies';
+import { Spinner } from '@chakra-ui/react';
+import SomethingWentWrong from 'components/typography/SomethingWentWrong';
+
+export const CompanySelect = ({ onChange, companyId }) => {
+  const { isLoading, isError, companyList } = useGetCompanies();
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+  if (isError) {
+    return <SomethingWentWrong />;
+  }
   return (
     <Flex flexDirection='column' mr='2em'>
       <FormLabel opacity='.85'>Company</FormLabel>
