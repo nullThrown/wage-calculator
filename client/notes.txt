@@ -68,17 +68,44 @@ new notes will be added and new to do items will be created from bottom-up
 
 
 GENERAL 
-*
-problem: go through each mutation - login, signup, addCompany(registration), addEntry and complete validation, error handling, and mutation optimization
-
+*currently selected company needs to be saved on user model
+*rename folder features/companySelect -> company
+-place all company related components/api calls/hooks into here
+-rename all company query keys to ['company', 'bla']
 *add a services folder (path: src/services) to handle plain JavaScript modules (e.g., localStorage.js )
 - add initial state objects here 
 
 *
+problem: find all use queries
+-separate into custom hooks
+-create unique and useful query keys  
+-handle loading/error logic 
+-tag which ones need to be invalidated and based on what
+
+*queries
+-useAuth - gets user - App 
+✔-getCompanies - registration/addCompany, editCompany, deleteCompany
+-create separate API call to get companies
+✔-getOverview - Overview
+-getEntries - Day, Week (entries component has single query fn, however, 
+it would be best to separate these calls into two separate ones and have separate data for each component)
+
+*********start here*********
+
+Day
+-create get entries route for Day component 
+-create custom hook to get entries
+-place custom hook in Day component
+Week
+-create get entriesByWeek route for Week component(already exists?) 
+-create custom hook to get entries by Week
+-place custom hook in Week component
+
+-getMonth - Month
+-getShift - Shift (has not been created yet)
+*
 problem:  create generic react-query error handler
   
-
-
 *
 problem: find all 'something went wrong error message" and replace with component 
 
@@ -113,6 +140,9 @@ solution: create system that preserves local time zones.
 
 
 ADD COMPANY 
+*
+problem: features/user/components/registration/addCompany - FinishInfo Modal should be created
+as a separate modal in the components folder
 
 *
 problem: styles: not enough margin on top of component
