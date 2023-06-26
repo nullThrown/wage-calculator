@@ -304,14 +304,11 @@ router.get('/month/:year/:month/:filter', verifyToken, async (req, res) => {
 // ROUTE GET api/entries/week/:date/:filter
 // DESC get entries grouped by weeks (mon-sun both inclusive)
 // ACCESS private
-router.get('/week/:date/:filter', verifyToken, async (req, res) => {
+router.get('/week/:filter/:date', verifyToken, async (req, res) => {
   let { date, filter } = req.params;
   console.log(date);
   console.log(filter);
   try {
-    if (date === 'today') {
-      date = new Date();
-    }
     const weekPairs = findWeekPairs(date, 26);
     const earliestDate = weekPairs[0][0];
     const latestDate = weekPairs[weekPairs.length - 1][1];
