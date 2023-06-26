@@ -11,11 +11,12 @@ import EditCompanyBtn from 'components/button/EditCompanyBtn';
 import AddCompanyBtn from 'components/button/AddCompanyBtn';
 import { successToast, errorToast } from 'components/toast/toast';
 import { connection_error, server_error } from 'constants/api/error';
+import { useQueryClient } from 'react-query';
+
 const Form = ({
   initialCompanyState,
   formData,
   setFormData,
-  setCompanyList,
   isEditMode,
   setIsEditMode,
   handleCancelEditMode,
@@ -23,6 +24,7 @@ const Form = ({
   const [isValidationError, setisValidationError] = useState(false);
 
   const toast = useToast();
+  const queryClient = useQueryClient();
   const addCompany = useAddCompany();
   const updateCompany = useUpdateCompany();
   const { isNameError, isPositionError } = useAddCompanyVal(formData);
@@ -44,7 +46,7 @@ const Form = ({
     } else {
       addCompany.mutate(formData, {
         onSuccess: (data, variables, context) => {
-          setCompanyList(data.data);
+          queryClient.setQueryData(['companies'], data);
           toast({ ...successToast, title: 'Company Added Successfully!' });
           setFormData(initialCompanyState);
         },
@@ -63,7 +65,7 @@ const Form = ({
     e.preventDefault();
     updateCompany.mutate(formData, {
       onSuccess: (data, variables, context) => {
-        setCompanyList(data.data);
+        queryClient.setQueryData(['companies'], data);
         toast({ ...successToast, title: 'Company Updated Successfully!' });
         setIsEditMode(false);
         setFormData(initialCompanyState);
