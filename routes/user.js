@@ -109,31 +109,6 @@ router.put('/company/update', verifyToken, async (req, res) => {
   }
 });
 
-// ROUTE PUT api/user/company/remove/set
-// DESC set a companies removed status from company list
-// ACCESS private
-router.put('/company/remove/set', verifyToken, async (req, res) => {
-  const { companyId, isRemoved } = req.body;
-
-  try {
-    const user = await User.findOneAndUpdate(
-      { _id: req.user.id, 'companies._id': companyId },
-      {
-        $set: {
-          'companies.$.isRemoved': isRemoved,
-        },
-      },
-      {
-        returnOriginal: false,
-      }
-    );
-    res.status(200).json(resource_updated);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json(server_error);
-  }
-});
-
 // ROUTE DELETE api/user/company/delete
 // DESC delete company from company list
 // ACCESS private
@@ -146,6 +121,31 @@ router.delete('/company/delete/:companyId', verifyToken, async (req, res) => {
       {
         $pull: {
           companies: { _id: companyId },
+        },
+      },
+      {
+        returnOriginal: false,
+      }
+    );
+    res.status(200).json(user.companies);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(server_error);
+  }
+});
+
+// ROUTE PUT api/user/company/remove/set
+// DESC set a companies removed status from company list
+// ACCESS private
+router.put('/company/remove/set', verifyToken, async (req, res) => {
+  const { companyId, isRemoved } = req.body;
+
+  try {
+    const user = await User.findOneAndUpdate(
+      { _id: req.user.id, 'companies._id': companyId },
+      {
+        $set: {
+          'companies.$.isRemoved': isRemoved,
         },
       },
       {
