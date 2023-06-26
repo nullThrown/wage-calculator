@@ -58,11 +58,7 @@ const Home = () => {
           <SecHeading text='Analytics' textAlign='center' />
           <Divider maxW='700px' />
           <VStack m='3em auto' w='100%' spacing='3em'>
-            <CompanySelect
-              filter={filter}
-              setFilter={setFilter}
-              companyList={data.companies}
-            />
+            <CompanySelect filter={filter} setFilter={setFilter} />
             <Overview filter={filter} />
             <Entries filter={filter} />
             {/* <Day filter={filter} /> */}
