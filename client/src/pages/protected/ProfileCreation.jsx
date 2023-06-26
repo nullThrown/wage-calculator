@@ -9,7 +9,7 @@ import CompanyDisplay from 'features/user/components/registration/addCompany/Com
 import FinishInfoModal from 'features/user/components/registration/addCompany/FinishInfoModal';
 import Form from 'features/user/components/registration/addCompany/Form';
 import FinishProfileSetupBtn from 'components/button/FinishProfileSetupBtn';
-
+import useGetCompanies from 'features/companySelect/hooks/useGetCompanies';
 const initialCompanyState = {
   name: '',
   position: '',
@@ -20,7 +20,7 @@ const initialCompanyState = {
 
 const ProfileCreation = () => {
   const [formData, setFormData] = useState(initialCompanyState);
-  const [companyList, setCompanyList] = useState([]);
+  const { companyList } = useGetCompanies();
   const [isEditMode, setIsEditMode] = useState(false);
 
   const modalHook = useDisclosure();
@@ -38,7 +38,7 @@ const ProfileCreation = () => {
 
   const handleFinish = (e) => {
     e.preventDefault();
-    if (companyList.length === 0) {
+    if (companyList?.length === 0) {
       modalHook.onOpen();
     } else {
       return navigate('/home');
@@ -53,16 +53,11 @@ const ProfileCreation = () => {
         <CenterContainer bg='grey' className='test'>
           <SmallCard>
             <Header />
-            <CompanyDisplay
-              companyList={companyList}
-              setCompanyList={setCompanyList}
-              handleSetEditMode={handleSetEditMode}
-            />
+            <CompanyDisplay handleSetEditMode={handleSetEditMode} />
             <Form
               initialCompanyState={initialCompanyState}
               formData={formData}
               setFormData={setFormData}
-              setCompanyList={setCompanyList}
               isEditMode={isEditMode}
               setIsEditMode={setIsEditMode}
               handleCancelEditMode={handleCancelEditMode}
