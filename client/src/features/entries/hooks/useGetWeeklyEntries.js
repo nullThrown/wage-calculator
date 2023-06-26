@@ -1,9 +1,9 @@
 import { useQuery } from 'react-query';
 import { getEntriesByWeek } from '../api/entries';
 
-const useGetEntriesByWeek = (date, filter) => {
-  return useQuery(['entries', date, filter], () =>
-    getEntriesByWeek(date, filter)
+const useGetEntriesByWeek = (filter, date) => {
+  return useQuery(['entries', filter, date], () =>
+    getEntriesByWeek(filter, date)
   );
 };
 
