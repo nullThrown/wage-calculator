@@ -1,17 +1,20 @@
 import LargeCard from 'components/card/LargeCard';
 import TertHeading from 'components/typography/TertHeading';
-import { Flex } from '@chakra-ui/react';
+import { Flex, Spinner } from '@chakra-ui/react';
 import StatRow from 'components/data/StatRow';
 import SimpleStat from 'components/data/SimpleStat';
-import { useQuery } from 'react-query';
-import { getOverviewData } from '../api/overview';
+import SomethingWentWrong from 'components/typography/SomethingWentWrong';
+import useGetOverviewData from '../hooks/useGetOverviewData';
 
 const Overview = ({ filter }) => {
-  const { isLoading, isError, data } = useQuery(
-    ['entries', 'overview', filter],
-    () => getOverviewData(filter)
-  );
+  const { isLoading, isError, data } = useGetOverviewData(filter);
 
+  if (isLoading) {
+    return <Spinner />;
+  }
+  if (isError) {
+    return <SomethingWentWrong />;
+  }
   return (
     <LargeCard as='section'>
       <TertHeading textAlign='center'>Overview</TertHeading>
