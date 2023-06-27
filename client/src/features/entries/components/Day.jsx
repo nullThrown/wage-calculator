@@ -12,26 +12,26 @@ import {
   Td,
   TableContainer,
   Flex,
+  Spinner,
 } from '@chakra-ui/react';
 import DatePicker from 'react-datepicker';
 import { useEffect, useState } from 'react';
+import useGetAllEntries from '../hooks/useGetAllEntries';
+import SomethingWentWrong from 'components/typography/SomethingWentWrong';
+import useGetEntriesByDate from '../hooks/useGetEntriesByDate';
 
-const Day = ({ filter, isLoading, isError, entries }) => {
-  const [date, setDate] = useState(null);
-  const [currentlySelectedEntries, setCurrentlySelectedEntries] = useState([]);
-
+const Day = ({ filter }) => {
+  const [date, setDate] = useState(new Date());
+  const { isLoading, isError, entries } = useGetEntriesByDate(filter, date);
   useEffect(() => {
-    // this logic is only useful upon initial mount
-    // once component has mounted
-    // changes to the currentlySelectedEntries
-    // loop through entries
-    // if entries.entries.length > 0
-    // find last entry (latest)
-    // push into currentlySelectedEntries
-    // loop down array and compare day/month/year to last entry
-    // if latest === current, push entry into currently selected entries
+    console.log(entries);
   }, [entries]);
-
+  if (isLoading) {
+    return <Spinner />;
+  }
+  if (isError) {
+    return <SomethingWentWrong />;
+  }
   return (
     <LargeCard as='section'>
       <TertHeading textAlign='center'>Single Entry</TertHeading>
