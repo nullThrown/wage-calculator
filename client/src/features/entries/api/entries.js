@@ -21,7 +21,15 @@ export const updateEntry = async (entry) => {
     return err;
   }
 };
-
+export const getAllEntries = async (filter) => {
+  try {
+    const { data } = await axios.get(`/entries/${filter}`);
+    return data;
+  } catch (err) {
+    const errorMsg = !err.response ? connection_error : err.response.data.msg;
+    return Promise.reject(new Error(errorMsg));
+  }
+};
 export const getEntriesByWeek = async (filter, date) => {
   try {
     const { data } = await axios.get(`/entries/week/${filter}/${date}`);
