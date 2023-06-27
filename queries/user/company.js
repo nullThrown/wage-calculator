@@ -1,7 +1,8 @@
 const User = require('../../models/User');
+const mongoose = require('mongoose');
 
-const getActiveCompanies = async (userId) => {
-  return await User.aggregate([
+const getActiveCompanyIds = async (userId) => {
+  const user = await User.aggregate([
     { $match: { _id: userId } },
     {
       $project: {
@@ -16,5 +17,8 @@ const getActiveCompanies = async (userId) => {
       },
     },
   ]);
+  return user[0].companies.map((company) => {
+    return mongoose.Types.ObjectId(company._id);
+  });
 };
-module.exports = getActiveCompanies;
+module.exports = getActiveCompanyIds;
