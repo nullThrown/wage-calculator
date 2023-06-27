@@ -1,8 +1,8 @@
 const User = require('../../models/User');
 
-const getActiveCompanies = async (userID) => {
+const getActiveCompanies = async (userId) => {
   return await User.aggregate([
-    { $match: { _id: userID } },
+    { $match: { _id: userId } },
     {
       $project: {
         _id: 0,
