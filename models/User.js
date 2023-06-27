@@ -17,7 +17,7 @@ const UserSchema = new Schema(
       {
         name: requiredStr,
         position: requiredStr,
-        isActive: requiredBool,
+        isActive: { type: Boolean, default: true },
         hourlyWage: requiredNum,
         overtimeMultiplier: requiredNum,
         startDate: currentTime,
