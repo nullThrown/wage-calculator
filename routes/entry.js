@@ -29,7 +29,7 @@ const {
 } = require('../queries/entry/week');
 const formatToShortDate = require('../util/formatToShortDate');
 const createWeekOfDates = require('../util/createWeekOfDates');
-
+const verifyFilter = require('../middleware/verifyFilter');
 // ROUTE POST api/entries/create
 // DESC create new earning's entry
 // ACCESS private
@@ -118,7 +118,7 @@ router.post('/create', verifyToken, async (req, res) => {
 // DESC update earning's entry
 // ACCESS private
 router.put('/update', verifyToken, async (req, res) => {
-  // check to see that ID and createdAt fields are consistent
+  // check to see that Id and createdAt fields are consistent
   // check to see that updatedAt field is set
   const {
     entryID,
@@ -194,10 +194,10 @@ router.put('/update', verifyToken, async (req, res) => {
 // ROUTE GET api/entries/all
 // DESC get overview data
 // ACCESS private
-router.get('/overview/:filter', verifyToken, async (req, res) => {
+router.get('/overview/:filter', verifyToken, verifyFilter, async (req, res) => {
   const { filter } = req.params;
 
-  const userID = mongoose.Types.ObjectId(req.user.id);
+  const userId = mongoose.Types.ObjectId(req.user.id);
 
   try {
     let entries;
@@ -205,33 +205,52 @@ router.get('/overview/:filter', verifyToken, async (req, res) => {
     if (filter === 'all') {
       entries = await Entries.aggregate([
         {
-          $match: { user: userID },
+          $match: { user: userId },
         },
       ]);
     } else if (filter === 'active') {
-      const user = await getActiveCompanies(userID);
+      const user = await getActiveCompanies(userId);
 
       const activeCompanyIDs = user[0].companies.map((company) => {
         return mongoose.Types.ObjectId(company._id);
       });
 
-      entries = await getAllActiveEntries(userID, activeCompanyIDs);
+      entries = await getAllActiveEntries(userId, activeCompanyIDs);
     } else {
-      const isValidID = mongoose.isObjectIdOrHexString(filter);
-      if (!isValidID) {
-        const error = new Error(
-          'filter is not valid search param or mongoose object ID'
-        );
-        return res.status(422).json({
-          msg: error.message,
-        });
-      }
-      const companyID = mongoose.Types.ObjectId(filter);
-      entries = await getAllEntriesByCompany(userID, companyID);
+      const companyId = mongoose.Types.ObjectId(filter);
+      entries = await getAllEntriesByCompany(userId, companyId);
     }
     const overviewData = calculateData(entries[0].data);
-    console.log(overviewData);
     res.status(200).json(overviewData);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(server_error);
+  }
+});
+
+// ROUTE GET api/entries/:filter
+// DESC get all entries
+// ACCESS private
+router.get('/:filter', verifyToken, verifyFilter, async (req, res) => {
+  try {
+    const { filter } = req.params;
+    const userId = mongoose.Types.ObjectId(req.user.id);
+    let entries;
+    if (filter === 'all') {
+      entries = await Entries.findOne({ user: userId });
+    } else if (filter === 'active') {
+      const user = await getActiveCompanies(userId);
+
+      const activeCompanyIds = user[0].companies.map((company) => {
+        return mongoose.Types.ObjectId(company._id);
+      });
+
+      entries = await getAllActiveEntries(userId, activeCompanyIds);
+    } else {
+      const companyId = mongoose.Types.ObjectId(filter);
+      entries = await getAllEntriesByCompany(userId, companyId);
+    }
+    res.status(200).json(entries);
   } catch (err) {
     console.log(err);
     res.status(500).json(server_error);
@@ -241,157 +260,147 @@ router.get('/overview/:filter', verifyToken, async (req, res) => {
 // ROUTE GET api/entries/month/:year/:month
 // DESC calc data by specific month
 // ACCESS private
-router.get('/month/:year/:month/:filter', verifyToken, async (req, res) => {
-  // year = full year e.g., 2022
-  // month = 1-indexed, no lead 0, e.g., 1,2,3...12
-  // best to place leading zero on front-end
-  // no reason to have conditional that applies to single digit months
-  // could lead to more bugs in the future
+router.get(
+  '/month/:year/:month/:filter',
+  verifyToken,
+  verifyFilter,
+  async (req, res) => {
+    // year = full year e.g., 2022
+    // month = 1-indexed, no lead 0, e.g., 1,2,3...12
+    // best to place leading zero on front-end
+    // no reason to have conditional that applies to single digit months
+    // could lead to more bugs in the future
 
-  let { year, month, filter } = req.params;
-  try {
-    if (month.length === 1) {
-      month = `0${month}`;
-    }
-    console.log(month);
-    const startDate = new Date(`${year}-${month}-01T00:00:00Z`);
-    console.log(startDate);
-    const endDate = new Date(year, month, 0);
-    endDate.setUTCHours(23, 59, 59, 999);
-    const userID = mongoose.Types.ObjectId(req.user.id);
-    let entries;
-
-    if (filter === 'all') {
-      entries = await getAllMonthlyEntries(userID, startDate, endDate);
-    } else if (filter === 'active') {
-      const user = await getActiveCompanies(userID);
-
-      const activeCompanyIDs = user[0].companies.map((company) => {
-        return mongoose.Types.ObjectId(company._id);
-      });
-      entries = await getActiveMonthlyEntries(
-        userID,
-        activeCompanyIDs,
-        startDate,
-        endDate
-      );
-    } else {
-      const isValidID = mongoose.isObjectIdOrHexString(filter);
-      if (!isValidID) {
-        const error = new Error(
-          'filter is not valid search param or mongoose object ID'
-        );
-        return res.status(422).json({
-          msg: error.message,
-        });
+    let { year, month, filter } = req.params;
+    try {
+      if (month.length === 1) {
+        month = `0${month}`;
       }
-      const companyID = mongoose.Types.ObjectId(filter);
-      entries = await getMonthlyEntriesByCompany(
-        userID,
-        startDate,
-        endDate,
-        companyID
-      );
+      console.log(month);
+      const startDate = new Date(`${year}-${month}-01T00:00:00Z`);
+      console.log(startDate);
+      const endDate = new Date(year, month, 0);
+      endDate.setUTCHours(23, 59, 59, 999);
+      const userId = mongoose.Types.ObjectId(req.user.id);
+      let entries;
+
+      if (filter === 'all') {
+        entries = await getAllMonthlyEntries(userId, startDate, endDate);
+      } else if (filter === 'active') {
+        const user = await getActiveCompanies(userId);
+
+        const activeCompanyIDs = user[0].companies.map((company) => {
+          return mongoose.Types.ObjectId(company._id);
+        });
+        entries = await getActiveMonthlyEntries(
+          userId,
+          activeCompanyIDs,
+          startDate,
+          endDate
+        );
+      } else {
+        const companyId = mongoose.Types.ObjectId(filter);
+        entries = await getMonthlyEntriesByCompany(
+          userId,
+          startDate,
+          endDate,
+          companyId
+        );
+      }
+      const monthData = calculateData(entries[0].data);
+      res.status(200).json(monthData);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json(server_error);
     }
-    const monthData = calculateData(entries[0].data);
-    res.status(200).json(monthData);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json(server_error);
   }
-});
+);
 
 // ROUTE GET api/entries/week/:date/:filter
 // DESC get entries grouped by weeks (mon-sun both inclusive)
 // ACCESS private
-router.get('/week/:filter/:date', verifyToken, async (req, res) => {
-  let { date, filter } = req.params;
-  console.log(date);
-  console.log(filter);
-  try {
-    const weekPairs = findWeekPairs(date, 26);
-    const earliestDate = weekPairs[0][0];
-    const latestDate = weekPairs[weekPairs.length - 1][1];
-    const userID = mongoose.Types.ObjectId(req.user.id);
-    let entries;
+router.get(
+  '/week/:filter/:date',
+  verifyToken,
+  verifyFilter,
+  async (req, res) => {
+    let { date, filter } = req.params;
+    try {
+      const weekPairs = findWeekPairs(date, 26);
+      const earliestDate = weekPairs[0][0];
+      const latestDate = weekPairs[weekPairs.length - 1][1];
+      const userId = mongoose.Types.ObjectId(req.user.id);
+      let entries;
 
-    if (filter === 'all') {
-      entries = await getAllWeeklyEntries(userID, earliestDate, latestDate);
-    } else if (filter === 'active') {
-      const user = await getActiveCompanies(userID);
+      if (filter === 'all') {
+        entries = await getAllWeeklyEntries(userId, earliestDate, latestDate);
+      } else if (filter === 'active') {
+        const user = await getActiveCompanies(userId);
 
-      const activeCompanyIDs = user[0].companies.map((company) => {
-        return mongoose.Types.ObjectId(company._id);
-      });
-
-      entries = await getAllActiveEntries(
-        userID,
-        activeCompanyIDs,
-        earliestDate,
-        latestDate
-      );
-    } else {
-      const isValidID = mongoose.isObjectIdOrHexString(filter);
-      if (!isValidID) {
-        const error = new Error(
-          'filter is not valid search param or mongoose object ID'
-        );
-        return res.status(422).json({
-          msg: error.message,
+        const activeCompanyIDs = user[0].companies.map((company) => {
+          return mongoose.Types.ObjectId(company._id);
         });
+
+        entries = await getAllActiveEntries(
+          userId,
+          activeCompanyIDs,
+          earliestDate,
+          latestDate
+        );
+      } else {
+        const companyId = mongoose.Types.ObjectId(filter);
+        entries = await getAllEntriesByCompany(
+          userId,
+          companyId,
+          earliestDate,
+          latestDate
+        );
       }
-      const companyID = mongoose.Types.ObjectId(filter);
-      entries = await getAllEntriesByCompany(
-        userID,
-        companyID,
-        earliestDate,
-        latestDate
-      );
-    }
-    // DatesShort property needs to be tested
-    let entriesByWeek = weekPairs.map((week) => {
-      return {
-        startDate: week[0],
-        endDate: week[1],
-        datesShort: `${formatToShortDate(week[0])} - ${formatToShortDate(
-          week[1]
-        )}`,
-        weekOfDays: createWeekOfDates(week[0]),
-        entries: [],
-        calcData: {},
-      };
-    });
-    const { data } = entries[0];
-
-    data.forEach((entry) => {
-      entriesByWeek.forEach((week) => {
-        if (
-          entry.shiftDate.getTime() > week.startDate.getTime() &&
-          entry.shiftDate.getTime() < week.endDate.getTime()
-        ) {
-          week.entries.push(entry);
-        }
+      // DatesShort property needs to be tested
+      let entriesByWeek = weekPairs.map((week) => {
+        return {
+          startDate: week[0],
+          endDate: week[1],
+          datesShort: `${formatToShortDate(week[0])} - ${formatToShortDate(
+            week[1]
+          )}`,
+          weekOfDays: createWeekOfDates(week[0]),
+          entries: [],
+          calcData: {},
+        };
       });
-    });
-    // populates calcData fields on entriesByWeek with calcData
-    entriesByWeek = entriesByWeek
-      .map((week) => {
-        const calcData = calculateData(week.entries);
+      const { data } = entries[0];
 
-        return { ...week, calcData };
-      })
-      .reverse();
-    res.status(200).json(entriesByWeek);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json(server_error);
+      data.forEach((entry) => {
+        entriesByWeek.forEach((week) => {
+          if (
+            entry.shiftDate.getTime() > week.startDate.getTime() &&
+            entry.shiftDate.getTime() < week.endDate.getTime()
+          ) {
+            week.entries.push(entry);
+          }
+        });
+      });
+      // populates calcData fields on entriesByWeek with calcData
+      entriesByWeek = entriesByWeek
+        .map((week) => {
+          const calcData = calculateData(week.entries);
+
+          return { ...week, calcData };
+        })
+        .reverse();
+      res.status(200).json(entriesByWeek);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json(server_error);
+    }
   }
-});
+);
 
 // ROUTE GET api/entries/shift
 // DESC get filtered shift data
 // ACCESS private
-router.get('/shift', verifyToken, async (req, res) => {
+router.get('/shift', verifyToken, verifyFilter, async (req, res) => {
   // make query to get all entries
   // create object to hold data for different filters
   // forEach entries array
@@ -444,16 +453,16 @@ router.get('/shift', verifyToken, async (req, res) => {
 // ROUTE GET api/entries/:id
 // DESC get single entry
 // ACCESS private
-router.get('/:id', verifyToken, async (req, res) => {
-  const { id } = req.params;
-  try {
-    const userId = await User.findOne({ username: username }, { _id: 1 });
-    const entries = await Entries.findOne({ user: userId });
-    res.status(200).json(entries);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json(server_error);
-  }
-});
+// router.get('/:id', verifyToken, async (req, res) => {
+//   const { id } = req.params;
+//   try {
+//     const userId = await User.findOne({ username: username }, { _id: 1 });
+//     const entries = await Entries.findOne({ user: userId });
+//     res.status(200).json(entries);
+//   } catch (err) {
+//     console.log(err);
+//     res.status(500).json(server_error);
+//   }
+// });
 
 module.exports = router;
