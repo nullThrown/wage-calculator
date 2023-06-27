@@ -1,5 +1,0 @@
-
-
-* create generic react-query error handler 
-
-*add isRequired to all inputs
