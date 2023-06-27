@@ -93,8 +93,9 @@ it would be best to separate these calls into two separate ones and have separat
 *********start here*********
 
 Day
--create get entries route for Day component 
--create custom hook to get entries
+✔-create route that grabs all entries with filter
+✔-create API axios call that fetches all entries 
+-create custom hook to wrap fetch call
 -place custom hook in Day component
 Week
 -create get entriesByWeek route for Week component(already exists?) 
