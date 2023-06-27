@@ -1,12 +1,12 @@
 const Entries = require('../../models/Entries');
 
-const getAllActiveEntries = async (userID, activeCompanyIDs) => {
-  const EqualityChecks = activeCompanyIDs.map((ID) => {
-    return { $eq: ['$$entry.company', ID] };
+const getAllActiveEntries = async (userId, activeCompanyIds) => {
+  const EqualityChecks = activeCompanyIds.map((Id) => {
+    return { $eq: ['$$entry.company', Id] };
   });
 
   return await Entries.aggregate([
-    { $match: { user: userID } },
+    { $match: { user: userId } },
     {
       $project: {
         data: {
@@ -23,9 +23,9 @@ const getAllActiveEntries = async (userID, activeCompanyIDs) => {
   ]);
 };
 
-const getAllEntriesByCompany = async (userID, companyID) => {
+const getAllEntriesByCompany = async (userId, companyID) => {
   return await Entries.aggregate([
-    { $match: { user: userID } },
+    { $match: { user: userId } },
     {
       $project: {
         data: {
