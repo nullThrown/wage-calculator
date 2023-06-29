@@ -1,0 +1,5 @@
+Express structure 
+
+place verifyToken and verifyFilter into router.get middleware for entry router
+place verifyToken and  into router.all middleware for user router
+
