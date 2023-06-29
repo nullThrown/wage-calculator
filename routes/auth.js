@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const verifyToken = require('../middleware/auth');
-const { registerUser, loginUser } = require('../controllers/auth');
+const registerUser = require('../controllers/auth/registerUser');
+const loginUser = require('../controllers/auth/loginUser');
 const { token_valid } = require('../constants/responseTypes');
 
 router.get('/', verifyToken, async (req, res) => {
