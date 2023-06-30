@@ -9,9 +9,9 @@ const server_error = { msg: 'server_error' };
 // success
 const token_valid = { msg: 'token_valid' };
 const password_match = { msg: 'password_match' };
-const resource_deleted = { msg: 'resource_deleted' };
 const resource_created = { msg: 'resource_created' };
 const resource_updated = { msg: 'resource_updated' };
+const resource_deleted = { msg: 'resource_deleted' };
 
 module.exports = {
   token_invalid,
@@ -22,7 +22,7 @@ module.exports = {
   server_error,
   token_valid,
   password_match,
-  resource_deleted,
   resource_created,
   resource_updated,
+  resource_deleted,
 };
