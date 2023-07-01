@@ -1,15 +1,14 @@
 Express structure 
-*test login/signup route
+* rename all files with .<type>. extension (ie., addCompany.controller.js, auth.route.js)
 
 FILE/FOLDER LOCATION
-*place queries folder into services folder
+✔*place queries folder into services folder
 
 FILE NAMING 
-*add 'controller' to controller fn file names 
 
 MIDDLEWARE
-*place verifyToken and verifyFilter into router.get middleware for entry router
-*place verifyToken and  into router.all middleware for user router
+✔*place verifyToken and verifyFilter into router.get middleware for entry router
+✔*place verifyToken and  into router.all middleware for user router
 
 
 CONTROLLERS 
@@ -37,3 +36,11 @@ MONGO QUERIES
 RESPONSETYPES 
 *recreate response objects into something more complicated
 *
+
+
+ERROR ROUTER 
+test: 
+add mware that only runs next()
+add mware that console logs statement
+add middleware that returns an error: next(error)
+add error handling mware in server.js 
