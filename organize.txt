@@ -39,8 +39,5 @@ RESPONSETYPES
 
 
 ERROR ROUTER 
-test: 
-add mware that only runs next()
-add mware that console logs statement
-add middleware that returns an error: next(error)
-add error handling mware in server.js 
+* create custom error class that extends Error 
+*
