@@ -58,6 +58,7 @@ const createEntry = async (req, res) => {
       hourlyWage,
       specialEvent,
       shiftDate,
+      // calc these data outside of the object
       totalTips: +creditTips + +cashTips,
       trueTotalTips: +creditTips + +cashTips - +tipOut,
       totalWages: timeWorkedDec * +hourlyWage,
@@ -65,6 +66,7 @@ const createEntry = async (req, res) => {
       trueTotalEarned:
         +creditTips + +cashTips - tipOut + timeWorkedDec * +hourlyWage,
     };
+    // calc these data outside of the object
     if (totalSalesApplicable) {
       newEntry.tipPct = (+creditTips + +cashTips) / +totalSales;
       newEntry.trueTipPct = (+creditTips + +cashTips - +tipOut) / +totalSales;

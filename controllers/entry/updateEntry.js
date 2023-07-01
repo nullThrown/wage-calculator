@@ -20,6 +20,7 @@ const updateEntry = async (req, res) => {
     specialEvent,
     shiftDate,
   } = req.body;
+  // conduct these calculations outside the object
   const totalTips = +creditTips + +cashTips;
   const trueTotalTips = +creditTips + +cashTips - +tipOut;
   const totalWages = +timeWorkedDec * +hourlyWage;

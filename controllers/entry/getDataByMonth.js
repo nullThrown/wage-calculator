@@ -10,12 +10,6 @@ const {
 } = require('../../queries/entry/month');
 
 const getDataByMonth = async (req, res) => {
-  // year = full year e.g., 2022
-  // month = 1-indexed, no lead 0, e.g., 1,2,3...12
-  // best to place leading zero on front-end
-  // no reason to have conditional that applies to single digit months
-  // could lead to more bugs in the future
-
   try {
     let { year, month, filter } = req.params;
     if (month.length === 1) {
