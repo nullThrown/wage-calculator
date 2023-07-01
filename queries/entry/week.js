@@ -1,9 +1,9 @@
 const Entries = require('../../models/Entries');
 // filters Entries beginning with start date and filter: all, active companies, specific company
 
-const getAllWeeklyEntries = async (userID, earliestDate, latestDate) => {
+const getAllWeeklyEntries = async (userId, earliestDate, latestDate) => {
   return await Entries.aggregate([
-    { $match: { user: userID } },
+    { $match: { user: userId } },
     {
       $project: {
         _id: 0,
@@ -24,17 +24,17 @@ const getAllWeeklyEntries = async (userID, earliestDate, latestDate) => {
   ]);
 };
 const getActiveWeeklyEntries = async (
-  userID,
+  userId,
   activeCompanyIDs,
   earliestDate,
   latestDate
 ) => {
-  const createEqCheck = activeCompanyIDs.map((ID) => {
-    return { $eq: ['$$entry.company', ID] };
+  const createEqCheck = activeCompanyIDs.map((Id) => {
+    return { $eq: ['$$entry.company', Id] };
   });
 
   return await Entries.aggregate([
-    { $match: { user: userID } },
+    { $match: { user: userId } },
     {
       $project: {
         data: {
