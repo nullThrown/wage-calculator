@@ -8,34 +8,38 @@ const updateCompany = require('../controllers/user/updateCompany');
 const deleteCompany = require('../controllers/user/deleteCompany');
 const setCompanyRemovedStatus = require('../controllers/user/setCompanyRemovedStatus');
 
+// ROUTE MIDDLEWARE api/user
+// DESC verify user
+router.use(verifyToken);
+
 // ROUTE GET api/user/me
 // DESC get current user
 // ACCESS private
-router.get('/me', verifyToken, getCurrentUser);
+router.get('/me', getCurrentUser);
 
 // ROUTE PUT api/user/me/update
 // DESC update current user
 // ACCESS private
-router.put('/me/update', verifyToken, updateCurrentUser);
+router.put('/me/update', updateCurrentUser);
 
 // ROUTE POST api/user/company/create
 // DESC add company to company list
 // ACCESS private
-router.post('/company/create', verifyToken, addCompany);
+router.post('/company/create', addCompany);
 
 // ROUTE PUT api/user/company/update
 // DESC update a company from company list
 // ACCESS private
-router.put('/company/update', verifyToken, updateCompany);
+router.put('/company/update', updateCompany);
 
 // ROUTE DELETE api/user/company/delete
 // DESC delete company from company list
 // ACCESS private
-router.delete('/company/delete/:companyId', verifyToken, deleteCompany);
+router.delete('/company/delete/:companyId', deleteCompany);
 
 // ROUTE PUT api/user/company/remove/set
 // DESC set a companies removed status (soft delete/reinstate)
 // ACCESS private
-router.put('/company/remove/set', verifyToken, setCompanyRemovedStatus);
+router.put('/company/remove/set', setCompanyRemovedStatus);
 
 module.exports = router;
