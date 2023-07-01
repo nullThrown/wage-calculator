@@ -1,4 +1,4 @@
-const Entries = require('../../models/Entries');
+const Entries = require('../../../models/Entries');
 
 const getAllMonthlyEntries = async (userID, startDate, endDate) => {
   return await Entries.aggregate([

@@ -1,13 +1,13 @@
 const { server_error } = require('../../constants/responseTypes');
 const mongoose = require('mongoose');
-const getActiveCompanyIds = require('../../queries/user/company');
+const getActiveCompanyIds = require('../../services/queries/user/company');
 const calculateData = require('../../business/calculateData');
 
 const {
   getAllMonthlyEntries,
   getMonthlyEntriesByCompany,
   getActiveMonthlyEntries,
-} = require('../../queries/entry/month');
+} = require('../../services/queries/entry/month');
 
 const getDataByMonth = async (req, res) => {
   try {

@@ -1,4 +1,4 @@
-const Entries = require('../../models/Entries');
+const Entries = require('../../../models/Entries');
 // filters Entries beginning with start date and filter: all, active companies, specific company
 
 const getAllWeeklyEntries = async (userId, earliestDate, latestDate) => {

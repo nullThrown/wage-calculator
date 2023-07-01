@@ -1,12 +1,12 @@
 const Entries = require('../../models/Entries');
 const { server_error } = require('../../constants/responseTypes');
 const mongoose = require('mongoose');
-const getActiveCompanyIds = require('../../queries/user/company');
+const getActiveCompanyIds = require('../../services/queries/user/company');
 const calculateData = require('../../business/calculateData');
 const {
   getAllActiveEntries,
   getAllEntriesByCompany,
-} = require('../../queries/entry/overview');
+} = require('../../services/queries/entry/overview');
 
 const getOverviewData = async (req, res) => {
   try {

@@ -1,14 +1,14 @@
 const { server_error } = require('../../constants/responseTypes');
 const mongoose = require('mongoose');
-const getActiveCompanyIds = require('../../queries/user/company');
+const getActiveCompanyIds = require('../../services/queries/user/company');
 const findWeekPairs = require('../../util/findWeekPairs');
 const calculateData = require('../../business/calculateData');
 const {
   getAllActiveEntries,
   getAllEntriesByCompany,
-} = require('../../queries/entry/overview');
+} = require('../../services/queries/entry/overview');
 
-const { getAllWeeklyEntries } = require('../../queries/entry/week');
+const { getAllWeeklyEntries } = require('../../services/queries/entry/week');
 const formatToShortDate = require('../../util/formatToShortDate');
 const createWeekOfDates = require('../../util/createWeekOfDates');
 

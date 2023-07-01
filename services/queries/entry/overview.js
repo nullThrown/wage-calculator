@@ -1,4 +1,4 @@
-const Entries = require('../../models/Entries');
+const Entries = require('../../../models/Entries');
 
 const getAllActiveEntries = async (userId, activeCompanyIds) => {
   const EqualityChecks = activeCompanyIds.map((Id) => {
