@@ -1,5 +1,39 @@
 Express structure 
+*test login/signup route
 
-place verifyToken and verifyFilter into router.get middleware for entry router
-place verifyToken and  into router.all middleware for user router
+FILE/FOLDER LOCATION
+*place queries folder into services folder
 
+FILE NAMING 
+*add 'controller' to controller fn file names 
+
+MIDDLEWARE
+*place verifyToken and verifyFilter into router.get middleware for entry router
+*place verifyToken and  into router.all middleware for user router
+
+
+CONTROLLERS 
+*entry/createEntry.js 
+-do not put hourly wage and position fields into newly created entry 
+-populate the company field when entries are used 
+-make calculations outside of the newEntry object 
+
+*entries/getDataByMonth.js
+-figure out how to normalize the month 
+-figure out what startDate and endDate are doing exactly
+
+*entries/updateEntry
+-do the calculations outside the object 
+-without hourlywage field, a call to getCompanies will need to be conducted
+-attempt to fix $set method (won't allow entire object to be placed)
+
+*user/updateCompany
+-try to fix $set bug (place entire object into thing)
+
+
+MONGO QUERIES 
+*very likely that there is repeated logic, perhaps a few of them good be condensed
+
+RESPONSETYPES 
+*recreate response objects into something more complicated
+*
