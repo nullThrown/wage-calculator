@@ -1,5 +1,4 @@
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 const User = require('../../models/User');
 const createToken = require('../../services/auth/createToken');
 
@@ -20,6 +19,7 @@ const loginUser = async (req, res) => {
       return res.status(400).json(invalid_credentials);
     }
     const token = createToken(user._id);
+
     res.status(200).json({ token });
   } catch (err) {
     console.log(err);

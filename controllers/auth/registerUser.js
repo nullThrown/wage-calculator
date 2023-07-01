@@ -1,11 +1,9 @@
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 const User = require('../../models/User');
 const Entries = require('../../models/Entries');
 const {
   email_already_exists,
   server_error,
-  resource_created,
 } = require('../../constants/responseTypes');
 const createToken = require('../../services/auth/createToken');
 
@@ -25,7 +23,8 @@ const registerUser = async (req, res) => {
       await entries.save();
 
       const token = createToken(user._id);
-      return res.status(201).json({ token });
+
+      res.status(201).json({ token });
     }
   } catch (err) {
     console.log(err);
