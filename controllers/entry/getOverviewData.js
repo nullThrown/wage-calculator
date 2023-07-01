@@ -9,11 +9,9 @@ const {
 } = require('../../queries/entry/overview');
 
 const getOverviewData = async (req, res) => {
-  const { filter } = req.params;
-
-  const userId = mongoose.Types.ObjectId(req.user.id);
-
   try {
+    const { filter } = req.params;
+    const userId = mongoose.Types.ObjectId(req.user.id);
     let entries;
 
     if (filter === 'all') {
