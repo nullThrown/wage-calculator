@@ -12,7 +12,6 @@ const UserSchema = new Schema(
     username: { ...requiredStr },
     email: { ...requiredStr, unique: true },
     password: requiredStr,
-    test: { type: String },
     companies: [
       {
         name: requiredStr,
@@ -30,9 +29,5 @@ const UserSchema = new Schema(
   },
   { timestamps: true }
 );
-/// solution -- set doc property with values of same doc
-UserSchema.pre('save', function (next) {
-  this.test = this.username + '-test';
-  next();
-});
+
 module.exports = mongoose.model('user', UserSchema);
