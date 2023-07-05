@@ -10,6 +10,7 @@ const getDataByMonth = require('../controllers/entry/getDataByMonth');
 const getDataByWeek = require('../controllers/entry/getDataByWeek');
 const getShiftData = require('../controllers/entry/getShiftData');
 const getSingleEntry = require('../controllers/entry/getSingleEntry');
+const validateEntry = require('../middleware/validation/entry/validateEntry');
 
 // ROUTE MIDDLEWARE api/entries
 // DESC verify token
@@ -18,12 +19,12 @@ router.use(verifyToken);
 // ROUTE POST api/entries/create
 // DESC create new earning's entry
 // ACCESS private
-router.post('/create', createEntry);
+router.post('/create', validateEntry, createEntry);
 
 // ROUTE PUT api/entries/update
 // DESC update earning's entry
 // ACCESS private
-router.put('/update', updateEntry);
+router.put('/update', validateEntry, updateEntry);
 
 // ROUTE GET api/entries/all
 // DESC get overview data
