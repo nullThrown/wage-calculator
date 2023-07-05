@@ -9,6 +9,7 @@ const updateCompany = async (req, res) => {
     hourlyWage,
     overtimeMultiplier,
     totalSalesApplicable,
+    isActive,
   } = req.body;
   try {
     const user = await User.findOneAndUpdate(
@@ -20,6 +21,7 @@ const updateCompany = async (req, res) => {
           'companies.$.hourlyWage': hourlyWage,
           'companies.$.overtimeMultiplier': overtimeMultiplier,
           'companies.$.totalSalesApplicable': totalSalesApplicable,
+          'companies.$.isActive': isActive,
         },
       },
       {
