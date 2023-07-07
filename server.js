@@ -3,6 +3,8 @@ const mongooseConnect = require('./database');
 require('dotenv').config();
 const cors = require('cors');
 const app = express();
+const handleError = require('./middleware/handleError');
+const logError = require('./middleware/logError');
 
 mongooseConnect();
 const corsOptions = {
@@ -17,11 +19,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/api/entries', require('./routes/entry'));
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/user', require('./routes/user'));
-
-app.use((err, req, res, next) => {
-  // console.log(err);
-  res.status(400).json(err);
-});
+app.use(logError);
+app.use(handleError);
 
 const port = process.env.PORT || 4000;
 app.listen(port, () => console.log(`listening on port: ${port}`));
