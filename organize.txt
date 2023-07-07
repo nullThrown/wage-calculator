@@ -1,21 +1,8 @@
-Express structure 
-* rename all files with .<type>. extension (ie., addCompany.controller.js, auth.route.js)
-
-FILE/FOLDER LOCATION
-✔*place queries folder into services folder
-
-FILE NAMING 
-
-MIDDLEWARE
-✔*place verifyToken and verifyFilter into router.get middleware for entry router
-✔*place verifyToken and  into router.all middleware for user router
-
-
-CONTROLLERS 
+CONTROLLERS
+*create entry object(one to be placed into Entry schema) in separate file and conduct calculations in safer environment
 *entry/createEntry.js 
 -do not put hourly wage and position fields into newly created entry 
 -populate the company field when entries are used 
--make calculations outside of the newEntry object 
 
 *entries/getDataByMonth.js
 -figure out how to normalize the month 
@@ -34,10 +21,4 @@ MONGO QUERIES
 *very likely that there is repeated logic, perhaps a few of them good be condensed
 
 RESPONSETYPES 
-*recreate response objects into something more complicated
-*
 
-
-ERROR ROUTER 
-* create custom error class that extends Error 
-*
