@@ -1,7 +1,6 @@
 const User = require('../../models/User');
-const { server_error } = require('../../constants/responseTypes');
 
-const createCompany = async (req, res) => {
+const createCompany = async (req, res, next) => {
   const {
     name,
     position,
@@ -27,8 +26,7 @@ const createCompany = async (req, res) => {
     );
     res.status(201).json(user.companies);
   } catch (err) {
-    console.log(err);
-    res.status(500).json(server_error);
+    next(err);
   }
 };
 

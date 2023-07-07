@@ -1,20 +1,17 @@
 const bcrypt = require('bcrypt');
 const User = require('../../models/User');
-const {
-  email_already_exists,
-  server_error,
-} = require('../../constants/responseTypes');
+const { emailAlreadyExists } = require('../../services/responseTypes/error');
+const NetworkError = require('../../services/error/NetworkError');
 
-const updateCurrentUser = async (req, res) => {
+const updateCurrentUser = async (req, res, next) => {
   const { username, email, password } = req.body;
   try {
     const user = await User.findById(req.user.id);
-
     if (user.email !== email) {
       const foundUser = await User.findOne({ email: email });
 
       if (foundUser) {
-        return res.status(409).json(email_already_exists);
+        throw new NetworkError(emailAlreadyExists);
       }
     }
     if (password) {
@@ -29,8 +26,7 @@ const updateCurrentUser = async (req, res) => {
     await user.save();
     return res.status(200).json(user);
   } catch (err) {
-    console.log(err);
-    res.status(500).json(server_error);
+    next(err);
   }
 };
 

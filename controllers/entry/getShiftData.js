@@ -1,7 +1,6 @@
 const Entries = require('../../models/Entries');
-const { server_error } = require('../../constants/responseTypes');
 
-const getShiftData = async (req, res) => {
+const getShiftData = async (req, res, next) => {
   // make query to get all entries
   // create object to hold data for different filters
   // forEach entries array
@@ -48,8 +47,7 @@ const getShiftData = async (req, res) => {
     // res.json(entries);
     res.status(200).json({ msg: 'shift route works' });
   } catch (err) {
-    console.log(err);
-    res.status(500).json(server_error);
+    next(err);
   }
 };
 

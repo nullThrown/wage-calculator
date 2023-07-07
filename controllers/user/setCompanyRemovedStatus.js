@@ -1,7 +1,6 @@
 const User = require('../../models/User');
-const { server_error } = require('../../constants/responseTypes');
 
-const setCompanyRemovedStatus = async (req, res) => {
+const setCompanyRemovedStatus = async (req, res, next) => {
   const { companyId, isRemoved } = req.body;
 
   try {
@@ -18,8 +17,7 @@ const setCompanyRemovedStatus = async (req, res) => {
     );
     res.status(200).json(user.companies);
   } catch (err) {
-    console.log(err);
-    res.status(500).json(server_error);
+    next(err);
   }
 };
 

@@ -1,10 +1,7 @@
 const Entries = require('../../models/Entries');
-const {
-  server_error,
-  resource_updated,
-} = require('../../constants/responseTypes');
+const { resourceUpdated } = require('../../services/responseTypes/success');
 
-const updateEntry = async (req, res) => {
+const updateEntry = async (req, res, next) => {
   const {
     entryId,
     timeWorkedDec,
@@ -63,10 +60,9 @@ const updateEntry = async (req, res) => {
         },
       }
     );
-    res.status(200).json(resource_updated);
+    res.status(200).json(resourceUpdated);
   } catch (err) {
-    console.log(err);
-    res.status(500).json(server_error);
+    next(err);
   }
 };
 

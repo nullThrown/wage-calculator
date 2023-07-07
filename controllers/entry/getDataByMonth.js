@@ -1,4 +1,3 @@
-const { server_error } = require('../../constants/responseTypes');
 const mongoose = require('mongoose');
 const getActiveCompanyIds = require('../../services/queries/user/company');
 const calculateData = require('../../business/calculateData');
@@ -9,7 +8,7 @@ const {
   getActiveMonthlyEntries,
 } = require('../../services/queries/entry/month');
 
-const getDataByMonth = async (req, res) => {
+const getDataByMonth = async (req, res, next) => {
   try {
     let { year, month, filter } = req.params;
     if (month.length === 1) {
@@ -44,8 +43,7 @@ const getDataByMonth = async (req, res) => {
     const monthData = calculateData(entries[0].data);
     res.status(200).json(monthData);
   } catch (err) {
-    console.log(err);
-    res.status(500).json(server_error);
+    next(err);
   }
 };
 

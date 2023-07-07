@@ -1,5 +1,4 @@
 const Entries = require('../../models/Entries');
-const { server_error } = require('../../constants/responseTypes');
 const mongoose = require('mongoose');
 const getActiveCompanyIds = require('../../services/queries/user/company');
 const {
@@ -7,7 +6,7 @@ const {
   getAllEntriesByCompany,
 } = require('../../services/queries/entry/overview');
 
-const getAllEntries = async (req, res) => {
+const getAllEntries = async (req, res, next) => {
   try {
     const { filter } = req.params;
     const userId = mongoose.Types.ObjectId(req.user.id);
@@ -24,8 +23,7 @@ const getAllEntries = async (req, res) => {
     }
     res.status(200).json(entries);
   } catch (err) {
-    console.log(err);
-    res.status(500).json(server_error);
+    next(err);
   }
 };
 

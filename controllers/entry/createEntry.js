@@ -1,9 +1,8 @@
 const User = require('../../models/User');
 const Entries = require('../../models/Entries');
-const { server_error } = require('../../constants/responseTypes');
 const mongoose = require('mongoose');
 
-const createEntry = async (req, res) => {
+const createEntry = async (req, res, next) => {
   try {
     const {
       hoursWorked,
@@ -81,8 +80,7 @@ const createEntry = async (req, res) => {
 
     res.status(201).json(entries.data[entries.data.length - 1]);
   } catch (err) {
-    console.log(err);
-    res.status(500).json({ ...server_error, error: err });
+    next(err);
   }
 };
 

@@ -1,4 +1,3 @@
-const { server_error } = require('../../constants/responseTypes');
 const mongoose = require('mongoose');
 const getActiveCompanyIds = require('../../services/queries/user/company');
 const findWeekPairs = require('../../util/findWeekPairs');
@@ -12,7 +11,7 @@ const { getAllWeeklyEntries } = require('../../services/queries/entry/week');
 const formatToShortDate = require('../../util/formatToShortDate');
 const createWeekOfDates = require('../../util/createWeekOfDates');
 
-const getDataByWeek = async (req, res) => {
+const getDataByWeek = async (req, res, next) => {
   let { date, filter } = req.params;
   try {
     const weekPairs = findWeekPairs(date, 26);
@@ -76,8 +75,7 @@ const getDataByWeek = async (req, res) => {
       .reverse();
     res.status(200).json(entriesByWeek);
   } catch (err) {
-    console.log(err);
-    res.status(500).json(server_error);
+    next(err);
   }
 };
 

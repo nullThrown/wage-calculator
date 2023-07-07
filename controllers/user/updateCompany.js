@@ -1,7 +1,6 @@
 const User = require('../../models/User');
-const { server_error } = require('../../constants/responseTypes');
 
-const updateCompany = async (req, res) => {
+const updateCompany = async (req, res, next) => {
   const {
     companyId,
     name,
@@ -30,8 +29,7 @@ const updateCompany = async (req, res) => {
     );
     res.status(200).json(user.companies);
   } catch (err) {
-    console.log(err);
-    res.status(500).json(server_error);
+    next(err);
   }
 };
 

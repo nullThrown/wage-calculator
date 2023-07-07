@@ -1,29 +1,23 @@
 const bcrypt = require('bcrypt');
 const User = require('../../models/User');
 const createToken = require('../../services/auth/createToken');
+const { invalidCredentials } = require('../../services/responseTypes/error');
+const NetworkError = require('../../services/error/NetworkError');
 
-const {
-  server_error,
-  invalid_credentials,
-} = require('../../constants/responseTypes');
-
-const loginUser = async (req, res) => {
+const loginUser = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email: email });
-    if (!user) {
-      return res.status(400).json(invalid_credentials);
-    }
+    if (!user) throw new NetworkError(invalidCredentials);
+
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      return res.status(400).json(invalid_credentials);
-    }
+    if (!isMatch) throw new NetworkError(invalidCredentials);
+
     const token = createToken(user._id);
 
     res.status(200).json({ token });
   } catch (err) {
-    console.log(err);
-    res.status(500).json(server_error);
+    return next(err);
   }
 };
 
