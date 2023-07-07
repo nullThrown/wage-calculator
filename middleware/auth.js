@@ -1,20 +1,17 @@
 const jwt = require('jsonwebtoken');
-const { token_invalid } = require('../constants/responseTypes');
+const { invalidToken } = require('../services/responseTypes/error');
+const NetworkError = require('../services/error/NetworkError');
 
-// grabs token from request headers
-// may switch to a cookie based system
 const verifyToken = (req, res, next) => {
   const token = req.header('x_auth_token');
 
-  if (!token) {
-    return res.status(401).json(token_invalid);
-  }
+  if (!token) return next(new NetworkError(invalidToken));
 
   try {
     const decoded = jwt.verify(token, process.env.JWTSECRET);
     req.user = decoded.user;
   } catch (err) {
-    return res.status(401).json(token_invalid);
+    return next(new NetworkError(invalidToken));
   }
   next();
 };
