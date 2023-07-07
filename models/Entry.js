@@ -3,7 +3,6 @@ const Schema = mongoose.Schema;
 const {
   requiredNum,
   requiredStr,
-  requiredBool,
   requiredDate,
 } = require('../constants/mongooseTypes');
 
