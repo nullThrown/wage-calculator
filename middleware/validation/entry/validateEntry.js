@@ -4,7 +4,7 @@ const { mongoIdSchema } = require('../../../services/validation/joiTypes');
 const entrySchema = Joi.object({
   hoursWorked: Joi.number().integer().min(0).max(23),
   minutesWorked: Joi.number().integer().min(0).max(59),
-  totalSales: Joi.number(),
+  totalSales: Joi.number().min(0),
   totalSalesApplicable: Joi.boolean().default(true),
   creditTips: Joi.number().min(0),
   cashTips: Joi.number().min(0),
