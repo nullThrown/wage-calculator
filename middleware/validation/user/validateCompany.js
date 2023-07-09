@@ -2,7 +2,7 @@ const Joi = require('joi');
 const { mongoIdSchema } = require('../../../services/validation/joiTypes');
 
 const companySchema = Joi.object({
-  companyId: mongoIdSchema.allow(''),
+  _id: mongoIdSchema.allow(''),
   name: Joi.string(),
   position: Joi.string(),
   hourlyWage: Joi.number().min(0),
@@ -10,6 +10,7 @@ const companySchema = Joi.object({
   isActive: Joi.boolean(),
   isRemoved: Joi.boolean(),
   totalSalesApplicable: Joi.boolean(),
+  startDate: Joi.date(),
 });
 const validateCompany = (req, res, next) => {
   const { error } = companySchema.validate(req.body, { abortEarly: false });
