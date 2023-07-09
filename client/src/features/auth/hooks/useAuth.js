@@ -3,18 +3,6 @@ import axios from 'config/axios';
 import storage from 'util/storage';
 import { useLocation } from 'react-router-dom';
 import { useQuery } from 'react-query';
-import { getUser } from '../api/auth';
-
-// const UseAuth = () => {
-//   try {
-//     const user = useQuery(['user'], getUser);
-//     console.log(user);
-//     return { user };
-//   } catch (err) {
-//     console.log(err);
-//     return { err };
-//   }
-// };
 
 const useAuth = () => {
   const [isAuth, setIsAuth] = useState(false);
@@ -24,9 +12,9 @@ const useAuth = () => {
     if (!token) return isAuth;
     try {
       const res = await axios.get('/auth');
-      setIsAuth(() => res.data.msg === 'token_valid');
+      setIsAuth(() => res.data.msg === 'valid_token');
     } catch (err) {
-      // console.log(err);
+      console.log(err);
     }
   };
   useEffect(() => {
