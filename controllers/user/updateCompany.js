@@ -2,7 +2,7 @@ const User = require('../../models/User');
 
 const updateCompany = async (req, res, next) => {
   const {
-    companyId,
+    _id,
     name,
     position,
     hourlyWage,
@@ -12,7 +12,7 @@ const updateCompany = async (req, res, next) => {
   } = req.body;
   try {
     const user = await User.findOneAndUpdate(
-      { _id: req.user.id, 'companies._id': companyId },
+      { _id: req.user.id, 'companies._id': _id },
       {
         $set: {
           'companies.$.name': name,
