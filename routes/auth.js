@@ -3,11 +3,12 @@ const router = express.Router();
 const verifyToken = require('../middleware/auth');
 const registerUser = require('../controllers/auth/registerUser');
 const loginUser = require('../controllers/auth/loginUser');
-const { token_valid } = require('../constants/responseTypes');
+const { validToken } = require('../services/responseTypes/success');
 const validateLogin = require('../middleware/validation/auth/validateLogin');
 const validateRegistration = require('../middleware/validation/auth/validateRegistration');
+
 router.get('/', verifyToken, async (req, res) => {
-  res.status(200).json(token_valid);
+  res.status(200).json(validToken);
 });
 
 // ROUTE POST api/auth/register
