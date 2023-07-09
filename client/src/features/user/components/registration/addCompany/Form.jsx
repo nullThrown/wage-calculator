@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { Box, Flex, ButtonGroup, useToast } from '@chakra-ui/react';
-import ErrorText from 'components/typography/ErrorText';
-import useAddCompany from 'features/user/hooks/useAddCompany';
-import useUpdateCompany from 'features/user/hooks/useUpdateCompany';
-import useAddCompanyVal from 'features/auth/hooks/useAddCompanyVal';
+import useAddCompany from 'features/company/hooks/useAddCompany';
+import useUpdateCompany from 'features/company/hooks/useUpdateCompany';
+import useAddCompanyVal from 'features/company/hooks/useAddCompanyVal';
 import TextInput from 'components/form/TextInput';
 import NumInput from 'components/form/NumInput';
 import CancelEditBtn from 'components/button/CancelEditBtn';

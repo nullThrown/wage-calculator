@@ -9,7 +9,7 @@ import CompanyDisplay from 'features/user/components/registration/addCompany/Com
 import FinishInfoModal from 'features/user/components/registration/addCompany/FinishInfoModal';
 import Form from 'features/user/components/registration/addCompany/Form';
 import FinishProfileSetupBtn from 'components/button/FinishProfileSetupBtn';
-import useGetCompanies from 'features/companySelect/hooks/useGetCompanies';
+import useGetCompanies from 'features/company/hooks/useGetCompanies';
 const initialCompanyState = {
   name: '',
   position: '',
@@ -38,11 +38,8 @@ const ProfileCreation = () => {
 
   const handleFinish = (e) => {
     e.preventDefault();
-    if (companyList?.length === 0) {
-      modalHook.onOpen();
-    } else {
-      return navigate('/home');
-    }
+    if (companyList?.length === 0) modalHook.onOpen();
+    else return navigate('/home');
   };
 
   return (

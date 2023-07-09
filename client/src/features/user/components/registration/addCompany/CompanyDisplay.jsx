@@ -14,10 +14,10 @@ import {
 import SetCompanyToEditBtn from 'components/button/SetCompanyToEditBtn';
 import DeleteCompanyBtn from 'components/button/DeleteCompanyBtn';
 import { successToast, errorToast } from 'components/toast/toast';
-import useDeleteCompany from 'features/user/hooks/usedeleteCompany';
+import useDeleteCompany from 'features/company/hooks/usedeleteCompany';
 import { connection_error, server_error } from 'constants/api/error';
 import { useQueryClient } from 'react-query';
-import useGetCompanies from 'features/companySelect/hooks/useGetCompanies';
+import useGetCompanies from 'features/company/hooks/useGetCompanies';
 import SomethingWentWrong from 'components/typography/SomethingWentWrong';
 
 const CompanyDisplay = ({ handleSetEditMode }) => {

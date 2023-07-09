@@ -1,5 +1,5 @@
 import { Select, Flex, FormLabel } from '@chakra-ui/react';
-import useGetCompanies from 'features/companySelect/hooks/useGetCompanies';
+import useGetCompanies from 'features/company/hooks/useGetCompanies';
 import { Spinner } from '@chakra-ui/react';
 import SomethingWentWrong from 'components/typography/SomethingWentWrong';
 
