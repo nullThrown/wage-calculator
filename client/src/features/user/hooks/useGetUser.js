@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import { getUser } from '../api/user';
+import { getUser } from 'features/user/api/user';
 
 const useGetUser = () => useQuery(['user'], () => getUser());
 
