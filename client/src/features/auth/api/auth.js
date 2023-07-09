@@ -20,13 +20,3 @@ export const loginUser = async (user) => {
     return Promise.reject(new Error(errorMsg));
   }
 };
-
-// place in user feature
-export const getUser = async () => {
-  try {
-    const { data } = await axios.get('/auth/me');
-    return data;
-  } catch (err) {
-    console.log(err);
-  }
-};
