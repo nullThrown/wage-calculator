@@ -1,4 +1,4 @@
-const validToken = { msg: 'token_valid' };
+const validToken = { msg: 'valid_token' };
 const passwordMatch = { msg: 'password_match' };
 const resourceCreated = { msg: 'resource_created' };
 const resourceUpdated = { msg: 'resource_updated' };
