@@ -1,6 +1,6 @@
 import { useMutation } from 'react-query';
 import { loginUser } from '../api/auth';
-import storage from 'util/storage';
+import storage from 'services/storage';
 
 const useLoginUser = () =>
   useMutation((user) => loginUser(user), {

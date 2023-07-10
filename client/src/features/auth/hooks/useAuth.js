@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'config/axios';
-import storage from 'util/storage';
+import storage from 'services/storage';
 import { useLocation } from 'react-router-dom';
 import { useQuery } from 'react-query';
 

@@ -1,5 +1,5 @@
-import Week from 'features/entries/components/Week';
-import Day from 'features/entries/components/Day';
+import Week from 'features/entries/components/week/Week';
+import Day from 'features/entries/components/day/Day';
 import { useState } from 'react';
 
 const currentDate = new Date()

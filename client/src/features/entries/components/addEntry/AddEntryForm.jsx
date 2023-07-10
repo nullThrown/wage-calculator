@@ -18,7 +18,7 @@ import EditEntryModal from 'features/entries/components/editEntry/EditEntryModal
 import { formatDollar, parseDollar } from 'util/format';
 import useCreateEntry from '../../hooks/useCreateEntry';
 import useAddEntryValidation from '../../hooks/useAddEntryValidation';
-import ShiftCheckboxGroup from 'features/entries/components/ShiftCheckboxGroup';
+import ShiftCheckboxGroup from 'features/entries/components/addEntry/ShiftCheckboxGroup';
 import SubmitEntryBtn from 'components/button/SubmitEntryBtn';
 import EditEntryBtn from 'components/button/EditEntryBtn';
 import { errorToast, successToast } from 'components/toast/toast';

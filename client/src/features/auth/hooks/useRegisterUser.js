@@ -1,6 +1,6 @@
 import { useMutation } from 'react-query';
 import { registerUser } from '../api/auth';
-import storage from '../../../util/storage';
+import storage from '../../../services/storage';
 
 // const useRegisterUser = useMutation((user) => registerUser(user));
 // useRegisterUSer instance should handle the UI logic
