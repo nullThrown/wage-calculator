@@ -5,7 +5,7 @@ import CenterContainer from 'components/base/CenterContainer';
 import MainHeading from 'components/typography/MainHeading';
 import SmallCard from 'components/card/SmallCard';
 import useRegisterUser from 'features/auth/hooks/useRegisterUser';
-import useSignupValidation from 'features/auth/hooks/useSignupVal';
+import useSignupValidation from 'features/auth/hooks/useValidateSignup';
 import TextInput from 'components/form/TextInput';
 import SignupBtn from 'components/button/SignupBtn';
 import {
