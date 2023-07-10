@@ -1,5 +1,5 @@
 import Axios, { AxiosRequestTransformer } from 'axios';
-import storage from '../util/storage';
+import storage from '../services/storage';
 
 // recursive fn that checks every value of request body
 // if value is Date it converts it into a timestamp with Date.now()
