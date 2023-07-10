@@ -6,6 +6,6 @@ const useGetAllEntries = (filter) => {
     ['entries', { filter: filter }],
     () => getAllEntries(filter)
   );
-  return { isLoading, isError, data };
+  return { isLoading, isError, entries: data };
 };
 export default useGetAllEntries;
