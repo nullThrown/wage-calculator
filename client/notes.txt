@@ -1,32 +1,5 @@
-NEW NOTES AFTER HIATUS
-read: previous notes, while mostly imcomprehensible, will stay up 
-new notes will be added and new to do items will be created from bottom-up
-
-
 GENERAL 
 *currently selected company needs to be saved on user model
-*rename folder features/companySelect -> company
--place all company related components/api calls/hooks into here
--rename all company query keys to ['company', 'bla']
-*add a services folder (path: src/services) to handle plain JavaScript modules (e.g., localStorage.js )
-- add initial state objects here 
-
-*
-problem: find all use queries
--separate into custom hooks
--create unique and useful query keys  
--handle loading/error logic 
--tag which ones need to be invalidated and based on what
-
-*queries
--useAuth - gets user - App 
-✔-getCompanies - registration/addCompany, editCompany, deleteCompany
--create separate API call to get companies
-✔-getOverview - Overview
--getEntries - Day, Week (entries component has single query fn, however, 
-it would be best to separate these calls into two separate ones and have separate data for each component)
-
-*********start here*********
 
 Day
 ✔-create route that grabs all entries with filter
@@ -42,9 +15,6 @@ Week
 -getShift - Shift (has not been created yet)
 *
 problem:  create generic react-query error handler
-  
-*
-problem: find all 'something went wrong error message" and replace with component 
 
 *
 problem: DefaultText component should be modifed by the chakra ui extend themes section 
@@ -56,18 +26,6 @@ solution: mongoose join (populate) method
 
 *
 problem: create format time util function that converts time from a decimal into a hours + minutes worked
-
-*
-problem: useAddCompanyVal.js file (path: features/auth/hooks) should be placed in user/hooks/validation folder
-
-*
-problem: useAddSignupVal.js file (path: features/auth/hooks) should be placed in user/hooks/validation folder
-
-*
-problem: validation hooks must be complete word 'val' -> 'validation' otherwise to confusing. Could mean value. 
-
-*
-problem: either have inputs be a separate component or individual for each
 
 *
 problem: axios stringify & node server convert request body date times into different timezone 
@@ -187,8 +145,16 @@ problem:
 
 
 DAY 
+*create fuctionality for display and selecting entries returned by date filter
+*create component - that contains <Title/>, entries ? <Text/>String, <Button/>[],
+*<Container/> 
+props: selectedEntries, currentlySelectedEntry 
+*<Title/> - text - 'Entries for <DatePicker/>'
+*<EntrySelectorsGroup/> - !entries ? 'no entries on this day' : <Button/>[] 
+*<Button/>
+props: currentlySelected ? change styles to indicated that it is selected 
 
-*
+
 problem: might need to separate useGetWeekDates query into both day and week components 
 partially because there are two date variables that are conflicting -- one for selecting weekData 
 and one for selecting data for a particular day in Day component
