@@ -14,9 +14,9 @@ const initialData = {
   currentWeek: '',
   selectedWeekData: {},
 };
-
+const currentDate = new Date();
 const Week = ({ filter }) => {
-  const { isLoading, isError, data } = useGetEntriesByWeek(filter, new Date());
+  const { isLoading, isError, data } = useGetEntriesByWeek(filter, currentDate);
 
   const [{ weekDates, currentWeek, selectedWeekData }, dispatch] = useReducer(
     weekDataReducer,
