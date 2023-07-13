@@ -1,19 +1,6 @@
 import LargeCard from 'components/card/LargeCard';
 import TertHeading from 'components/typography/TertHeading';
-import QuatHeading from 'components/typography/QuatHeading';
-import StatRow from 'components/data/StatRow';
-import SimpleStat from 'components/data/SimpleStat';
-import {
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  TableContainer,
-  Flex,
-  Spinner,
-} from '@chakra-ui/react';
+import { Spinner } from '@chakra-ui/react';
 import DatePicker from 'react-datepicker';
 import { useState, useMemo } from 'react';
 import useGetAllEntries from '../../hooks/useGetAllEntries';
