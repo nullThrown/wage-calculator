@@ -12,13 +12,11 @@ import MainHeading from 'components/typography/MainHeading';
 import Header from 'components/base/Header';
 import AddEntryForm from 'features/entries/components/addEntry/AddEntryForm';
 import Overview from 'features/overview/components/Overview';
-import Day from 'features/entries/components/day/Day';
 import Month from 'features/month/components/Month';
 import Shift from 'features/shift/components/Shift';
 import SecHeading from 'components/typography/SecHeading';
 import CompanySelect from 'features/company/components/CompanySelect';
-import Week from 'features/entries/components/week/Week';
-import Entries from 'features/entries/components/Entries';
+import Entries from 'features/entries/components/displayEntry/Entries';
 import { useQuery } from 'react-query';
 import { getUser } from 'features/user/api/user';
 import CenterContainer from 'components/base/CenterContainer';
@@ -62,8 +60,6 @@ const Home = () => {
             <CompanySelect filter={filter} setFilter={setFilter} />
             <Overview filter={filter} />
             <Entries filter={filter} />
-            {/* <Day filter={filter} /> */}
-            {/* <Week filter={filter} /> */}
             {/* completely breaks page */}
             {/* <Month filter={filter} /> */}
             {/* <Shift filter={filter} /> */}
