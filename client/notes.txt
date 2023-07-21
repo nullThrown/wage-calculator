@@ -121,8 +121,8 @@ Solution: match company id and position to company array within node server - gr
 
 
 
-OVERVIEW 
 
+OVERVIEW 
 *
 problem: onLoading and onError UI states are not rendered
 
@@ -130,72 +130,11 @@ problem: onLoading and onError UI states are not rendered
 problem: find more interesting data to display to the user 
 
 
-*
-problem:
 
-*
-problem:
-
-*
-problem:
-
-*
-problem:
-
-
-
-DAY 
-*create fuctionality for display and selecting entries returned by date filter
-*create component - that contains <Title/>, entries ? <Text/>String, <Button/>[],
-*<Container/> 
-props: selectedEntries, currentlySelectedEntry 
-*<Title/> - text - 'Entries for <DatePicker/>'
-*<EntrySelectorsGroup/> - !entries ? 'no entries on this day' : <Button/>[] 
-*<Button/>
-props: currentlySelected ? change styles to indicated that it is selected 
-
-
-problem: might need to separate useGetWeekDates query into both day and week components 
-partially because there are two date variables that are conflicting -- one for selecting weekData 
-and one for selecting data for a particular day in Day component
-
-*
-problem entry data needs to be pulled from separate API 
-pull all entries back a year 
-if user selects date prior to 1 year of most recent date within entries data pool 
-create new API request
-
-*
-problem: is not intuitively linked to week section 
-
-*
-problem: requires a tag upon that describes if entry was last input 
-
-*
-problem: add date picker - set to current date 
-have current date present all shifts worked for that day
-allow user to select which shifts' data gets presented to the stats section
-
-*
-problem:
-
-*
-problem:
-
-*
-problem:
-
-
-WEEK
+ENTRIES
 
 *
 problem: EntryDisplay box needs access to company name
-
-*
-problem:a shift preview should provide option to send data to Day statistics view
-
-*
-problem: popover display a few more pieces of data and a populate button will send info to single entry stats view
 
 *
 problem: week date box requires 'day' text i.g., 'sunday', 'saturday', 'monday'
@@ -204,17 +143,10 @@ problem: week date box requires 'day' text i.g., 'sunday', 'saturday', 'monday'
 problem: day displayed does not match the weekPairs data. select dates: (9-15) DateBox dates: (8-14)  
 
 *
-problem: Week needs to display its data -- wait until full combover of front-end components is acheived
-Too many components will get used that I don't fully understand yet
-
-*
 problem: shifts are not being placed in the correct days
 
 *
 problem: weekpairs in Week component is a poor name. It's not a pair its just a week.
-
-*
-problem: Week Shift popover 'view' button needs to populate single entry data
 
 
 MONTH 
