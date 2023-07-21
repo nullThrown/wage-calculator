@@ -1,9 +1,9 @@
 import TestContainer from 'components/base/TestContainer';
-import SomethingWentWrong from 'components/typography/SomethingWentWrong';
+import Entries from 'features/entries/components/displayEntry/Entries';
 const Test = () => {
   return (
     <TestContainer>
-      <SomethingWentWrong refresh />
+      <Entries filter='all' />
     </TestContainer>
   );
 };
