@@ -59,7 +59,7 @@ const AddEntryForm = ({ onToggle }) => {
       setIsValidationError(false);
       createEntry.mutate(newEntry, {
         onSuccess: (data, variables, context) => {
-          setNewEntry(initialEntryValue);
+          // setNewEntry(initialEntryValue);
           toast({ ...successToast, title: 'New entry added' });
         },
         onError: (error, variables, context) => {
@@ -71,16 +71,6 @@ const AddEntryForm = ({ onToggle }) => {
       });
     }
   };
-
-  // newEntry.companyId does not populate until company select handler is fired
-  // this effect allows the companyId to populate to the first company in list(company initially selected)
-  // useEffect(() => {
-  //   setNewEntry({
-  //     ...newEntry,
-  //     companyId: companyList[0]._id,
-  //     totalSalesApplicable: companyList[0].totalSalesApplicable,
-  //   });
-  // }, [companyList[0]._id, companyList[0].totalSalesApplicable]);
 
   return (
     <LargeCard as='form' m='1em 0 0 0'>
