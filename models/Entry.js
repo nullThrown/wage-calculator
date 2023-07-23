@@ -19,7 +19,7 @@ const EntrySchema = new Schema(
     position: requiredStr,
     hourlyWage: requiredNum,
     specialEvent: { type: Boolean, default: false },
-    shiftDate: requiredDate,
+    shiftDate: requiredNum,
     totalTips: requiredNum,
     trueTotalTips: requiredNum,
     totalWages: requiredNum,
