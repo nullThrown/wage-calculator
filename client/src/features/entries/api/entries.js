@@ -3,8 +3,11 @@ import { connection_error } from 'constants/api/error';
 
 export const createEntry = async (entry) => {
   try {
-    entry = { ...entry, shiftDate: Date.now() };
-    const { data } = await axios.post('/entries/create', entry);
+    const shiftTimestamp = entry.shiftDate.getTime();
+    const { data } = await axios.post('/entries/create', {
+      ...entry,
+      shiftDate: shiftTimestamp,
+    });
     return data;
   } catch (err) {
     const errorMsg = !err.response ? connection_error : err.response.data.msg;
@@ -33,6 +36,7 @@ export const getAllEntries = async (filter) => {
 export const getEntriesByWeek = async (filter, date) => {
   try {
     const { data } = await axios.get(`/entries/week/${filter}/${date}`);
+    console.log(data);
     return data;
   } catch (err) {
     const errorMsg = !err.response ? connection_error : err.response.data.msg;
