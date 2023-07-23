@@ -54,12 +54,12 @@ const getDataByWeek = async (req, res, next) => {
       };
     });
     const { data } = entries[0];
-
+    console.log(data[44]);
     data.forEach((entry) => {
       entriesByWeek.forEach((week) => {
         if (
-          entry.shiftDate.getTime() > week.startDate.getTime() &&
-          entry.shiftDate.getTime() < week.endDate.getTime()
+          entry.shiftDate > week.startDate.getTime() &&
+          entry.shiftDate < week.endDate.getTime()
         ) {
           week.entries.push(entry);
         }
