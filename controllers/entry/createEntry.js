@@ -15,14 +15,8 @@ const createEntry = async (req, res, next) => {
       shiftTime,
       companyId,
       specialEvent,
+      shiftDate,
     } = req.body;
-
-    let timestamp = req.body.shiftDate;
-
-    // works but sets the date to local time zone
-    // this should set the zone to whichever date the node server is running on
-    // solution: convert to the timestamp to the date it orginally specified
-    shiftDate = new Date(timestamp).toLocaleDateString('en-us');
     const timeWorkedDec = +hoursWorked + +minutesWorked / 60;
 
     const userId = mongoose.Types.ObjectId(req.user.id);
