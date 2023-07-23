@@ -1,18 +1,19 @@
+*fix: Week Section 
+backend: data will be array of entries
+front-end:
+-create component that contains the seven day boxes
+-pass date state var into fn that takes 2 args (date: Date, entries: Array) 
+create var = entriesByDay : Array {day: String, entries: Array}
+take date and create 7 days from monday - sunday add to entriesByDay array 
+loop through entriesByDay array and nest loop entries array 
+if entry (month, day, year) are equal to entriesByDay day (month, day, year)
+place entry into entriesByDay entries: array 
+return entriesByDay
+
+
 GENERAL 
 *currently selected company needs to be saved on user model
 
-Day
-✔-create route that grabs all entries with filter
-✔-create API axios call that fetches all entries 
--create custom hook to wrap fetch call
--place custom hook in Day component
-Week
--create get entriesByWeek route for Week component(already exists?) 
--create custom hook to get entries by Week
--place custom hook in Week component
-
--getMonth - Month
--getShift - Shift (has not been created yet)
 *
 problem:  create generic react-query error handler
 
@@ -33,11 +34,7 @@ many date times need to reflect local time zones.
 solution: create system that preserves local time zones. 
 
 
-
 ADD COMPANY 
-*
-problem: features/user/components/registration/addCompany - FinishInfo Modal should be created
-as a separate modal in the components folder
 
 *
 problem: styles: not enough margin on top of component
@@ -132,6 +129,19 @@ problem: find more interesting data to display to the user
 
 
 ENTRIES
+*
+problem: date conversion!!! mismatch! somewhere along the shiftDate pipeline createEntry, stringify, send to server, send to DB, send back to server, parse, stringify, send to react, parse, 
+somewhere within this pipeline the date is being converted into separate time zones
+therefore when a new entry is created, its original date value is being converted. 
+This problem also extends into the week of days component  
+
+shiftDate: variable pipeline: 
+- state variable in AddEntryForm - local timezone 
+-converted into timestamp 
+-sent to node server 
+-stored in mongoDB as timestamp: Number
+- that number is, when run locally in chrome browser, converted into the correct time
+
 
 *
 problem: EntryDisplay box needs access to company name
