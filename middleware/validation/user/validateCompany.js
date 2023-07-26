@@ -2,7 +2,7 @@ const Joi = require('joi');
 const { mongoIdSchema } = require('../../../services/validation/joiTypes');
 
 const companySchema = Joi.object({
-  _id: mongoIdSchema.allow(''),
+  _id: mongoIdSchema.allow(null),
   name: Joi.string(),
   position: Joi.string(),
   hourlyWage: Joi.number().min(0),
