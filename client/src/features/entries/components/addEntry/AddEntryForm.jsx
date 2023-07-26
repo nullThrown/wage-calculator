@@ -59,7 +59,7 @@ const AddEntryForm = ({ onToggle }) => {
       setIsValidationError(false);
       createEntry.mutate(newEntry, {
         onSuccess: (data, variables, context) => {
-          // setNewEntry(initialEntryValue);
+          setNewEntry(initialEntryValue);
           toast({ ...successToast, title: 'New entry added' });
         },
         onError: (error, variables, context) => {
@@ -74,7 +74,7 @@ const AddEntryForm = ({ onToggle }) => {
 
   return (
     <LargeCard as='form' m='1em 0 0 0'>
-      <TertHeading text="Add Earning's Report" textAlign='center' />
+      <TertHeading textAlign='center'>Add Earning's Report</TertHeading>
       <Flex m='1em' justify='center'>
         <EditEntryBtn onOpen={onOpen} />
         <EditEntryModal isOpen={isOpen} onClose={onClose} />
