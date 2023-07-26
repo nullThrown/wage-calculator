@@ -6,20 +6,20 @@ import { useState } from 'react';
 import SomethingWentWrong from 'components/typography/SomethingWentWrong';
 import DataDisplay from 'features/entries/components/displayEntry/DataDisplay';
 import DataDisplayEmpty from 'features/entries/components/displayEntry/DataDisplayEmpty';
-import useGetEntriesByWeek from 'features/entries/hooks/useGetWeeklyEntries';
-import formatReadableDate from 'util/formatReadableDate';
 import DateBox from 'features/entries/components/displayEntry/DateBox';
-import selectWeekData from 'features/entries/helpers/selectWeekData';
-
-const currentDate = new Date();
+import filterEntriesByWeek from 'features/entries/helpers/filterEntriesByWeek/filterEntriesByWeek';
+import useGetAllEntries from 'features/entries/hooks/useGetAllEntries';
 
 const Entries = ({ filter }) => {
   const [date, setDate] = useState(new Date());
   const [selectedEntry, setSelectedEntry] = useState(null);
 
-  const { isLoading, isError, data } = useGetEntriesByWeek(filter, currentDate);
+  const { isLoading, isError, entries } = useGetAllEntries(filter);
 
-  const selectedWeekData = selectWeekData(date, data);
+  console.time();
+  const entriesByWeek = filterEntriesByWeek(date, entries);
+  console.timeEnd();
+
   if (isLoading) {
     return <Spinner />;
   }
@@ -35,18 +35,12 @@ const Entries = ({ filter }) => {
         maxDate={new Date()}></DatePicker>
 
       <HStack>
-        {selectedWeekData.weekOfDays?.map((day, i) => {
-          const dayDate = formatReadableDate(day);
-          const entriesByDay = selectedWeekData.entries.filter((entry) => {
-            const shiftDate = formatReadableDate(entry.shiftDate);
-            return shiftDate === dayDate;
-          });
-
+        {entriesByWeek.map((day) => {
           return (
             <DateBox
-              key={day}
-              day={dayDate}
-              entries={entriesByDay}
+              key={day.date}
+              day={day.date.getDate()}
+              entries={day.entries}
               setSelectedEntry={setSelectedEntry}
             />
           );
