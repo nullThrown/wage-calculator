@@ -6,10 +6,7 @@ import {
   PopoverHeader,
   PopoverBody,
   PopoverFooter,
-  PopoverAnchor,
   PopoverArrow,
-  PopoverCloseButton,
-  VStack,
   Flex,
   Text,
   Button,
@@ -36,7 +33,7 @@ const ShiftInstance = ({ entry, setSelectedEntry }) => {
         <PopoverArrow />
         <PopoverHeader
           bg='green.600'
-          color='white'>{`Iron Cactus - ${entry.position}`}</PopoverHeader>
+          color='white'>{`bar - ${entry.position}`}</PopoverHeader>
         <PopoverBody>
           <Flex flexDirection='column'>
             <Text>{`time worked: ${entry.timeWorkedDec.toFixed(2)}`}</Text>
