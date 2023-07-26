@@ -22,21 +22,19 @@ import { getUser } from 'features/user/api/user';
 import CenterContainer from 'components/base/CenterContainer';
 import SomethingWentWrong from 'components/typography/SomethingWentWrong';
 import AddEntryAccordianBtn from 'components/button/AddEntryAccordianBtn';
-import useGetAllEntries from 'features/entries/hooks/useGetAllEntries';
 const Home = () => {
   const [filter, setFilter] = useState('all');
 
   const { isOpen, onToggle } = useDisclosure();
-  const user = useQuery(['user'], getUser);
-  const entries = useGetAllEntries(filter);
-  if (user.isLoading || entries.isLoading) {
+  const { isLoading, isError, data } = useQuery(['user'], getUser);
+  if (isLoading) {
     return (
       <CenterContainer>
         <Spinner mt='6em' />
       </CenterContainer>
     );
   }
-  if (user.isError || entries.isError) {
+  if (isError) {
     return (
       <CenterContainer>
         <SomethingWentWrong />
@@ -48,7 +46,7 @@ const Home = () => {
     <>
       <Header />
       <MainContainer>
-        <MainHeading>Welcome, {user.data.username}</MainHeading>
+        <MainHeading>Welcome, {data.username}</MainHeading>
         <AddEntryAccordianBtn onToggle={onToggle} />
         <Collapse in={isOpen} animateOpacity>
           <AddEntryForm onToggle={onToggle} />
