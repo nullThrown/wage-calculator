@@ -7,13 +7,13 @@ const updateEntry = require('../controllers/entry/updateEntry');
 const getOverviewData = require('../controllers/entry/getOverviewData');
 const getAllEntries = require('../controllers/entry/getAllEntries');
 const getDataByMonth = require('../controllers/entry/getDataByMonth');
-const getDataByWeek = require('../controllers/entry/getDataByWeek');
 const getShiftData = require('../controllers/entry/getShiftData');
 const getSingleEntry = require('../controllers/entry/getSingleEntry');
 const validateEntry = require('../middleware/validation/entry/validateEntry');
 
-// ROUTE MIDDLEWARE api/entries
-// DESC verify token
+// MIDDLEWARE api/entries
+// ROUTE ALL api/entries/*
+// DESC verify user token
 router.use(verifyToken);
 
 // ROUTE POST api/entries/create
@@ -40,11 +40,6 @@ router.get('/:filter', verifyFilter, getAllEntries);
 // DESC calc data by specific month
 // ACCESS private
 router.get('/month/:year/:month/:filter', verifyFilter, getDataByMonth);
-
-// ROUTE GET api/entries/week/:date/:filter
-// DESC get entries grouped by weeks (mon-sun both inclusive)
-// ACCESS private
-router.get('/week/:filter/:date', verifyFilter, getDataByWeek);
 
 // ROUTE GET api/entries/shift
 // DESC get filtered shift data
