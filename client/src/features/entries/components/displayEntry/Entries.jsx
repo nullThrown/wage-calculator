@@ -16,9 +16,7 @@ const Entries = ({ filter }) => {
 
   const { isLoading, isError, entries } = useGetAllEntries(filter);
 
-  console.time();
   const entriesByWeek = filterEntriesByWeek(date, entries);
-  console.timeEnd();
 
   if (isLoading) {
     return <Spinner />;
@@ -30,9 +28,15 @@ const Entries = ({ filter }) => {
     <LargeCard as='section'>
       <TertHeading textAlign='center'>Entries</TertHeading>
       <DatePicker
+        showIcon
+        wrapperClassName='date-picker-wrapper'
+        calendarClassName='date-picker-calendar'
+        monthClassName='date-picker-month'
         selected={date}
+        locale='en-GB'
         onChange={(date) => setDate(date)}
-        maxDate={new Date()}></DatePicker>
+        maxDate={new Date()}
+      />
 
       <HStack>
         {entriesByWeek.map((day) => {
