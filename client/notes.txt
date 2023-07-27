@@ -1,14 +1,3 @@
-*fix: Week Section 
-backend: data will be array of entries
-front-end:
--create component that contains the seven day boxes
--pass date state var into fn that takes 2 args (date: Date, entries: Array) 
-create var = entriesByDay : Array {day: String, entries: Array}
-take date and create 7 days from monday - sunday add to entriesByDay array 
-loop through entriesByDay array and nest loop entries array 
-if entry (month, day, year) are equal to entriesByDay day (month, day, year)
-place entry into entriesByDay entries: array 
-return entriesByDay
 
 
 GENERAL 
