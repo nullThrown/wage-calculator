@@ -1,4 +1,14 @@
-
+*customize date-picker
+darken blue color: blue-600/700
+✔-create custom component in src/components/ folder 
+-add title
+✔- add icon to date picker component
+✔- add border around date selector
+✔-change calendar header - white
+-darken the month selectors
+✔-hovered day should be blue ring
+✔-selected day should be solid encompassing circle
+-?have week start on monday 
 
 GENERAL 
 *currently selected company needs to be saved on user model
