@@ -1,9 +1,10 @@
 import TestContainer from 'components/base/TestContainer';
-import Entries from 'features/entries/components/displayEntry/Entries';
+import Container from 'features/entries/components/displayEntry/calendar/Week';
+
 const Test = () => {
   return (
     <TestContainer>
-      <Entries filter='all' />
+      <Container />
     </TestContainer>
   );
 };
