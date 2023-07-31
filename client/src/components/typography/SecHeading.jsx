@@ -1,9 +1,9 @@
 import { Heading } from '@chakra-ui/react';
 
-const SecHeading = ({ children, textAlign }) => {
+const SecHeading = ({ children, textAlign, as }) => {
   return (
     <Heading
-      as='h2'
+      as={as}
       size='xl'
       opacity='.85'
       fontWeight='400'
