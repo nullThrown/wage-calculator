@@ -1,21 +1,21 @@
 import LargeCard from 'components/card/LargeCard';
 import TertHeading from 'components/typography/TertHeading';
-import { Spinner, HStack } from '@chakra-ui/react';
+import { Spinner } from '@chakra-ui/react';
 import { useState } from 'react';
 import SomethingWentWrong from 'components/typography/SomethingWentWrong';
 import DataDisplay from 'features/entries/components/displayEntry/DataDisplay';
 import DataDisplayEmpty from 'features/entries/components/displayEntry/DataDisplayEmpty';
-import DateBox from 'features/entries/components/displayEntry/DateBox';
 import filterEntriesByWeek from 'features/entries/helpers/filterEntriesByWeek/filterEntriesByWeek';
 import useGetAllEntries from 'features/entries/hooks/useGetAllEntries';
 import CustomDatePicker from 'components/inputs/DatePicker/CustomDatePicker';
+import Week from 'features/entries/components/displayEntry/calendar/Week';
+import Header from 'features/entries/components/displayEntry/calendar/Header';
 
 const Entries = ({ filter }) => {
   const [date, setDate] = useState(new Date());
   const [selectedEntry, setSelectedEntry] = useState(null);
 
   const { isLoading, isError, entries } = useGetAllEntries(filter);
-
   const entriesByWeek = filterEntriesByWeek(date, entries);
 
   if (isLoading) {
@@ -27,21 +27,14 @@ const Entries = ({ filter }) => {
   return (
     <LargeCard as='section'>
       <TertHeading textAlign='center'>Entries</TertHeading>
-
-      <CustomDatePicker date={date} setDate={setDate} />
-
-      <HStack>
-        {entriesByWeek.map((day) => {
-          return (
-            <DateBox
-              key={day.date}
-              day={day.date.getDate()}
-              entries={day.entries}
-              setSelectedEntry={setSelectedEntry}
-            />
-          );
-        })}
-      </HStack>
+      <Header>
+        <CustomDatePicker date={date} setDate={setDate} />
+      </Header>
+      <Week
+        entriesByWeek={entriesByWeek}
+        setSelectedEntry={setSelectedEntry}
+        date={date}
+      />
 
       {selectedEntry ? (
         <DataDisplay selectedEntry={selectedEntry} />
