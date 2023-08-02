@@ -11,7 +11,7 @@
 .date-picker-month {
 }
 .example-custom-input {
-  background: url('../../../../public/calendar.svg') no-repeat right !important;
+  background: url('../../../../public/svg/calendar.svg') no-repeat right !important;
   background-size: 20px !important;
   width: 8.6em !important;
   font-size: 0.9rem !important;
