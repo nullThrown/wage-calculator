@@ -1,14 +1,75 @@
-*customize date-picker
-darken blue color: blue-600/700
-✔-create custom component in src/components/ folder 
--add title
-✔- add icon to date picker component
-✔- add border around date selector
-✔-change calendar header - white
--darken the month selectors
-✔-hovered day should be blue ring
-✔-selected day should be solid encompassing circle
--?have week start on monday 
+LANDING PAGE
+*create landing page
+
+SIGNUP PAGE
+*add image to left-hand side of form 
+*normalize size
+*add wrapper at smaller screen sizes
+-inputs are pushed against the edge
+*remove the signup button loading animation 
+*add animation upon successful signup
+*redirect instantly to create-profile page
+ 
+ STYLES - to set offset background color on image
+ <div id="element">
+</div>
+
+body {
+	background-color: #e6e4e2;
+	padding: 2rem;
+}
+#element {
+	position: relative;
+	width: 290px;
+	height: 350px;
+	background: url(https://i.imgur.com/nRWmBVg.png) center center no-repeat;
+	background-size: cover;
+	border-radius: 1.5rem;
+}
+
+#element::after {
+	position: absolute;
+	z-index: -1;
+	content: "";
+	width: 100%;
+	height: 100%;
+	top: 20%;
+	left: 20%;
+	border-radius: 1.5rem 1.5rem 0 0;
+	background-image: linear-gradient(#9d9490, #d5c9c2, #e1d6d0, #e6e4e2);
+}
+
+
+
+LOGIN PAGE
+*add image to left-hand side of form 
+*normalize size
+*add wrapper at smaller screen sizes
+-inputs are pushed against the edge
+
+SIGNUP SUCCESS PAGE 
+*delete this page - it is unnecessary
+
+PROFILE CREATION PAGE
+*rename to add Company
+*add padding between inputs 
+*adding padding within the form - inputs are pushing against the edge
+*look into proper box shadow 
+*fix are you sure you want to continue modal
+*add padding to top of container 
+
+HOME PAGE
+*page does not load if there is no data - problem with a 'toFixed' method
+*create new layout for page 
+*create comparison chart
+
+ACCOUNT PAGE
+*create account page 
+*allow the user access to add/remove companies, change email/password/username
+
+HEADER COMPONENT 
+*create header component 
+-have two different states for protected/public
 
 GENERAL 
 *currently selected company needs to be saved on user model
@@ -17,20 +78,13 @@ GENERAL
 problem:  create generic react-query error handler
 
 *
-problem: DefaultText component should be modifed by the chakra ui extend themes section 
-There is no reason to have a separate component for that.
-
-*
 problem: entry items coming from API need to have both a company Id as well as a company name
 solution: mongoose join (populate) method 
 
 *
 problem: create format time util function that converts time from a decimal into a hours + minutes worked
 
-*
-problem: axios stringify & node server convert request body date times into different timezone 
-many date times need to reflect local time zones. 
-solution: create system that preserves local time zones. 
+
 
 
 ADD COMPANY 
@@ -129,34 +183,11 @@ problem: find more interesting data to display to the user
 
 ENTRIES
 *
-problem: date conversion!!! mismatch! somewhere along the shiftDate pipeline createEntry, stringify, send to server, send to DB, send back to server, parse, stringify, send to react, parse, 
-somewhere within this pipeline the date is being converted into separate time zones
-therefore when a new entry is created, its original date value is being converted. 
-This problem also extends into the week of days component  
 
-shiftDate: variable pipeline: 
-- state variable in AddEntryForm - local timezone 
--converted into timestamp 
--sent to node server 
--stored in mongoDB as timestamp: Number
-- that number is, when run locally in chrome browser, converted into the correct time
 
 
 *
 problem: EntryDisplay box needs access to company name
-
-*
-problem: week date box requires 'day' text i.g., 'sunday', 'saturday', 'monday'
-
-*
-problem: day displayed does not match the weekPairs data. select dates: (9-15) DateBox dates: (8-14)  
-
-*
-problem: shifts are not being placed in the correct days
-
-*
-problem: weekpairs in Week component is a poor name. It's not a pair its just a week.
-
 
 MONTH 
 
