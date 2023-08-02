@@ -1,10 +1,9 @@
 import TestContainer from 'components/base/TestContainer';
-import Container from 'features/entries/components/displayEntry/calendar/Week';
-
+import Header from 'components/base/Header';
 const Test = () => {
   return (
     <TestContainer>
-      <Container />
+      <Header />
     </TestContainer>
   );
 };
