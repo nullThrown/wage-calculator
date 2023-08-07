@@ -1,15 +1,13 @@
 const Entries = require('../../models/Entries');
-
-// doesn't filter with entryId but returns entire entry list
-const getSingleEntry = async (req, res, next) => {
+const testPopulate = async (req, res, next) => {
   const userId = req.user.id;
-
+  console.log(userId);
   try {
-    const entries = await Entries.findOne({ user: userId });
+    const entries = await Entries.find({ user: userId }).populate('user');
     res.status(200).json(entries);
   } catch (err) {
     next(err);
   }
 };
 
-module.exports = getSingleEntry;
+module.exports = testPopulate;

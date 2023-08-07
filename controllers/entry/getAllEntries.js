@@ -2,6 +2,7 @@ const Entries = require('../../models/Entries');
 const mongoose = require('mongoose');
 const getActiveCompanyIds = require('../../services/queries/user/company');
 const {
+  getAllEntriesQuery,
   getAllActiveEntries,
   getAllEntriesByCompany,
 } = require('../../services/queries/entry/overview');
@@ -13,6 +14,7 @@ const getAllEntries = async (req, res, next) => {
     let entries;
     if (filter === 'all') {
       entries = await Entries.findOne({ user: userId });
+      // entries = await getAllEntriesQuery(userId);
     } else if (filter === 'active') {
       const activeCompanyIds = await getActiveCompanyIds(userId);
 

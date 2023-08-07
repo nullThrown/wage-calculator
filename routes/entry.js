@@ -8,8 +8,8 @@ const getOverviewData = require('../controllers/entry/getOverviewData');
 const getAllEntries = require('../controllers/entry/getAllEntries');
 const getDataByMonth = require('../controllers/entry/getDataByMonth');
 const getShiftData = require('../controllers/entry/getShiftData');
-const getSingleEntry = require('../controllers/entry/getSingleEntry');
 const validateEntry = require('../middleware/validation/entry/validateEntry');
+const testPopulate = require('../controllers/entry/getSingleEntry');
 
 // MIDDLEWARE api/entries
 // ROUTE ALL api/entries/*
@@ -49,6 +49,11 @@ router.get('/shift/:filter', verifyFilter, getShiftData);
 // ROUTE GET api/entries/:id
 // DESC get single entry
 // ACCESS private
-router.get('/:id', getSingleEntry);
+// router.get('/:id', getSingleEntry);
+
+// ROUTE GET api/entries/test/populate
+// DESC get single entry
+// ACCESS private
+router.get('/test/populate', testPopulate);
 
 module.exports = router;
