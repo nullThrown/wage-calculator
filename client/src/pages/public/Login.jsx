@@ -1,11 +1,16 @@
-import React from 'react';
+import MainWrapper from 'components/base/MainWrapper';
 import LoginForm from 'features/auth/components/LoginForm';
-import MainContainer from 'components/base/Container';
+import Footer from 'components/base/Footer';
+import FormContainer from 'components/base/FormContainer';
+
 const Login = () => {
   return (
-    <MainContainer>
-      <LoginForm />
-    </MainContainer>
+    <MainWrapper>
+      <FormContainer>
+        <LoginForm />
+      </FormContainer>
+      <Footer />
+    </MainWrapper>
   );
 };
 

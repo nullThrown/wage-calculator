@@ -15,10 +15,11 @@ import SignupFree from 'components/link/SignupFree';
 import LandingImage from 'components/image/LandingImage';
 import { TbDeviceWatchDollar } from 'react-icons/tb';
 import { GrCompare } from 'react-icons/gr';
-
+import Footer from 'components/base/Footer';
+import MainWrapper from 'components/base/MainWrapper';
 const Landing = () => {
   return (
-    <>
+    <MainWrapper isHeader>
       <Header />
       <MainContainer>
         <Grid templateColumns='1fr 1fr' rowGap='4em'>
@@ -103,7 +104,8 @@ const Landing = () => {
           </HStack>
         </Grid>
       </MainContainer>
-    </>
+      <Footer />
+    </MainWrapper>
   );
 };
 

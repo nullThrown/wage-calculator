@@ -22,6 +22,8 @@ import { getUser } from 'features/user/api/user';
 import CenterContainer from 'components/base/CenterContainer';
 import SomethingWentWrong from 'components/typography/SomethingWentWrong';
 import AddEntryAccordianBtn from 'components/button/AddEntryAccordianBtn';
+import MainWrapper from 'components/base/MainWrapper';
+import Footer from 'components/base/Footer';
 const Home = () => {
   const [filter, setFilter] = useState('all');
 
@@ -43,7 +45,7 @@ const Home = () => {
   }
 
   return (
-    <>
+    <MainWrapper isHeader>
       <Header />
       <MainContainer>
         <MainHeading>Welcome, {data.username}</MainHeading>
@@ -58,13 +60,13 @@ const Home = () => {
             <CompanySelect filter={filter} setFilter={setFilter} />
             <Overview filter={filter} />
             <Entries filter={filter} />
-            {/* completely breaks page */}
             {/* <Month filter={filter} /> */}
             {/* <Shift filter={filter} /> */}
           </VStack>
         </Box>
       </MainContainer>
-    </>
+      <Footer />
+    </MainWrapper>
   );
 };
 
