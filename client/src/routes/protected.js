@@ -1,7 +1,6 @@
 import Home from 'pages/protected/Home';
 import Account from 'pages/protected/Account';
-import SignupSuccess from 'pages/protected/SignupSuccess';
-import ProfileCreation from 'pages/protected/ProfileCreation';
+import AddCompany from 'pages/protected/AddCompany';
 import { Navigate } from 'react-router-dom';
 const protectedRoutes = [
   {
@@ -13,12 +12,8 @@ const protectedRoutes = [
     element: <Account />,
   },
   {
-    path: '/signup-success',
-    element: <SignupSuccess />,
-  },
-  {
-    path: '/create-profile',
-    element: <ProfileCreation />,
+    path: '/add-company',
+    element: <AddCompany />,
   },
   {
     path: '/',
