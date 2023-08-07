@@ -1,62 +1,28 @@
+GENERAL 
 LANDING PAGE
-*create landing page
+
+
+SIGNUP AND LOGIN PAGE 
 
 SIGNUP PAGE
-*add image to left-hand side of form 
-*normalize size
-*add wrapper at smaller screen sizes
--inputs are pushed against the edge
-*remove the signup button loading animation 
+✔*add image to left-hand side of form 
+✔*normalize size
+✔*add wrapper at smaller screen sizes
 *add animation upon successful signup
 *redirect instantly to create-profile page
  
- STYLES - to set offset background color on image
- <div id="element">
-</div>
-
-body {
-	background-color: #e6e4e2;
-	padding: 2rem;
-}
-#element {
-	position: relative;
-	width: 290px;
-	height: 350px;
-	background: url(https://i.imgur.com/nRWmBVg.png) center center no-repeat;
-	background-size: cover;
-	border-radius: 1.5rem;
-}
-
-#element::after {
-	position: absolute;
-	z-index: -1;
-	content: "";
-	width: 100%;
-	height: 100%;
-	top: 20%;
-	left: 20%;
-	border-radius: 1.5rem 1.5rem 0 0;
-	background-image: linear-gradient(#9d9490, #d5c9c2, #e1d6d0, #e6e4e2);
-}
-
-
-
 LOGIN PAGE
-*add image to left-hand side of form 
-*normalize size
-*add wrapper at smaller screen sizes
--inputs are pushed against the edge
-
-SIGNUP SUCCESS PAGE 
-*delete this page - it is unnecessary
+✔*add image to left-hand side of form 
+✔*normalize size
+✔*add wrapper at smaller screen sizes
 
 PROFILE CREATION PAGE
-*rename to add Company
-*add padding between inputs 
-*adding padding within the form - inputs are pushing against the edge
+✔*rename to add Company
+✔*add padding between inputs 
+✔*adding padding within the form - inputs are pushing against the edge
 *look into proper box shadow 
-*fix are you sure you want to continue modal
-*add padding to top of container 
+*fix 'are you sure you want' to continue modal
+*fix margin on bottom of page
 
 HOME PAGE
 *page does not load if there is no data - problem with a 'toFixed' method
@@ -70,6 +36,10 @@ ACCOUNT PAGE
 HEADER COMPONENT 
 *create header component 
 -have two different states for protected/public
+
+*FOOTER COMPONENT
+✔*create a footer component 
+*add footer to all pages
 
 GENERAL 
 *currently selected company needs to be saved on user model
@@ -89,18 +59,6 @@ problem: create format time util function that converts time from a decimal into
 
 ADD COMPANY 
 
-*
-problem: styles: not enough margin on top of component
-
-*
-problem: inputs take up too much horizontal space within form component
-
-*
-problem: more space required between inputs 
-
-*
-problem: company list initial data should be pulled from DB not created locally 
-what if user reloads page? or steps away for a while?
 
 *
 problem: Edit Company and Cancel buttons are not inline
@@ -113,10 +71,6 @@ problem: add company on ProfileCreation page should have option to permanently s
 
 
 HOME
-
-*
-problem: All API calls on the home page should produce one loading state 
-if any one API call fails, the entire page should render 'something went wrong' component
 
 
 ADD ENTRY
@@ -178,12 +132,6 @@ problem: onLoading and onError UI states are not rendered
 
 *
 problem: find more interesting data to display to the user 
-
-
-
-ENTRIES
-*
-
 
 
 *
