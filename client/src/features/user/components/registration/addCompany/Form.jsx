@@ -79,7 +79,14 @@ const Form = ({
   };
 
   return (
-    <Box as='form' m='30px 0 0' boxShadow='5px 5px 10px rgb(220,220,220)'>
+    <Box
+      as='form'
+      mt='3rem'
+      display='flex'
+      flexDir='column'
+      gap='1.4em'
+      padding='2em'
+      boxShadow='5px 5px 10px rgb(220,220,220)'>
       <TextInput
         title='Company Name'
         name='name'
@@ -111,7 +118,7 @@ const Form = ({
         name='overtimeMultiplier'
         value={formData.overtimeMultiplier}
         onChange={handleNumberChange}
-        helperText='if hourly wage is increased by %50, set to 1.5'
+        helperText='If hourly wage is increased by %50, set to 1.5'
         precision={1}
         min={1}
         stepper

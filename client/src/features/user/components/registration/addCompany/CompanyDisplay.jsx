@@ -7,9 +7,9 @@ import {
   Th,
   Td,
   TableContainer,
-  Text,
   useToast,
   Spinner,
+  Heading,
 } from '@chakra-ui/react';
 import SetCompanyToEditBtn from 'components/button/SetCompanyToEditBtn';
 import DeleteCompanyBtn from 'components/button/DeleteCompanyBtn';
@@ -49,11 +49,11 @@ const CompanyDisplay = ({ handleSetEditMode }) => {
     return <SomethingWentWrong />;
   }
   return (
-    <Box mt='2em'>
-      <Text textAlign='center' fontSize='lg' fontWeight='600'>
-        Added Companies
-      </Text>
-      <TableContainer>
+    <Box mt='3.4em'>
+      <Heading textAlign='center' fontSize='lg' fontWeight='500' mb='.5em'>
+        Current Companies
+      </Heading>
+      <TableContainer fontSize='sm'>
         <Table>
           <Thead>
             <Tr>
