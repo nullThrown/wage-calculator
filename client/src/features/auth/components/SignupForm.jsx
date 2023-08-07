@@ -1,9 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Flex, useToast } from '@chakra-ui/react';
-import CenterContainer from 'components/base/CenterContainer';
-import MainHeading from 'components/typography/MainHeading';
-import SmallCard from 'components/card/SmallCard';
+import {
+  Flex,
+  useToast,
+  Container,
+  Box,
+  Image,
+  Heading,
+} from '@chakra-ui/react';
 import useRegisterUser from 'features/auth/hooks/useRegisterUser';
 import useSignupValidation from 'features/auth/hooks/useValidateSignup';
 import TextInput from 'components/form/TextInput';
@@ -43,7 +47,7 @@ const SignupForm = () => {
 
     return registerUser.mutate(user, {
       onSuccess: (data, variables, context) => {
-        navigate('/signup-success');
+        navigate('/add-company');
       },
       onError: (error, variables, context) => {
         const { message } = error;
@@ -57,52 +61,72 @@ const SignupForm = () => {
   };
 
   return (
-    <CenterContainer>
-      <SmallCard as='form'>
-        <MainHeading size='2xl' textAlign='center'>
-          Sign Up
-        </MainHeading>
+    <>
+      <Heading
+        as='h1'
+        size='xl'
+        textAlign='center'
+        fontWeight='400'
+        color='#20499C'>
+        Sign Up
+      </Heading>
+      <Flex
+        m={['1.4em auto 0', '1.8em auto 0', '1.8em 0 0']}
+        w={['92%', '74%', '100%']}
+        flexDirection={['column', 'column', 'row']}
+        alignItems='center'
+        gap={['3.2em', '3.2em', '.8em']}>
+        <Box
+          as='form'
+          width='100%'
+          order={[1, 1, 0]}
+          borderBottom='2px solid #20499C'>
+          <Flex flexDirection='column' gap='.8em'>
+            <TextInput
+              title='Email'
+              name='email'
+              type='email'
+              value={user.email}
+              onChange={handleInputChange}
+              isInvalid={emailError & displayErrors}
+              errorMsg='Email is either invalid or in use'
+            />
+            <TextInput
+              title='Username'
+              name='username'
+              value={user.username}
+              onChange={handleInputChange}
+              isInvalid={usernameError & displayErrors}
+              errorMsg='Must have a username'
+            />
 
-        <Flex flexDirection='column'>
-          <TextInput
-            title='Email'
-            name='email'
-            type='email'
-            value={user.email}
-            onChange={handleInputChange}
-            isInvalid={emailError & displayErrors}
-            errorMsg='Email is either invalid or in use'
-          />
-          <TextInput
-            title='Username'
-            name='username'
-            value={user.username}
-            onChange={handleInputChange}
-            isInvalid={usernameError & displayErrors}
-            errorMsg='Must have a username'
-          />
-
-          <TextInput
-            title='password'
-            name='password'
-            type='password'
-            value={user.password}
-            onChange={handleInputChange}
-            isInvalid={passwordError & displayErrors}
-            errorMsg='Password must be at least 8 characters'
-            helperText={
-              passwordError & displayErrors
-                ? null
-                : 'Password must be at least 8 characters'
-            }
-          />
-        </Flex>
-        <SignupBtn
-          isLoading={registerUser.isLoading}
-          handleSubmit={handleSubmit}
-        />
-      </SmallCard>
-    </CenterContainer>
+            <TextInput
+              title='password'
+              name='password'
+              type='password'
+              value={user.password}
+              onChange={handleInputChange}
+              isInvalid={passwordError & displayErrors}
+              errorMsg='Password must be at least 8 characters'
+              helperText={
+                passwordError & displayErrors
+                  ? null
+                  : 'Password must be at least 8 characters'
+              }
+            />
+          </Flex>
+          <Flex justify='center' m='2em 0 1em'>
+            <SignupBtn
+              isLoading={registerUser.isLoading}
+              handleSubmit={handleSubmit}
+            />
+          </Flex>
+        </Box>
+        <Box as='figure' w={['90%', '90%', '100%']}>
+          <Image src='svg/welcome-cats.svg' />
+        </Box>
+      </Flex>
+    </>
   );
 };
 

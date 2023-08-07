@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import { Heading, Flex } from '@chakra-ui/react';
-import CenterContainer from 'components/base/CenterContainer';
+import { Heading, Flex, Container, Box, Image } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
-import SmallCard from 'components/card/SmallCard';
 import TextInput from 'components/form/TextInput';
 import LoginBtn from 'components/button/LoginBtn';
 import useLoginUser from '../hooks/useLoginUser';
@@ -62,35 +60,59 @@ export const LoginForm = () => {
   };
 
   return (
-    <CenterContainer>
-      <SmallCard as='form'>
-        <Heading size='lg' fontWeight='400' textAlign='center' color='teal.900'>
-          Login
-        </Heading>
-        {error.isError && <ErrorText>{error.desc}</ErrorText>}
-        <TextInput
-          title='Email'
-          name='email'
-          type='email'
-          onChange={handleInputChange}
-          isInvalid={error.isError}
-        />
-        <TextInput
-          title='Password'
-          name='password'
-          type='password'
-          onChange={handleInputChange}
-          isInvalid={error.isError}
-        />
-
-        <Flex justifyContent='center' mt='1em'>
-          <LoginBtn
-            isLoading={loginUser.isLoading}
-            handleSubmit={handleSubmit}
-          />
-        </Flex>
-      </SmallCard>
-    </CenterContainer>
+    <>
+      <Heading
+        as='h1'
+        size='xl'
+        textAlign='center'
+        fontWeight='400'
+        color='#20499C'>
+        Login
+      </Heading>
+      {error.isError && <ErrorText>{error.desc}</ErrorText>}
+      <Flex
+        m={['1.4em auto 0', '1.8em auto 0', '1.8em 0 0']}
+        w={['92%', '74%', '100%']}
+        flexDirection={['column', 'column', 'row']}
+        alignItems='center'
+        gap={['3.2em', '3.2em', '.8em']}>
+        <Box
+          as='form'
+          width='100%'
+          alignSelf='flex-end'
+          order={[1, 1, 0]}
+          borderBottom='2px solid #20499C'>
+          <Flex flexDirection='column' gap='.8em'>
+            <TextInput
+              title='Email'
+              name='email'
+              type='email'
+              onChange={handleInputChange}
+              isInvalid={error.isError}
+            />
+            <TextInput
+              title='Password'
+              name='password'
+              type='password'
+              onChange={handleInputChange}
+              isInvalid={error.isError}
+            />
+          </Flex>
+          <Flex justifyContent='center' m='2em 0 1em'>
+            <LoginBtn
+              isLoading={loginUser.isLoading}
+              handleSubmit={handleSubmit}
+            />
+          </Flex>
+        </Box>
+        <Box
+          as='figure'
+          alignSelf={['auto', 'auto', 'flex-end']}
+          w={['90%', '90%', '100%']}>
+          <Image src='svg/man-opens-door.svg' />
+        </Box>
+      </Flex>
+    </>
   );
 };
 export default LoginForm;
