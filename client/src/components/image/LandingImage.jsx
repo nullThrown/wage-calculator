@@ -1,15 +1,28 @@
-import { Box, Grid, Image } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 const LandingImage = () => {
   return (
-    <Image
-      src='/image/girl-on-computer.jpg'
-      alt='girl on computer'
-      objectFit='cover'
-      borderRadius={['1.4em', '1.8em', '2.4em']}
-      boxSize={['14em', '14em', '18em']}
-      backgroundColor='blue.400'
-      backgroundPosition='top 20px right 20px'
-    />
+    <Box
+      as='span'
+      role='img'
+      aria-label='girl on computer'
+      display='block'
+      width='400px'
+      height='300px'
+      position='relative'
+      background='url(/image/girl-on-computer.jpg)'
+      backgroundSize='cover'
+      borderRadius='1.5rem'
+      _after={{
+        position: 'absolute',
+        zIndex: '-1',
+        content: '""',
+        width: '100%',
+        height: '100%',
+        top: '14%',
+        left: '14%',
+        borderRadius: '1.5rem 1.5rem 0 0',
+        backgroundImage: 'linear-gradient(blue, white)',
+      }}></Box>
   );
 };
 
