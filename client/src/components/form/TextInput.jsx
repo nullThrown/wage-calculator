@@ -22,10 +22,11 @@ const TextInput = ({
       isInvalid={isInvalid}
       isDisabled={isDisabled}
       isRequired={isRequired}>
-      <FormLabel htmlFor={name} opacity='.85'>
+      <FormLabel htmlFor={name} opacity='.9' mb='4px'>
         {title}
       </FormLabel>
       <Input
+        height='var(--chakra-sizes-9)'
         type={type ? type : 'text'}
         id={name}
         value={value}

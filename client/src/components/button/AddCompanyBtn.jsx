@@ -5,7 +5,7 @@ const AddCompanyBtn = ({ isLoading, handleAddCompany }) => {
       type='submit'
       colorScheme='green'
       textAlign='center'
-      m='30px auto 15px'
+      m='1.9rem auto .8rem'
       isLoading={isLoading}
       loadingText='Adding'
       onClick={handleAddCompany}>
