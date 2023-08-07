@@ -1,0 +1,11 @@
+account page
+
+2 sections 
+
+*Personal Info 
+-Email 
+-username
+-password
+
+*companies 
+-import displayCompanies component
