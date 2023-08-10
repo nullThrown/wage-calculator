@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const verifyToken = require('../middleware/auth');
 const getCurrentUser = require('../controllers/user/getCurrentUser');
-const updateCurrentUser = require('../controllers/user/updateCurrentUser');
+const updateCurrentPersonal = require('../controllers/user/updateCurrentPersonal');
 const createCompany = require('../controllers/user/createCompany');
 const updateCompany = require('../controllers/user/updateCompany');
 const deleteCompany = require('../controllers/user/deleteCompany');
@@ -11,9 +11,12 @@ const validateUser = require('../middleware/validation/user/validateUser');
 const validateCompany = require('../middleware/validation/user/validateCompany');
 const validateCompanyDelete = require('../middleware/validation/user/validateCompanyDelete');
 const setCompanyRemovedStatusValidation = require('../middleware/validation/user/setCompanyRemovedStatusValidation');
+const validateUpdatePassword = require('../middleware/validation/user/validateUpdatePassword');
+const updatePassword = require('../controllers/user/updatePassword');
 
-// ROUTE MIDDLEWARE api/user
-// DESC verify user
+// MIDDLEWARE
+// ROUTE ALL api/user
+// DESC verify user token
 router.use(verifyToken);
 
 // ROUTE GET api/user/me
@@ -21,10 +24,15 @@ router.use(verifyToken);
 // ACCESS private
 router.get('/me', getCurrentUser);
 
-// ROUTE PUT api/user/me/update
-// DESC update current user
+// ROUTE PUT api/user/me/update/personal
+// DESC update current user personal info
 // ACCESS private
-router.put('/me/update', validateUser, updateCurrentUser);
+router.put('/me/update/personal', validateUser, updateCurrentPersonal);
+
+// ROUTE PUT api/user/me/update/password
+// DESC update current user password
+// ACCESS private
+router.put('/me/update/password', validateUpdatePassword, updatePassword);
 
 // ROUTE POST api/user/company/create
 // DESC add company to company list
