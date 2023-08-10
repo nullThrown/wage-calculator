@@ -22,21 +22,23 @@ const Overview = ({ filter }) => {
         <StatRow>
           <SimpleStat
             title='Total Per Hour'
-            amount={data?.totalPerHour.toFixed(2)}
+            amount={data.totalTimeWorked ? data.totalPerHour.toFixed(2) : '-'}
             helpText='wages and tips'
-            symbolBefore='$'
+            symbolBefore={data.totalTimeWorked ? '$' : null}
           />
           <SimpleStat
             title='Tip Amount Per Hour'
-            amount={data?.tipPerHour.toFixed(2)}
+            amount={data.totalTimeWorked ? data?.tipPerHour?.toFixed(2) : '-'}
             helpText='after tipout'
-            symbolBefore='$'
+            symbolBefore={data.totalTimeWorked ? '$' : null}
           />
           <SimpleStat
             title='tip Percentage'
-            amount={(data?.tipPct * 100).toFixed(2)}
+            amount={
+              data.totalTimeWorked ? (data?.tipPct * 100)?.toFixed(2) : '-'
+            }
             helpText='per bill'
-            symbolAfter='%'
+            symbolAfter={data.totalTimeWorked ? '%' : null}
           />
         </StatRow>
       </Flex>
