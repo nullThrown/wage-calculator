@@ -13,7 +13,7 @@ const getAllEntries = async (req, res, next) => {
     const userId = mongoose.Types.ObjectId(req.user.id);
     let entries;
     if (filter === 'all') {
-      entries = await Entries.findOne({ user: userId });
+      entries = await Entries.findOne({ user: userId }).populate('user');
       // entries = await getAllEntriesQuery(userId);
     } else if (filter === 'active') {
       const activeCompanyIds = await getActiveCompanyIds(userId);
