@@ -1,13 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  Flex,
-  useToast,
-  Container,
-  Box,
-  Image,
-  Heading,
-} from '@chakra-ui/react';
+import { Flex, useToast, Box, Image, Heading } from '@chakra-ui/react';
 import useRegisterUser from 'features/auth/hooks/useRegisterUser';
 import useSignupValidation from 'features/auth/hooks/useValidateSignup';
 import TextInput from 'components/form/TextInput';
