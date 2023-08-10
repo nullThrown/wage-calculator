@@ -10,10 +10,12 @@ const Week = ({ entriesByWeek, setSelectedEntry, date }) => {
           });
           let containerClass = '';
           if (day.entries.length === 0) containerClass = 'empty';
-          if (day.date.getDate() === date.getDate())
+          if (day.date.getDate() === date.getDate()) {
             containerClass = 'selected';
+          }
           return (
             <Day
+              key={day.date.getDate()}
               entries={day.entries}
               dayName={dayShort}
               dayNumber={day.date.getDate()}
