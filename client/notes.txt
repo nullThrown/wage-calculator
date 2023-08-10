@@ -1,47 +1,4 @@
 GENERAL 
-LANDING PAGE
-
-
-SIGNUP AND LOGIN PAGE 
-
-SIGNUP PAGE
-✔*add image to left-hand side of form 
-✔*normalize size
-✔*add wrapper at smaller screen sizes
-*add animation upon successful signup
-*redirect instantly to create-profile page
- 
-LOGIN PAGE
-✔*add image to left-hand side of form 
-✔*normalize size
-✔*add wrapper at smaller screen sizes
-
-PROFILE CREATION PAGE
-✔*rename to add Company
-✔*add padding between inputs 
-✔*adding padding within the form - inputs are pushing against the edge
-*look into proper box shadow 
-*fix 'are you sure you want' to continue modal
-*fix margin on bottom of page
-
-HOME PAGE
-*page does not load if there is no data - problem with a 'toFixed' method
-*create new layout for page 
-*create comparison chart
-
-ACCOUNT PAGE
-*create account page 
-*allow the user access to add/remove companies, change email/password/username
-
-HEADER COMPONENT 
-*create header component 
--have two different states for protected/public
-
-*FOOTER COMPONENT
-✔*create a footer component 
-*add footer to all pages
-
-GENERAL 
 *currently selected company needs to be saved on user model
 
 *
@@ -54,23 +11,32 @@ solution: mongoose join (populate) method
 *
 problem: create format time util function that converts time from a decimal into a hours + minutes worked
 
-
+*
+problem: Chakra UI modals do not properly close upon toClose method 
+- modal is not displayed to screen but content is still part of dom + overlay prevents interaction with content underneath 
 
 
 ADD COMPANY 
-
-
 *
 problem: Edit Company and Cancel buttons are not inline
 
 *
-problem: 'are you sure you want to continue' modal bugs out. Something is wrong with the chakra ui modal 
-
+problem: add company on ProfileCreation page should have option to permanently set totalSalesApplicable = false/true 
 *
-problem: add company on ProfileCreation page should have option to permanently set totalSalesApplicable = false/true
+problem: requires an option to select isActive
 
 
-HOME
+SIGNUP PAGE
+*add animation upon successful signup
+ 
+
+HOME PAGE
+*create new layout for page 
+*create comparison chart
+
+
+HEADER COMPONENT 
+-have two different states for protected/public
 
 
 ADD ENTRY
@@ -91,10 +57,6 @@ problem: tooltips should be added to confusing inputs
 problem: combine handlers into single fn
 
 *
-problem: on success after add entry needs to produce success icon as well as oppurtunity to 
-add another entry or close 
-
-*
 problem:
 Add entry arrow symbol needs to flip upon button press
 
@@ -102,17 +64,16 @@ Add entry arrow symbol needs to flip upon button press
 *
 problem: Total Sales Applicable value needs to change upon CompanySelect value as well as manual control
 
-
-EDIT ENTRY
 *
-  Problem: Edit Entry (within Add Entry form) fill button does not work 
+problem: needs to invalidate all 'entries' queries
+
+
+
+EDIT ENTRY (Add Entry Form)
+*
+  Problem: Edit Entry fill button does not work 
   Desc: fill button click does not populate form with proper date, does not close modal
   Solution: Unsure
-
-*
-  Problem: Edit Entry modal overlay does not close upon fill,cancel (btn), X(btn), esc(key press), click off 
-  Solution: find reddit comment from previously asked question
-
 
 *
 Problem: Add Entry function does not create all fields specified in Entry model 
@@ -125,7 +86,6 @@ Solution: match company id and position to company array within node server - gr
 
 
 
-
 OVERVIEW 
 *
 problem: onLoading and onError UI states are not rendered
@@ -133,9 +93,6 @@ problem: onLoading and onError UI states are not rendered
 *
 problem: find more interesting data to display to the user 
 
-
-*
-problem: EntryDisplay box needs access to company name
 
 MONTH 
 
