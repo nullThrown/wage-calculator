@@ -5,8 +5,8 @@ import React from 'react';
 export const ErrorText = ({ children, textAlign, m }) => {
   return (
     <Text
-      fontSize='md'
-      color='red.800'
+      fontSize='sm'
+      color='red.700'
       m={m}
       fontWeight='400'
       textAlign={textAlign}>
