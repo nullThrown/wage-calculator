@@ -16,7 +16,7 @@ import ErrorText from 'components/typography/ErrorText';
 const initialErrorValue = {
   isError: false,
   type: null,
-  desc: null,
+  msg: null,
 };
 
 export const LoginForm = () => {
@@ -46,7 +46,7 @@ export const LoginForm = () => {
           setError({
             isError: true,
             type: invalid_credentials,
-            desc: 'Invalid credentials',
+            msg: 'Invalid credentials',
           });
         } else if (message === server_error || message === connection_error) {
           setError(initialErrorValue);
@@ -69,7 +69,7 @@ export const LoginForm = () => {
         color='#20499C'>
         Login
       </Heading>
-      {error.isError && <ErrorText>{error.desc}</ErrorText>}
+      {error.isError && <ErrorText>{error.msg}</ErrorText>}
       <Flex
         m={['1.4em auto 0', '1.8em auto 0', '1.8em 0 0']}
         w={['92%', '74%', '100%']}
