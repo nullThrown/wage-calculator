@@ -21,7 +21,7 @@ const UserSchema = new Schema(
         overtimeMultiplier: requiredNum,
         startDate: currentTime,
         endDate: { type: Date },
-        totalSalesApplicable: requiredBool,
+        totalSalesApplicable: { type: Boolean, default: true },
         isRemoved: { type: Boolean, default: false },
       },
     ],
