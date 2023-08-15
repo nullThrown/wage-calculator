@@ -1,7 +1,7 @@
 const Entries = require('../../models/Entries');
 const mongoose = require('mongoose');
 const getActiveCompanyIds = require('../../services/queries/user/company');
-const calculateData = require('../../business/calculateData');
+const calculateData = require('../../services/calculate/calculateData');
 const {
   getAllActiveEntries,
   getAllEntriesByCompany,
