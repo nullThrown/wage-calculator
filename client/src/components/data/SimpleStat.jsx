@@ -3,15 +3,15 @@ import { Stat, StatNumber, StatHelpText, StatLabel } from '@chakra-ui/react';
 const SimpleStat = ({ title, symbolBefore, symbolAfter, amount, helpText }) => {
   return (
     <Stat>
-      <StatLabel opacity='.90' fontSize='14px'>
+      <StatLabel opacity='.8' fontSize='.8rem'>
         {title}
       </StatLabel>
-      <StatNumber fontSize='22px' opacity='.95'>
+      <StatNumber fontSize='1rem' opacity='.95'>
         {symbolBefore}
         {amount}
         {symbolAfter}
       </StatNumber>
-      <StatHelpText>{helpText}</StatHelpText>
+      <StatHelpText fontSize='.75rem'>{helpText}</StatHelpText>
     </Stat>
   );
 };

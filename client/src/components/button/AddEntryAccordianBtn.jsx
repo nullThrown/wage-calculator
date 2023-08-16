@@ -7,7 +7,6 @@ const AddEntryAccordianBtn = ({ onToggle }) => {
       colorScheme='blue'
       variant='outline'
       type='button'
-      mt='2em'
       rightIcon={<ArrowDownIcon />}>
       Add Entry
     </Button>

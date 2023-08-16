@@ -73,7 +73,7 @@ const AddEntryForm = ({ onToggle }) => {
   };
 
   return (
-    <LargeCard as='form' m='1em 0 0 0'>
+    <LargeCard as='form'>
       <TertHeading textAlign='center'>Add Earning's Report</TertHeading>
       <Flex m='1em' justify='center'>
         <EditEntryBtn onOpen={onOpen} />
