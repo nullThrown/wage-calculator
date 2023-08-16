@@ -31,9 +31,36 @@ SIGNUP PAGE
  
 
 HOME PAGE
-*create new layout for page 
-*create comparison chart
+*make sure headings are in order
+✔*reduce size of stat display 
+*choose different data for Overview component 
+✔*add title to graph 
+*add filters to graph
 
+*time covered - X 
+-by day 
+-by month 
+-by year
+*earnings - Y 
+-total per hour 
+-avg total per shift 
+
+*groups - serie (actual line graphs)
+-by company - default
+- company (day & night) company x 2
+*center graphs when display flex-dir = column
+
+*make entries component responsive
+*make day cards width/height responsive to viewport changes 
+-have days stack vertically on smaller screens
+*make month/year reactive
+*center entry quick view 'View' button 
+*convert time worked into hours + minutes 
+*add dollar sign to total earned 
+*change total earned to trueTotalEarned value
+*add percentage sign to tip pct  
+*calc total earned per hour for individual entry
+*convert hours worked into hours + minutes
 
 HEADER COMPONENT 
 -have two different states for protected/public
