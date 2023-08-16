@@ -3,18 +3,15 @@ import {
   Collapse,
   useDisclosure,
   Divider,
-  VStack,
-  Box,
   Spinner,
+  Flex,
+  Box,
+  Heading,
 } from '@chakra-ui/react';
 import MainContainer from 'components/base/Container';
-import MainHeading from 'components/typography/MainHeading';
 import Header from 'components/base/Header';
 import AddEntryForm from 'features/entries/components/addEntry/AddEntryForm';
 import Overview from 'features/overview/components/Overview';
-import Month from 'features/month/components/Month';
-import Shift from 'features/shift/components/Shift';
-import SecHeading from 'components/typography/SecHeading';
 import CompanySelect from 'features/company/components/CompanySelect';
 import Entries from 'features/entries/components/displayEntry/Entries';
 import { useQuery } from 'react-query';
@@ -24,6 +21,8 @@ import SomethingWentWrong from 'components/typography/SomethingWentWrong';
 import AddEntryAccordianBtn from 'components/button/AddEntryAccordianBtn';
 import MainWrapper from 'components/base/MainWrapper';
 import Footer from 'components/base/Footer';
+import Graph from 'features/graph/components/Graph';
+
 const Home = () => {
   const [filter, setFilter] = useState('all');
 
@@ -48,21 +47,30 @@ const Home = () => {
     <MainWrapper isHeader>
       <Header />
       <MainContainer>
-        <MainHeading>Welcome, {data.username}</MainHeading>
         <AddEntryAccordianBtn onToggle={onToggle} />
         <Collapse in={isOpen} animateOpacity>
           <AddEntryForm onToggle={onToggle} />
         </Collapse>
-        <Box m='4em auto' w='100%'>
-          <SecHeading text='Analytics' textAlign='center' />
-          <Divider maxW='700px' />
-          <VStack m='3em auto' w='100%' spacing='3em'>
-            <CompanySelect filter={filter} setFilter={setFilter} />
+        <Divider mt='1.5em' maxW='700px' />
+        <CompanySelect filter={filter} setFilter={setFilter} />
+        <Box mt='4em' pt='1em' borderTop='1px solid rgb(230,230,230)'>
+          <Heading
+            opacity='85'
+            fontSize='4xl'
+            fontWeight='400'
+            textAlign='center'>
+            Analytics
+          </Heading>
+          <Flex
+            m='2em 0 6em'
+            flexDirection={{ base: 'column', md: 'row', lg: 'row' }}
+            justifyContent='space-between'>
             <Overview filter={filter} />
-            <Entries filter={filter} />
-            {/* <Month filter={filter} /> */}
-            {/* <Shift filter={filter} /> */}
-          </VStack>
+            <Graph />
+          </Flex>
+          <Entries filter={filter} />
+          {/* <Month filter={filter} /> */}
+          {/* <Shift filter={filter} /> */}
         </Box>
       </MainContainer>
       <Footer />
