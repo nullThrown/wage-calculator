@@ -6,8 +6,8 @@ const EditCompanyBtn = ({ isLoading, handleUpdateCompany }) => {
       type='submit'
       colorScheme='yellow'
       textAlign='center'
-      m='30px auto 15px'
       isLoading={isLoading}
+      mr='.8em'
       loadingText='Updating'
       onClick={handleUpdateCompany}>
       Edit Company
