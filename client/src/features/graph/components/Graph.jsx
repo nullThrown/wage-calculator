@@ -1,8 +1,10 @@
 import { Box, Heading } from '@chakra-ui/react';
 import LineGraph from 'components/data/LineGraph';
 import GraphForm from './GraphForm';
-import bumpData from 'mock/bumpGraph';
 import { useState } from 'react';
+import useGetAllEntries from 'features/entries/hooks/useGetAllEntries';
+import byDayPerHour from 'features/graph/helpers/byDayPerHour';
+import selectGraphDataGenerator from 'features/graph/helpers/selectGraphDataGenerator';
 
 const initialFilterValue = {
   XAxis: 'byDay',
@@ -10,13 +12,20 @@ const initialFilterValue = {
   YAxis: 'totalPerHour',
 };
 
-const Graph = () => {
+const Graph = ({ filter }) => {
   const [graphFilters, setGraphFilters] = useState(initialFilterValue);
-  const handleShiftTimeChange = () => {
-    setGraphFilters({ ...graphFilters, shiftTime: !graphFilters.shiftTime });
-  };
+
+  const { isLoading, isError, entries } = useGetAllEntries(filter);
+
+  const graphDataGenerator = selectGraphDataGenerator(entries, graphFilters);
+
+  const graphData = graphDataGenerator(entries);
+
   const handleXAxisChange = (e) => {
     setGraphFilters({ ...graphFilters, XAxis: e.target.value });
+  };
+  const handleShiftTimeChange = () => {
+    setGraphFilters({ ...graphFilters, shiftTime: !graphFilters.shiftTime });
   };
   const handleYAxisChange = (value) => {
     setGraphFilters({ ...graphFilters, YAxis: value });
@@ -37,7 +46,7 @@ const Graph = () => {
         handleXAxisChange={handleXAxisChange}
         handleYAxisChange={handleYAxisChange}
       />
-      <LineGraph data={bumpData} />
+      <LineGraph data={graphData} />
     </Box>
   );
 };
