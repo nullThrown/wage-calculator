@@ -5,16 +5,15 @@ const Signup = () => {
     <Link
       as={RouterLink}
       to='/signup'
-      color='blackAlpha.800'
+      color='whiteAlpha.900'
+      fontWeight='500'
       // blue.600
-      border='1px solid rgba(0, 0, 0, 0.80)'
       padding='2px 12px'
-      borderRadius='14px'
-      backgroundColor='white'
+      backgroundColor='purple.300'
+      borderRadius='2px'
       _hover={{
         textDecoration: 'none',
-        color: 'blackAlpha.600',
-        borderColor: 'blackAlpha.600',
+        backgroundColor: 'purple.200',
       }}>
       Signup
     </Link>
