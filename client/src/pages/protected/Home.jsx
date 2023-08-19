@@ -27,7 +27,7 @@ const Home = () => {
   const [filter, setFilter] = useState('all');
 
   const { isOpen, onToggle } = useDisclosure();
-  const { isLoading, isError, data } = useQuery(['user'], getUser);
+  const { isLoading, isError } = useQuery(['user'], getUser);
   if (isLoading) {
     return (
       <CenterContainer>
