@@ -62,15 +62,13 @@ const Home = () => {
             Analytics
           </Heading>
           <Flex
-            m='2em 0 6em'
+            m='2em 0 15em'
             flexDirection={{ base: 'column', md: 'row', lg: 'row' }}
             justifyContent='space-between'>
             <Overview filter={filter} />
-            <Graph />
+            <Graph filter={filter} />
           </Flex>
           <Entries filter={filter} />
-          {/* <Month filter={filter} /> */}
-          {/* <Shift filter={filter} /> */}
         </Box>
       </MainContainer>
       <Footer />
