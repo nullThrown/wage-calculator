@@ -5,13 +5,8 @@ import {
   FormControl,
   FormLabel,
 } from '@chakra-ui/react';
-import { useState } from 'react';
 
 const YAxisFilter = ({ graphFilters, handleYAxisChange }) => {
-  const [x, setX] = useState('totalPerHour');
-
-  const handleXAxisChange = (value) => setX(value);
-
   return (
     <FormControl flexBasis='100%' as='fieldset'>
       <FormLabel as='legend' opacity='.85'>
