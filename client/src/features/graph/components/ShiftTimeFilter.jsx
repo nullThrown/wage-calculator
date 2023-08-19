@@ -1,5 +1,4 @@
 import { FormControl, Switch, FormLabel } from '@chakra-ui/react';
-import { useState } from 'react';
 
 const ShiftTimeFilter = ({ handleShiftTimeChange, graphFilters }) => {
   return (
