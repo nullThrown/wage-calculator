@@ -1,10 +1,10 @@
-import { Box, Heading } from '@chakra-ui/react';
+import { Box, Heading, Spinner } from '@chakra-ui/react';
 import LineGraph from 'components/data/LineGraph';
 import GraphForm from './GraphForm';
 import { useState } from 'react';
 import useGetAllEntries from 'features/entries/hooks/useGetAllEntries';
-import byDayPerHour from 'features/graph/helpers/byDayPerHour';
 import selectGraphDataGenerator from 'features/graph/helpers/selectGraphDataGenerator';
+import SomethingWentWrong from 'components/typography/SomethingWentWrong';
 
 const initialFilterValue = {
   XAxis: 'byDay',
@@ -30,6 +30,20 @@ const Graph = ({ filter }) => {
   const handleYAxisChange = (value) => {
     setGraphFilters({ ...graphFilters, YAxis: value });
   };
+  if (isLoading) {
+    return (
+      <Box maxW='34rem' height='24rem'>
+        <Spinner />
+      </Box>
+    );
+  }
+  if (isError) {
+    return (
+      <Box maxW='34rem' height='24rem'>
+        <SomethingWentWrong />
+      </Box>
+    );
+  }
   return (
     <Box maxW='34rem' height='24rem'>
       <Heading
