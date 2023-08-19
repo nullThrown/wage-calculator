@@ -125,15 +125,15 @@ const Form = ({
         step={0.1}
       />
 
-      <Flex justifyContent='center'>
+      <Flex justifyContent='center' alignItems='center' m='2em 0 .6em'>
         {isEditMode ? (
-          <ButtonGroup gap='3'>
+          <>
             <EditCompanyBtn
               handleUpdateCompany={handleUpdateCompany}
               isLoading={updateCompany.isLoading}
             />
             <CancelEditBtn handleCancelEditMode={handleCancelEditMode} />
-          </ButtonGroup>
+          </>
         ) : (
           <AddCompanyBtn
             isLoading={addCompany.isLoading}
