@@ -1,54 +1,39 @@
 GENERAL 
 *currently selected company needs to be saved on user model
 
-*
-problem:  create generic react-query error handler
+*create generic react-query error handler
 
-*
-problem: entry items coming from API need to have both a company Id as well as a company name
-solution: mongoose join (populate) method 
+*entry items coming from API need to have both a company Id as well as a company name - mongoose join (populate) method 
 
-*
-problem: create format time util function that converts time from a decimal into a hours + minutes worked
-
-*
-problem: Chakra UI modals do not properly close upon toClose method 
-- modal is not displayed to screen but content is still part of dom + overlay prevents interaction with content underneath 
+*create format time util function that converts time from a decimal into a hours + minutes worked
 
 
-ADD COMPANY 
-*
-problem: Edit Company and Cancel buttons are not inline
+HEADER COMPONENT 
 
-*
-problem: add company on ProfileCreation page should have option to permanently set totalSalesApplicable = false/true 
-*
-problem: requires an option to select isActive
+*have two different states for protected/public
+
 
 
 SIGNUP PAGE
 *add animation upon successful signup
  
+ 
+ 
+ADD COMPANY (registration)
+*Edit Company and Cancel buttons are not inline
+
+*add company on ProfileCreation page should have option to permanently set totalSalesApplicable = false/true 
+
+*requires an option to select isActive
+
 
 HOME PAGE
 *make sure headings are in order
-✔*reduce size of stat display 
 *choose different data for Overview component 
-✔*add title to graph 
-*add filters to graph
 
-*time covered - X 
--by day 
--by month 
--by year
-*earnings - Y 
--total per hour 
--avg total per shift 
 
-*groups - serie (actual line graphs)
--by company - default
-- company (day & night) company x 2
-*center graphs when display flex-dir = column
+
+ENTRIES
 
 *make entries component responsive
 *make day cards width/height responsive to viewport changes 
@@ -62,49 +47,33 @@ HOME PAGE
 *calc total earned per hour for individual entry
 *convert hours worked into hours + minutes
 
-HEADER COMPONENT 
--have two different states for protected/public
 
 
 ADD ENTRY
 
-*
-problem: company switch (company select) does not effect Total Sales Applicable value
+*company switch (company select) does not effect Total Sales Applicable value
 
-*
-problem: if totalSalesApplicable = false, disable Total Sales input   
+*if totalSalesApplicable = false, disable Total Sales input   
 
-*
-problem: tooltips should be added to confusing inputs
+*tooltips should be added to confusing inputs
 -total sales "the amount sold.. helps us determine a tip percentage."
 -total Sales Applicable "if the amount that you sold is known, check the box." 
 -special event "party, banquet, etc. This allows us to determine earnings on both regular and special shifts."  
 
-*
-problem: combine handlers into single fn
+*combine handlers into single fn
 
-*
-problem:
-Add entry arrow symbol needs to flip upon button press
+*add entry arrow symbol needs to flip upon button press
 
+*total Sales Applicable value needs to change upon CompanySelect value as well as manual control
 
-*
-problem: Total Sales Applicable value needs to change upon CompanySelect value as well as manual control
-
-*
-problem: needs to invalidate all 'entries' queries
+*needs to invalidate all 'entries' queries
 
 
 
 EDIT ENTRY (Add Entry Form)
-*
-  Problem: Edit Entry fill button does not work 
-  Desc: fill button click does not populate form with proper date, does not close modal
-  Solution: Unsure
-
-*
-Problem: Add Entry function does not create all fields specified in Entry model 
-Solution: rework Add Entry function 
+*add functionality to edit button
+  
+??*addEntry function does not create all fields specified in Entry model 
 
 *
 Problem: Add Entry function - company select - needs to be or point towards an object id 
@@ -114,27 +83,26 @@ Solution: match company id and position to company array within node server - gr
 
 
 OVERVIEW 
-*
-problem: onLoading and onError UI states are not rendered
+*onLoading and onError UI states are not rendered
 
-*
-problem: find more interesting data to display to the user 
-
-
-MONTH 
-
-*
-problem: Month section does not have a title 
+*find more interesting data to display to the user 
 
 
 
-SHIFT
+LINE GRAPH 
 
-*
-problem: shift section needs to be created
+*add dummy data if no data (just used to add visual to graph)
+
+*remove if(!entries) condition from particular helper functions, this should be handle within 'selectGraphDataGenerator.js' file
+
+*condense helper functions, all functionalities are basically the same with minor modifications
+
+*write test for helper functions
+
+*add feat day/night filter functionality 
 
 
 
 
-/********** BACK END **********/
+
 
