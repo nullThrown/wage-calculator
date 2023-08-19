@@ -8,19 +8,13 @@ GENERAL
 *create format time util function that converts time from a decimal into a hours + minutes worked
 
 
-HEADER COMPONENT 
-
-*have two different states for protected/public
-
-
 
 SIGNUP PAGE
 *add animation upon successful signup
  
  
- 
+
 ADD COMPANY (registration)
-*Edit Company and Cancel buttons are not inline
 
 *add company on ProfileCreation page should have option to permanently set totalSalesApplicable = false/true 
 
