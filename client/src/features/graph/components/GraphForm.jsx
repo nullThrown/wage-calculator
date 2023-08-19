@@ -1,4 +1,4 @@
-import { Box, HStack, Divider, Button } from '@chakra-ui/react';
+import { Box, HStack, Divider } from '@chakra-ui/react';
 import XAxisFilter from './XAxisFilter';
 import ShiftTimeFilter from './ShiftTimeFilter';
 import YAxisFilter from './YAxisFilter';
@@ -29,14 +29,6 @@ const GraphForm = ({
             handleYAxisChange={handleYAxisChange}
           />
         </HStack>
-        <Button
-          display='block'
-          margin='0 auto'
-          colorScheme='green'
-          size='sm'
-          type='submit'>
-          Apply Changes
-        </Button>
       </Box>
       <Divider m='.5em 0' />
     </>
