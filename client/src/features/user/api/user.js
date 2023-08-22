@@ -31,3 +31,16 @@ export const updatePassword = async (passwordInfo) => {
     return Promise.reject(new Error(errorMsg));
   }
 };
+export const updateCompanyActiveStatus = async (isActive) => {
+  try {
+    const { data } = await axios.put(
+      '/user/company/update/active-status',
+      isActive
+    );
+    return data;
+  } catch (err) {
+    console.log(err.response);
+    const errorMsg = !err.response ? connection_error : err.response.data.type;
+    return Promise.reject(new Error(errorMsg));
+  }
+};
