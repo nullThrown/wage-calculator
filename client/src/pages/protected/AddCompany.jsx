@@ -17,14 +17,16 @@ const initialCompanyState = {
   position: '',
   hourlyWage: 0,
   overtimeMultiplier: 1,
-  _id: null,
+  _id: '',
+  totalSalesApplicable: false,
+  isActive: true,
 };
 
 const AddCompany = () => {
   const [formData, setFormData] = useState(initialCompanyState);
-  const { companyList } = useGetCompanies();
   const [isEditMode, setIsEditMode] = useState(false);
 
+  const { companyList } = useGetCompanies();
   const modalHook = useDisclosure();
   const navigate = useNavigate();
 
@@ -38,6 +40,12 @@ const AddCompany = () => {
     setFormData(initialCompanyState);
   };
 
+  const handleTotalSales = (e) => {
+    setFormData({
+      ...formData,
+      totalSalesApplicable: !formData.totalSalesApplicable,
+    });
+  };
   const handleFinish = (e) => {
     e.preventDefault();
     if (companyList?.length === 0) modalHook.onOpen();
@@ -57,6 +65,7 @@ const AddCompany = () => {
           isEditMode={isEditMode}
           setIsEditMode={setIsEditMode}
           handleCancelEditMode={handleCancelEditMode}
+          handleTotalSales={handleTotalSales}
         />
 
         <Flex justify='center' mt='4em'>
