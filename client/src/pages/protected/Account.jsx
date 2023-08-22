@@ -8,6 +8,7 @@ import Form from 'features/user/components/registration/addCompany/Form';
 import EditPersonal from 'features/user/components/editProfile/EditPersonal';
 import ChangePassword from 'features/user/components/editProfile/ChangePassword';
 import FormContainer from 'components/base/FormContainer';
+import MainNav from 'components/nav/MainNav';
 
 const initialCompanyState = {
   name: '',
@@ -36,6 +37,7 @@ const Account = () => {
   return (
     <MainWrapper isHeader>
       <Header />
+      <MainNav />
       <Box as='section' maxW='64rem' w='98%' m='5em auto 12em'>
         <Flex
           gap='3em'

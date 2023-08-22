@@ -22,6 +22,7 @@ import AddEntryAccordianBtn from 'components/button/AddEntryAccordianBtn';
 import MainWrapper from 'components/base/MainWrapper';
 import Footer from 'components/base/Footer';
 import Graph from 'features/graph/components/Graph';
+import MainNav from 'components/nav/MainNav';
 
 const Home = () => {
   const [filter, setFilter] = useState('all');
@@ -46,6 +47,7 @@ const Home = () => {
   return (
     <MainWrapper isHeader>
       <Header />
+      <MainNav />
       <MainContainer>
         <AddEntryAccordianBtn onToggle={onToggle} />
         <Collapse in={isOpen} animateOpacity>
