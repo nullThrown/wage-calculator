@@ -16,10 +16,6 @@ SIGNUP PAGE
 
 ADD COMPANY (registration)
 
-*add company on ProfileCreation page should have option to permanently set totalSalesApplicable = false/true 
-
-*requires an option to select isActive
-
 
 HOME PAGE
 *make sure headings are in order
