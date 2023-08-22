@@ -1,5 +1,13 @@
 import { useState } from 'react';
-import { Box, Flex, ButtonGroup, useToast } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  useToast,
+  Checkbox,
+  Divider,
+  FormHelperText,
+  FormControl,
+} from '@chakra-ui/react';
 import useAddCompany from 'features/company/hooks/useAddCompany';
 import useUpdateCompany from 'features/company/hooks/useUpdateCompany';
 import useAddCompanyVal from 'features/company/hooks/useValidateAddCompany';
@@ -19,6 +27,8 @@ const Form = ({
   isEditMode,
   setIsEditMode,
   handleCancelEditMode,
+  handleTotalSales,
+  deactivateCompany,
 }) => {
   const [isValidationError, setisValidationError] = useState(false);
 
@@ -124,6 +134,23 @@ const Form = ({
         stepper
         step={0.1}
       />
+      <FormControl>
+        <Divider mt='.5em' />
+        <Checkbox
+          mt='.5em'
+          colorScheme='teal'
+          onChange={handleTotalSales}
+          name='totalSalesApplicable'
+          isChecked={formData.totalSalesApplicable}>
+          Total Sales Applicable
+        </Checkbox>
+        <FormHelperText>
+          Check this if you have access to the total sales of any particular
+          shift. We use total sales amount to determine a the tip percentage for
+          each shift.
+        </FormHelperText>
+        <Divider />
+      </FormControl>
 
       <Flex justifyContent='center' alignItems='center' m='2em 0 .6em'>
         {isEditMode ? (
