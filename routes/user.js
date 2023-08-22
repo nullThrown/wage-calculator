@@ -6,11 +6,11 @@ const updateCurrentPersonal = require('../controllers/user/updateCurrentPersonal
 const createCompany = require('../controllers/user/createCompany');
 const updateCompany = require('../controllers/user/updateCompany');
 const deleteCompany = require('../controllers/user/deleteCompany');
-const setCompanyRemovedStatus = require('../controllers/user/setCompanyRemovedStatus');
+const setCompanyActiveStatus = require('../controllers/user/setCompanyActiveStatus');
 const validateUser = require('../middleware/validation/user/validateUser');
 const validateCompany = require('../middleware/validation/user/validateCompany');
 const validateCompanyDelete = require('../middleware/validation/user/validateCompanyDelete');
-const setCompanyRemovedStatusValidation = require('../middleware/validation/user/setCompanyRemovedStatusValidation');
+const setCompanyActiveStatusValidation = require('../middleware/validation/user/setCompanyActiveStatusValidation');
 const validateUpdatePassword = require('../middleware/validation/user/validateUpdatePassword');
 const updatePassword = require('../controllers/user/updatePassword');
 
@@ -53,13 +53,13 @@ router.delete(
   deleteCompany
 );
 
-// ROUTE PUT api/user/company/remove/set
-// DESC set a companies removed status (soft delete/reinstate)
+// ROUTE PUT api/user/company/update/active-status
+// removes or reinstates a companies active status
 // ACCESS private
 router.put(
-  '/company/remove/set',
-  setCompanyRemovedStatusValidation,
-  setCompanyRemovedStatus
+  '/company/update/active-status',
+  setCompanyActiveStatusValidation,
+  setCompanyActiveStatus
 );
 
 module.exports = router;
