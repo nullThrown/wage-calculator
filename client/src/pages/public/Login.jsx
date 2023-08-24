@@ -1,6 +1,6 @@
 import LoginForm from 'features/auth/components/LoginForm';
 import FormContainer from 'components/base/FormContainer';
-import TwoColumnLayout from 'components/layout.jsx/TwoColumnLayout';
+import TwoColumnLayout from 'components/layout/TwoColumnLayout';
 
 const Login = () => {
   return (

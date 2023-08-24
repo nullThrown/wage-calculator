@@ -1,5 +1,5 @@
 import { Heading } from '@chakra-ui/react';
-import TwoColumnLayout from 'components/layout.jsx/TwoColumnLayout';
+import TwoColumnLayout from 'components/layout/TwoColumnLayout';
 
 const NotFound = () => {
   return (

@@ -18,7 +18,7 @@ import CenterContainer from 'components/base/CenterContainer';
 import SomethingWentWrong from 'components/typography/SomethingWentWrong';
 import AddEntryAccordianBtn from 'components/button/AddEntryAccordianBtn';
 import Graph from 'features/graph/components/Graph';
-import FourColumnLayout from 'components/layout.jsx/FourColumnLayout';
+import FourColumnLayout from 'components/layout/FourColumnLayout';
 
 const Home = () => {
   const [filter, setFilter] = useState('all');

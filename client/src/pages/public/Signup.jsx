@@ -1,6 +1,6 @@
 import SignupForm from 'features/auth/components/SignupForm';
 import FormContainer from 'components/base/FormContainer';
-import TwoColumnLayout from 'components/layout.jsx/TwoColumnLayout';
+import TwoColumnLayout from 'components/layout/TwoColumnLayout';
 
 const Signup = () => {
   return (

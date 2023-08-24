@@ -1,4 +1,4 @@
-import TwoColumnLayout from 'components/layout.jsx/TwoColumnLayout';
+import TwoColumnLayout from 'components/layout/TwoColumnLayout';
 const Test = () => {
   return <TwoColumnLayout></TwoColumnLayout>;
 };

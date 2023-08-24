@@ -5,7 +5,7 @@ import SignupFree from 'components/link/SignupFree';
 import LandingImage from 'components/image/LandingImage';
 import { TbDeviceWatchDollar } from 'react-icons/tb';
 import { GrCompare } from 'react-icons/gr';
-import ThreeColumnLayout from 'components/layout.jsx/ThreeColumnLayout';
+import ThreeColumnLayout from 'components/layout/ThreeColumnLayout';
 
 const Landing = () => {
   return (

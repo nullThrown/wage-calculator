@@ -8,7 +8,7 @@ import Form from 'features/user/components/registration/addCompany/Form';
 import EditPersonal from 'features/user/components/editProfile/EditPersonal';
 import ChangePassword from 'features/user/components/editProfile/ChangePassword';
 import FormContainer from 'components/base/FormContainer';
-import FourColumnLayout from 'components/layout.jsx/FourColumnLayout';
+import FourColumnLayout from 'components/layout/FourColumnLayout';
 
 const initialCompanyState = {
   name: '',

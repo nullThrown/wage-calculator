@@ -9,7 +9,7 @@ import Form from 'features/user/components/registration/addCompany/Form';
 import FinishProfileSetupBtn from 'components/button/FinishProfileSetupBtn';
 import useGetCompanies from 'features/company/hooks/useGetCompanies';
 import FormContainer from 'components/base/FormContainer';
-import TwoColumnLayout from 'components/layout.jsx/TwoColumnLayout';
+import TwoColumnLayout from 'components/layout/TwoColumnLayout';
 
 const initialCompanyState = {
   name: '',
