@@ -1,17 +1,16 @@
 import { useState } from 'react';
 
-import { Flex, useDisclosure, Container } from '@chakra-ui/react';
+import { Flex, useDisclosure } from '@chakra-ui/react';
 import Header from 'features/user/components/registration/Header';
-import MainContainer from 'components/base/Container';
 import { useNavigate } from 'react-router-dom';
 import CompanyDisplay from 'features/user/components/registration/addCompany/CompanyDisplay';
 import FinishInfoModal from 'features/user/components/registration/addCompany/FinishInfoModal';
 import Form from 'features/user/components/registration/addCompany/Form';
 import FinishProfileSetupBtn from 'components/button/FinishProfileSetupBtn';
 import useGetCompanies from 'features/company/hooks/useGetCompanies';
-import MainWrapper from 'components/base/MainWrapper';
-import Footer from 'components/base/Footer';
 import FormContainer from 'components/base/FormContainer';
+import TwoColumnLayout from 'components/layout.jsx/TwoColumnLayout';
+
 const initialCompanyState = {
   name: '',
   position: '',
@@ -53,7 +52,7 @@ const AddCompany = () => {
   };
 
   return (
-    <MainWrapper>
+    <TwoColumnLayout>
       <FinishInfoModal isOpen={modalHook.isOpen} onClose={modalHook.onClose} />
       <FormContainer>
         <Header />
@@ -72,8 +71,7 @@ const AddCompany = () => {
           <FinishProfileSetupBtn handleFinish={handleFinish} />
         </Flex>
       </FormContainer>
-      <Footer />
-    </MainWrapper>
+    </TwoColumnLayout>
   );
 };
 

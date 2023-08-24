@@ -8,7 +8,7 @@ import Form from 'features/user/components/registration/addCompany/Form';
 import EditPersonal from 'features/user/components/editProfile/EditPersonal';
 import ChangePassword from 'features/user/components/editProfile/ChangePassword';
 import FormContainer from 'components/base/FormContainer';
-import MainNav from 'components/nav/MainNav';
+import FourColumnLayout from 'components/layout.jsx/FourColumnLayout';
 
 const initialCompanyState = {
   name: '',
@@ -35,32 +35,27 @@ const Account = () => {
   };
 
   return (
-    <MainWrapper isHeader>
-      <Header />
-      <MainNav />
-      <Box as='section' maxW='64rem' w='98%' m='5em auto 12em'>
-        <Flex
-          gap='3em'
-          mb='8em'
-          wrap='wrap'
-          justifyContent={['center', 'center', 'flex-start']}>
-          <EditPersonal />
-          <ChangePassword />
-        </Flex>
-        <FormContainer>
-          <CompanyDisplay handleSetEditMode={handleSetEditMode} />
-          <Form
-            initialCompanyState={initialCompanyState}
-            formData={formData}
-            setFormData={setFormData}
-            isEditMode={isEditMode}
-            setIsEditMode={setIsEditMode}
-            handleCancelEditMode={handleCancelEditMode}
-          />
-        </FormContainer>
-      </Box>
-      <Footer />
-    </MainWrapper>
+    <FourColumnLayout>
+      <Flex
+        gap='3em'
+        mb='2em'
+        wrap='wrap'
+        justifyContent={['center', 'center', 'flex-start']}>
+        <EditPersonal />
+        <ChangePassword />
+      </Flex>
+      <FormContainer>
+        <CompanyDisplay handleSetEditMode={handleSetEditMode} />
+        <Form
+          initialCompanyState={initialCompanyState}
+          formData={formData}
+          setFormData={setFormData}
+          isEditMode={isEditMode}
+          setIsEditMode={setIsEditMode}
+          handleCancelEditMode={handleCancelEditMode}
+        />
+      </FormContainer>
+    </FourColumnLayout>
   );
 };
 

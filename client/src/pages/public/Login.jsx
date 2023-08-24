@@ -1,16 +1,14 @@
-import MainWrapper from 'components/base/MainWrapper';
 import LoginForm from 'features/auth/components/LoginForm';
-import Footer from 'components/base/Footer';
 import FormContainer from 'components/base/FormContainer';
+import TwoColumnLayout from 'components/layout.jsx/TwoColumnLayout';
 
 const Login = () => {
   return (
-    <MainWrapper>
+    <TwoColumnLayout>
       <FormContainer>
         <LoginForm />
       </FormContainer>
-      <Footer />
-    </MainWrapper>
+    </TwoColumnLayout>
   );
 };
 
