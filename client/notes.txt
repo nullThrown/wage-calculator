@@ -7,14 +7,12 @@ GENERAL
 
 *create format time util function that converts time from a decimal into a hours + minutes worked
 
+*normalize all front end validation
 
 
 SIGNUP PAGE
 *add animation upon successful signup
  
- 
-
-ADD COMPANY (registration)
 
 
 HOME PAGE
