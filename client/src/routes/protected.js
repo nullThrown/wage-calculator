@@ -1,6 +1,8 @@
 import Home from 'pages/protected/Home';
 import Account from 'pages/protected/Account';
 import AddCompany from 'pages/protected/AddCompany';
+import SignupSuccess from 'pages/protected/SignupSuccess';
+
 import { Navigate } from 'react-router-dom';
 const protectedRoutes = [
   {
@@ -15,6 +17,11 @@ const protectedRoutes = [
     path: '/add-company',
     element: <AddCompany />,
   },
+  {
+    path: '/signup-success',
+    element: <SignupSuccess />,
+  },
+
   {
     path: '/',
     element: <Navigate to='/home' />,
