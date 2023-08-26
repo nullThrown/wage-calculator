@@ -50,6 +50,7 @@ const Home = () => {
       <CompanySelect filter={filter} setFilter={setFilter} />
       <Box mt='4em' pt='1em' borderTop='1px solid rgb(230,230,230)'>
         <Heading
+          as='h2'
           opacity='85'
           fontSize='4xl'
           fontWeight='400'
