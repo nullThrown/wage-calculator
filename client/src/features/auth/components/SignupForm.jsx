@@ -5,6 +5,8 @@ import useRegisterUser from 'features/auth/hooks/useRegisterUser';
 import useSignupValidation from 'features/auth/hooks/useValidateSignup';
 import TextInput from 'components/form/TextInput';
 import SignupBtn from 'components/button/SignupBtn';
+// import SignupSuccess from 'pages/protected/SignupSuccess';
+
 import {
   connection_error,
   email_already_exists,
@@ -40,7 +42,7 @@ const SignupForm = () => {
 
     return registerUser.mutate(user, {
       onSuccess: (data, variables, context) => {
-        navigate('/add-company');
+        navigate('/signup-success');
       },
       onError: (error, variables, context) => {
         const { message } = error;
