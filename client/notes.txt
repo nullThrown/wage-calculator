@@ -1,4 +1,18 @@
+SIGNUP SUCCESS
+*place signup success component within Signup page 
+*conditional render loading 
+-if(registerUser.loading) render Loading Component 
+-if (RU == success) allow animation to complete full cycle then halt 
+- render Text 'Account Created!' 
+- then navigate to path: '/add-company' using timeout 
+
+if(RU == error) render signup form 
+- with proper errors
+
+
 GENERAL 
+*create one-column layout component
+
 *currently selected company needs to be saved on user model
 
 *create generic react-query error handler
@@ -7,7 +21,7 @@ GENERAL
 
 *create format time util function that converts time from a decimal into a hours + minutes worked
 
-*normalize all front end validation
+*normalize all front end validation error handling and error display
 
 
 SIGNUP PAGE
