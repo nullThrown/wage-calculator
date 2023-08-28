@@ -3,10 +3,10 @@ import { connection_error } from 'constants/api/error';
 
 export const registerUser = async (user) => {
   try {
-    const res = await axios.post('/auth/register', user);
-    return res;
+    const { data } = await axios.post('/auth/register', user);
+    return data;
   } catch (err) {
-    const errorMsg = !err.response ? connection_error : err.response.data.msg;
+    const errorMsg = !err.response ? connection_error : err.response.data.type;
     return Promise.reject(new Error(errorMsg));
   }
 };
