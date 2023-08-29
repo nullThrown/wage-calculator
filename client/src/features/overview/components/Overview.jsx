@@ -1,6 +1,4 @@
-import LargeCard from 'components/card/LargeCard';
-import TertHeading from 'components/typography/TertHeading';
-import { Flex, Spinner, Box } from '@chakra-ui/react';
+import { Flex, Spinner, Box, Heading } from '@chakra-ui/react';
 import StatRow from 'components/data/StatRow';
 import SimpleStat from 'components/data/SimpleStat';
 import SomethingWentWrong from 'components/typography/SomethingWentWrong';
@@ -17,7 +15,14 @@ const Overview = ({ filter }) => {
   }
   return (
     <Box as='section'>
-      <TertHeading textAlign='center'>Overview</TertHeading>
+      <Heading
+        textAlign='center'
+        as='h3'
+        size='md'
+        opacity='.95'
+        fontWeight='500'>
+        Overview
+      </Heading>
       <Flex direction='column'>
         <StatRow>
           <SimpleStat

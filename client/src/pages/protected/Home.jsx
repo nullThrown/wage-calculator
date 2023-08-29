@@ -55,11 +55,11 @@ const Home = () => {
         w='100%'
         borderTop='1px solid rgb(230,230,230)'>
         <Heading
+          textAlign='center'
           as='h2'
-          opacity='85'
-          fontSize='4xl'
-          fontWeight='400'
-          textAlign='center'>
+          fontSize='3xl'
+          opacity='.95'
+          fontWeight='500'>
           Analytics
         </Heading>
         <Flex

@@ -76,7 +76,12 @@ const CompanyDisplay = ({ handleSetEditMode }) => {
   }
   return (
     <Box mt='3.4em'>
-      <Heading textAlign='center' fontSize='lg' fontWeight='500' mb='.5em'>
+      <Heading
+        as='h2'
+        textAlign='center'
+        fontSize='lg'
+        fontWeight='500'
+        mb='.5em'>
         Current Companies
       </Heading>
       <TableContainer fontSize='sm'>
