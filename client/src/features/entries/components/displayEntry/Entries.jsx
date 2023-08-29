@@ -27,7 +27,7 @@ const Entries = ({ filter }) => {
   return (
     <LargeCard as='section'>
       <TertHeading textAlign='center'>Entries</TertHeading>
-      <Header>
+      <Header date={date}>
         <CustomDatePicker date={date} setDate={setDate} />
       </Header>
       <Week
