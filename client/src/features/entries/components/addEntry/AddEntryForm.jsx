@@ -23,6 +23,8 @@ import SubmitEntryBtn from 'components/button/SubmitEntryBtn';
 import EditEntryBtn from 'components/button/EditEntryBtn';
 import { errorToast, successToast } from 'components/toast/toast';
 import { connection_error, server_error } from 'constants/api/error';
+import useGetCompanies from 'features/company/hooks/useGetCompanies';
+
 const initialEntryValue = {
   hoursWorked: 0,
   minutesWorked: 0,
@@ -33,23 +35,30 @@ const initialEntryValue = {
   shiftTime: 'morning',
   companyId: null,
   specialEvent: false,
-  totalSalesApplicable: null,
+  totalSalesApplicable: false,
   shiftDate: new Date(),
 };
-const AddEntryForm = ({ onToggle }) => {
+const AddEntryForm = () => {
   const [newEntry, setNewEntry] = useState(initialEntryValue);
   const [isValidationError, setIsValidationError] = useState(false);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isTimeWorkedZero } = useAddEntryValidation(newEntry);
   const toast = useToast();
+  const getCompanies = useGetCompanies();
   const createEntry = useCreateEntry();
 
-  const handleNumberChange = (value, name) =>
-    setNewEntry({ ...newEntry, [name]: value });
-
-  const handleCompanyChange = (e) =>
-    setNewEntry({ ...newEntry, companyId: e.target.value });
+  // the first argument of the chakra ui's onChange callback varies based on input type
+  const handleChange = (firstArg, name) => {
+    if (typeof firstArg === 'object') {
+      setNewEntry({
+        ...newEntry,
+        [firstArg.target.name]: firstArg.target.value,
+      });
+    } else {
+      setNewEntry({ ...newEntry, [name]: firstArg });
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -71,7 +80,27 @@ const AddEntryForm = ({ onToggle }) => {
       });
     }
   };
-
+  useEffect(() => {
+    const { companyList } = getCompanies;
+    if (companyList) {
+      setNewEntry({
+        ...newEntry,
+        companyId: companyList[0]._id,
+      });
+    }
+  }, [getCompanies.companyList]);
+  useEffect(() => {
+    const { companyId } = newEntry;
+    if (companyId) {
+      const selectedCompany = getCompanies.companyList.find(
+        (company) => company._id === companyId
+      );
+      setNewEntry({
+        ...newEntry,
+        totalSalesApplicable: selectedCompany.totalSalesApplicable,
+      });
+    }
+  }, [newEntry.companyId, getCompanies.companyList]);
   return (
     <LargeCard as='form'>
       <TertHeading textAlign='center'>Add Earning's Report</TertHeading>
@@ -93,7 +122,7 @@ const AddEntryForm = ({ onToggle }) => {
           <ShiftCheckboxGroup
             totalSalesApplicable={newEntry.totalSalesApplicable}
             specialEvent={newEntry.specialEvent}
-            onChange={handleNumberChange}
+            onChange={handleChange}
           />
         </Grid>
       </Flex>
@@ -110,7 +139,7 @@ const AddEntryForm = ({ onToggle }) => {
             title='Hours Worked'
             name='hoursWorked'
             value={newEntry.hoursWorked}
-            onChange={handleNumberChange}
+            onChange={handleChange}
             isInvalid={isValidationError && isTimeWorkedZero}
             errorMsg='Must have at least 1 minute of time worked'
             precision={0}
@@ -121,7 +150,7 @@ const AddEntryForm = ({ onToggle }) => {
             title='Minutes Worked'
             name='minutesWorked'
             value={newEntry.minutesWorked}
-            onChange={handleNumberChange}
+            onChange={handleChange}
             isInvalid={isValidationError && isTimeWorkedZero}
             precision={0}
             min={0}
@@ -131,10 +160,9 @@ const AddEntryForm = ({ onToggle }) => {
           <NumInput
             title='Total Sales'
             name='totalSales'
+            isDisabled={!newEntry.totalSalesApplicable}
             value={formatDollar(newEntry.totalSales)}
-            onChange={(value) =>
-              handleNumberChange(parseDollar(value), 'totalSales')
-            }
+            onChange={(value) => handleChange(parseDollar(value), 'totalSales')}
             precision={2}
             min={0}
           />
@@ -150,9 +178,7 @@ const AddEntryForm = ({ onToggle }) => {
             title='Credit Tips'
             name='creditTips'
             value={formatDollar(newEntry.creditTips)}
-            onChange={(value) =>
-              handleNumberChange(parseDollar(value), 'creditTips')
-            }
+            onChange={(value) => handleChange(parseDollar(value), 'creditTips')}
             precision={2}
             min={0}
           />
@@ -160,9 +186,7 @@ const AddEntryForm = ({ onToggle }) => {
             title='Cash Tips'
             name='cashTips'
             value={formatDollar(newEntry.cashTips)}
-            onChange={(value) =>
-              handleNumberChange(parseDollar(value), 'cashTips')
-            }
+            onChange={(value) => handleChange(parseDollar(value), 'cashTips')}
             precision={2}
             min={0}
           />
@@ -170,9 +194,7 @@ const AddEntryForm = ({ onToggle }) => {
             title='Tip Out'
             name='tipOut'
             value={formatDollar(newEntry.tipOut)}
-            onChange={(value) =>
-              handleNumberChange(parseDollar(value), 'tipOut')
-            }
+            onChange={(value) => handleChange(parseDollar(value), 'tipOut')}
             precision={2}
             min={0}
           />
@@ -189,11 +211,12 @@ const AddEntryForm = ({ onToggle }) => {
         m='.4em 0'>
         <ShiftRadioGroup
           value={newEntry.shiftTime}
-          onChange={(value) => handleNumberChange(value, 'shiftTime')}
+          onChange={(value) => handleChange(value, 'shiftTime')}
         />
         <CompanySelect
-          onChange={handleCompanyChange}
+          onChange={handleChange}
           companyId={newEntry.companyId}
+          companyList={getCompanies.companyList}
         />
       </Grid>
       <Divider />
