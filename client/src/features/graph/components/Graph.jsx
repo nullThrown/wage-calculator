@@ -49,9 +49,9 @@ const Graph = ({ filter }) => {
       <Heading
         textAlign='center'
         as='h3'
-        size='lg'
-        opacity='.85'
-        fontWeight='400'>
+        size='md'
+        opacity='.95'
+        fontWeight='500'>
         Compare
       </Heading>
       <GraphForm
