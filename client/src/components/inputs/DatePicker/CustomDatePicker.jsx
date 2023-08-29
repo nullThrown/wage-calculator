@@ -14,6 +14,7 @@ const CustomDatePicker = ({ date, setDate }) => {
     <DatePicker
       selected={date}
       onChange={(date) => setDate(date)}
+      maxDate={new Date()}
       customInput={<ExampleCustomInput />}
       dayClassName={() => 'example-datepicker-day-class'}
       popperClassName='example-datepicker-class'
