@@ -48,7 +48,12 @@ const Home = () => {
       </Collapse>
       <Divider mt='1.5em' maxW='700px' />
       <CompanySelect filter={filter} setFilter={setFilter} />
-      <Box mt='4em' pt='1em' borderTop='1px solid rgb(230,230,230)'>
+      <Box
+        mt='4em'
+        pt='1em'
+        maxW='58rem'
+        w='100%'
+        borderTop='1px solid rgb(230,230,230)'>
         <Heading
           as='h2'
           opacity='85'
