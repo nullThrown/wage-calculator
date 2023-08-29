@@ -10,8 +10,7 @@ const Day = ({
 }) => {
   return (
     <Box
-      width='11em'
-      height='11em'
+      flex='1 1 0px'
       padding='5px 0'
       className={`calendar__day--${containerClass}`}>
       <Box
