@@ -19,6 +19,7 @@ const NumInput = ({
   helperText,
   errorMsg,
   isInvalid,
+  isDisabled,
   defaultValue,
   placeholder,
   precision,
@@ -28,7 +29,10 @@ const NumInput = ({
   step,
 }) => {
   return (
-    <FormControl isRequired={isRequired} isInvalid={isInvalid}>
+    <FormControl
+      isRequired={isRequired}
+      isInvalid={isInvalid}
+      isDisabled={isDisabled}>
       <FormLabel opacity='.85' htmlFor={name}>
         {title}
       </FormLabel>
