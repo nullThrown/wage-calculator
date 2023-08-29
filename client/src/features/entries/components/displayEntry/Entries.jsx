@@ -1,6 +1,5 @@
 import LargeCard from 'components/card/LargeCard';
-import TertHeading from 'components/typography/TertHeading';
-import { Spinner } from '@chakra-ui/react';
+import { Spinner, Heading } from '@chakra-ui/react';
 import { useState } from 'react';
 import SomethingWentWrong from 'components/typography/SomethingWentWrong';
 import DataDisplay from 'features/entries/components/displayEntry/DataDisplay';
@@ -26,7 +25,14 @@ const Entries = ({ filter }) => {
   }
   return (
     <LargeCard as='section'>
-      <TertHeading textAlign='center'>Entries</TertHeading>
+      <Heading
+        textAlign='center'
+        as='h3'
+        size='md'
+        opacity='.95'
+        fontWeight='500'>
+        Entries
+      </Heading>
       <Header date={date}>
         <CustomDatePicker date={date} setDate={setDate} />
       </Header>
