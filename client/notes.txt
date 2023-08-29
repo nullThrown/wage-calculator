@@ -1,6 +1,5 @@
 
 GENERAL 
-*create one-column layout component
 
 *currently selected company needs to be saved on user model
 
@@ -8,45 +7,35 @@ GENERAL
 
 *entry items coming from API need to have both a company Id as well as a company name - mongoose join (populate) method 
 
-*create format time util function that converts time from a decimal into a hours + minutes worked
-
 *normalize all front end validation error handling and error display
  
+*add company name to all locations where only company Id is accessible   
 
 
 HOME PAGE
-*make sure headings are in order
 *choose different data for Overview component 
 
-
-
 ENTRIES
-
-✔*make entries component responsive
-✔*make day cards width/height responsive to viewport changes 
-✔-have days stack vertically on smaller screens
-
-*add company name to short view 
 *calc total earned per hour for individual entry
 
 
 
 ADD ENTRY
 
-*company switch (company select) does not effect Total Sales Applicable value
+✔*company switch (company select) does not effect Total Sales Applicable value
 
-*if totalSalesApplicable = false, disable Total Sales input   
+✔*if totalSalesApplicable = false, disable Total Sales input   
 
 *tooltips should be added to confusing inputs
 -total sales "the amount sold.. helps us determine a tip percentage."
 -total Sales Applicable "if the amount that you sold is known, check the box." 
 -special event "party, banquet, etc. This allows us to determine earnings on both regular and special shifts."  
 
-*combine handlers into single fn
+✔*combine handlers into single fn
 
 *add entry arrow symbol needs to flip upon button press
 
-*total Sales Applicable value needs to change upon CompanySelect value as well as manual control
+✔*total Sales Applicable value needs to change upon CompanySelect value as well as manual control
 
 *needs to invalidate all 'entries' queries
 
