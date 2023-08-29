@@ -1,8 +1,6 @@
-import { Select, Box } from '@chakra-ui/react';
-import TertHeading from 'components/typography/TertHeading';
+import { Select, Box, Spinner, Heading } from '@chakra-ui/react';
 import CompanyDisplay from './CompanyDisplay';
 import useGetCompanies from '../hooks/useGetCompanies';
-import { Spinner } from '@chakra-ui/react';
 import SomethingWentWrong from 'components/typography/SomethingWentWrong';
 
 const CompanySelect = ({ filter, setFilter }) => {
@@ -19,7 +17,14 @@ const CompanySelect = ({ filter, setFilter }) => {
   return (
     <Box>
       <Box m='1em 0'>
-        <TertHeading textAlign='center'>Filter Companies</TertHeading>
+        <Heading
+          textAlign='center'
+          as='h2'
+          fontSize='3xl'
+          opacity='.95'
+          fontWeight='500'>
+          Filter Companies
+        </Heading>
       </Box>
       <Select variant='filled' value={filter} onChange={handleFilterChange}>
         <option key='0' value='all'>
