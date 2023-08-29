@@ -1,14 +1,3 @@
-SIGNUP SUCCESS
-*place signup success component within Signup page 
-*conditional render loading 
--if(registerUser.loading) render Loading Component 
--if (RU == success) allow animation to complete full cycle then halt 
-- render Text 'Account Created!' 
-- then navigate to path: '/add-company' using timeout 
-
-if(RU == error) render signup form 
-- with proper errors
-
 
 GENERAL 
 *create one-column layout component
@@ -22,10 +11,6 @@ GENERAL
 *create format time util function that converts time from a decimal into a hours + minutes worked
 
 *normalize all front end validation error handling and error display
-
-
-SIGNUP PAGE
-*add animation upon successful signup
  
 
 
@@ -37,17 +22,12 @@ HOME PAGE
 
 ENTRIES
 
-*make entries component responsive
-*make day cards width/height responsive to viewport changes 
--have days stack vertically on smaller screens
-*make month/year reactive
-*center entry quick view 'View' button 
-*convert time worked into hours + minutes 
-*add dollar sign to total earned 
-*change total earned to trueTotalEarned value
-*add percentage sign to tip pct  
+✔*make entries component responsive
+✔*make day cards width/height responsive to viewport changes 
+✔-have days stack vertically on smaller screens
+
+*add company name to short view 
 *calc total earned per hour for individual entry
-*convert hours worked into hours + minutes
 
 
 
