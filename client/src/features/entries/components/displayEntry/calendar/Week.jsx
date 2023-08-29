@@ -1,9 +1,9 @@
 import Day from 'features/entries/components/displayEntry/calendar/Day';
-import { HStack, Box } from '@chakra-ui/react';
+import { Flex, Box } from '@chakra-ui/react';
 const Week = ({ entriesByWeek, setSelectedEntry, date }) => {
   return (
     <Box as='section' maxW='55rem'>
-      <HStack width='100%' spacing='1em'>
+      <Flex width='100%' spacing='1em' flexDir={['column', 'column', 'row']}>
         {entriesByWeek.map((day) => {
           const dayShort = day.date.toLocaleDateString('en-US', {
             weekday: 'short',
@@ -24,7 +24,7 @@ const Week = ({ entriesByWeek, setSelectedEntry, date }) => {
             />
           );
         })}
-      </HStack>
+      </Flex>
     </Box>
   );
 };
