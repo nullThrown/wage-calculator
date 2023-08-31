@@ -6,6 +6,7 @@ import {
   useDisclosure,
   FormLabel,
   useToast,
+  Tooltip,
 } from '@chakra-ui/react';
 import DatePicker from 'react-datepicker';
 import TertHeading from 'components/typography/TertHeading';
@@ -24,6 +25,7 @@ import EditEntryBtn from 'components/button/EditEntryBtn';
 import { errorToast, successToast } from 'components/toast/toast';
 import { connection_error, server_error } from 'constants/api/error';
 import useGetCompanies from 'features/company/hooks/useGetCompanies';
+import CustomDatePicker from 'components/inputs/DatePicker/CustomDatePicker';
 
 const initialEntryValue = {
   hoursWorked: 0,
@@ -48,7 +50,7 @@ const AddEntryForm = () => {
   const getCompanies = useGetCompanies();
   const createEntry = useCreateEntry();
 
-  // the first argument of the chakra ui's onChange callback varies based on input type
+  // the first argument of the Chakra UI's onChange callback varies based on input type
   const handleChange = (firstArg, name) => {
     if (typeof firstArg === 'object') {
       setNewEntry({
@@ -114,10 +116,14 @@ const AddEntryForm = () => {
         <Grid m='.4em 0' templateColumns='33% 67%'>
           <Flex flexDirection='column'>
             <FormLabel opacity='.85'>Shift Date</FormLabel>
-            <DatePicker
+            {/* <DatePicker
               selected={newEntry.shiftDate}
               onChange={(date) => setNewEntry({ ...newEntry, shiftDate: date })}
-              maxDate={new Date()}></DatePicker>
+              maxDate={new Date()}></DatePicker> */}
+            <CustomDatePicker
+              date={newEntry.shiftDate}
+              setDate={(date) => setNewEntry({ ...newEntry, shiftDate: date })}
+            />
           </Flex>
           <ShiftCheckboxGroup
             totalSalesApplicable={newEntry.totalSalesApplicable}
@@ -156,16 +162,19 @@ const AddEntryForm = () => {
             min={0}
             max={59}
           />
-
-          <NumInput
-            title='Total Sales'
-            name='totalSales'
-            isDisabled={!newEntry.totalSalesApplicable}
-            value={formatDollar(newEntry.totalSales)}
-            onChange={(value) => handleChange(parseDollar(value), 'totalSales')}
-            precision={2}
-            min={0}
-          />
+          <Tooltip>
+            <NumInput
+              title='Total Sales'
+              name='totalSales'
+              isDisabled={!newEntry.totalSalesApplicable}
+              value={formatDollar(newEntry.totalSales)}
+              onChange={(value) =>
+                handleChange(parseDollar(value), 'totalSales')
+              }
+              precision={2}
+              min={0}
+            />
+          </Tooltip>
         </Grid>
         <Divider />
       </Flex>
