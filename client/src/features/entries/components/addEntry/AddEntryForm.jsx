@@ -6,9 +6,7 @@ import {
   useDisclosure,
   FormLabel,
   useToast,
-  Tooltip,
 } from '@chakra-ui/react';
-import DatePicker from 'react-datepicker';
 import TertHeading from 'components/typography/TertHeading';
 import QuatHeading from 'components/typography/QuatHeading';
 import NumInput from 'components/form/NumInput';
@@ -116,10 +114,6 @@ const AddEntryForm = () => {
         <Grid m='.4em 0' templateColumns='33% 67%'>
           <Flex flexDirection='column'>
             <FormLabel opacity='.85'>Shift Date</FormLabel>
-            {/* <DatePicker
-              selected={newEntry.shiftDate}
-              onChange={(date) => setNewEntry({ ...newEntry, shiftDate: date })}
-              maxDate={new Date()}></DatePicker> */}
             <CustomDatePicker
               date={newEntry.shiftDate}
               setDate={(date) => setNewEntry({ ...newEntry, shiftDate: date })}
@@ -162,19 +156,15 @@ const AddEntryForm = () => {
             min={0}
             max={59}
           />
-          <Tooltip>
-            <NumInput
-              title='Total Sales'
-              name='totalSales'
-              isDisabled={!newEntry.totalSalesApplicable}
-              value={formatDollar(newEntry.totalSales)}
-              onChange={(value) =>
-                handleChange(parseDollar(value), 'totalSales')
-              }
-              precision={2}
-              min={0}
-            />
-          </Tooltip>
+          <NumInput
+            title='Total Sales'
+            name='totalSales'
+            isDisabled={!newEntry.totalSalesApplicable}
+            value={formatDollar(newEntry.totalSales)}
+            onChange={(value) => handleChange(parseDollar(value), 'totalSales')}
+            precision={2}
+            min={0}
+          />
         </Grid>
         <Divider />
       </Flex>
