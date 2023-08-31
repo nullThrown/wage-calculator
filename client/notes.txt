@@ -21,24 +21,7 @@ ENTRIES
 
 
 ADD ENTRY
-
-✔*company switch (company select) does not effect Total Sales Applicable value
-
-✔*if totalSalesApplicable = false, disable Total Sales input   
-
-*tooltips should be added to confusing inputs
--total sales "the amount sold.. helps us determine a tip percentage."
--total Sales Applicable "if the amount that you sold is known, check the box." 
--special event "party, banquet, etc. This allows us to determine earnings on both regular and special shifts."  
-
-✔*combine handlers into single fn
-
-*add entry arrow symbol needs to flip upon button press
-
-✔*total Sales Applicable value needs to change upon CompanySelect value as well as manual control
-
-*needs to invalidate all 'entries' queries
-
+*CompanyId does not repopulate after entry is submitted -- stays null!!
 
 
 EDIT ENTRY (Add Entry Form)
@@ -54,22 +37,13 @@ Solution: match company id and position to company array within node server - gr
 
 
 OVERVIEW 
-*onLoading and onError UI states are not rendered
-
 *find more interesting data to display to the user 
 
 
 
 LINE GRAPH 
-
-*add dummy data if no data (just used to add visual to graph)
-
-*remove if(!entries) condition from particular helper functions, this should be handle within 'selectGraphDataGenerator.js' file
-
 *condense helper functions, all functionalities are basically the same with minor modifications
-
 *write test for helper functions
-
 *add feat day/night filter functionality 
 
 
