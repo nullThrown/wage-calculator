@@ -22,7 +22,6 @@ const byMonthPerHour = (entries) => {
 
   data.forEach((entry) => {
     const shiftMonth = new Date(entry.shiftDate).getMonth();
-    console.log(shiftMonth);
     let companyIndex = dataStore.findIndex(
       (item) => item.companyId === entry.company
     );
