@@ -3,9 +3,17 @@ import byDayPerShift from 'features/graph/helpers/byDayPerShift';
 import byMonthPerHour from './byMonthPerHour';
 import byMonthPerShift from './byMonthPerShift';
 
+const dummyData = [
+  {
+    data: [
+      { x: 'no-data', y: 0 },
+      { x: 'no-data', y: 10 },
+    ],
+  },
+];
+
 const selectGraphDataGenerator = (entries, filters) => {
-  if (!entries)
-    return () => [{ id: 'no-data', data: [{ x: 'no-data', y: 40 }] }];
+  if (!entries || entries.data.length === 0) return () => dummyData;
 
   const { XAxis, YAxis } = filters;
   if (XAxis === 'byDay') {
