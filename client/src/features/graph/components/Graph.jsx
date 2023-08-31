@@ -21,8 +21,8 @@ const Graph = ({ filter }) => {
 
   const graphData = graphDataGenerator(entries);
 
-  const handleXAxisChange = (e) => {
-    setGraphFilters({ ...graphFilters, XAxis: e.target.value });
+  const handleXAxisChange = (event) => {
+    setGraphFilters({ ...graphFilters, XAxis: event.target.value });
   };
   const handleShiftTimeChange = () => {
     setGraphFilters({ ...graphFilters, shiftTime: !graphFilters.shiftTime });
