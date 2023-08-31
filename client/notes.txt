@@ -1,19 +1,20 @@
 
 GENERAL 
-
 *currently selected company needs to be saved on user model
-
 *create generic react-query error handler
-
 *entry items coming from API need to have both a company Id as well as a company name - mongoose join (populate) method 
-
 *normalize all front end validation error handling and error display
- 
 *add company name to all locations where only company Id is accessible   
+*authentication does not work!
+-after login/logout, navigation does not send the user with updated info 
+in other words, when the page navigates, router does not recognize change in auth status 
 
 
-HOME PAGE
+
+OVERVIEW
 *choose different data for Overview component 
+
+
 
 ENTRIES
 *calc total earned per hour for individual entry
@@ -24,15 +25,10 @@ ADD ENTRY
 *CompanyId does not repopulate after entry is submitted -- stays null!!
 
 
-EDIT ENTRY (Add Entry Form)
-*add functionality to edit button
-  
-??*addEntry function does not create all fields specified in Entry model 
 
-*
-Problem: Add Entry function - company select - needs to be or point towards an object id 
-of that specific company or position
-Solution: match company id and position to company array within node server - grab object id in backend 
+EDIT ENTRY (Add Entry Form)
+*add functionality to edit button  
+??*addEntry function does not create all fields specified in Entry model 
 
 
 
