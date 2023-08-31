@@ -1,11 +1,12 @@
 import { forwardRef } from 'react';
 import DatePicker from 'react-datepicker';
 import './CustomDatePicker.css';
+
 const CustomDatePicker = ({ date, setDate }) => {
-  const ExampleCustomInput = forwardRef(({ value, onClick, onChange }, ref) => (
+  const CustomInput = forwardRef(({ value, onClick, onChange }, ref) => (
     <input
       value={value}
-      className='example-custom-input'
+      className='custom-input'
       onClick={onClick}
       onChange={onChange}
       ref={ref}></input>
@@ -15,9 +16,9 @@ const CustomDatePicker = ({ date, setDate }) => {
       selected={date}
       onChange={(date) => setDate(date)}
       maxDate={new Date()}
-      customInput={<ExampleCustomInput />}
-      dayClassName={() => 'example-datepicker-day-class'}
-      popperClassName='example-datepicker-class'
+      customInput={<CustomInput />}
+      dayClassName={() => 'datepicker-day-class'}
+      popperClassName='datepicker-class'
       todayButton='TODAY'
     />
   );
