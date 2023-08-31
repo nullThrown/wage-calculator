@@ -1,5 +1,4 @@
 const byDayPerHour = (entries) => {
-  if (!entries) return [{ id: 'no-data', data: [{ x: 'no-data', y: 40 }] }];
   const { data } = entries;
   const dataStore = [];
   const companyItem = {
