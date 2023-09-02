@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useReducer } from 'react';
 import {
   Divider,
   Flex,
@@ -24,6 +24,12 @@ import { errorToast, successToast } from 'components/toast/toast';
 import { connection_error, server_error } from 'constants/api/error';
 import useGetCompanies from 'features/company/hooks/useGetCompanies';
 import CustomDatePicker from 'components/inputs/DatePicker/CustomDatePicker';
+import useGetAllEntries from 'features/entries/hooks/useGetAllEntries';
+
+import {
+  initialState,
+  entryFormReducer,
+} from 'features/entries/helpers/entryFormReducer';
 
 const initialEntryValue = {
   hoursWorked: 0,
@@ -47,6 +53,8 @@ const AddEntryForm = ({ filter }) => {
   const toast = useToast();
   const getCompanies = useGetCompanies();
   const createEntry = useCreateEntry();
+  const [state, dispatch] = useReducer(entryFormReducer, initialState);
+  const { isLoading, isError, entries } = useGetAllEntries(filter);
 
   // the first argument of the Chakra UI's onChange callback varies based on input type
   const handleChange = (firstArg, name) => {
@@ -106,7 +114,13 @@ const AddEntryForm = ({ filter }) => {
       <TertHeading textAlign='center'>Add Earning's Report</TertHeading>
       <Flex m='1em' justify='center'>
         <EditEntryBtn onOpen={onOpen} />
-        <EditEntryModal isOpen={isOpen} onClose={onClose} filter={filter} />
+        <EditEntryModal
+          isOpen={isOpen}
+          onClose={onClose}
+          filter={filter}
+          state={state}
+          dispatch={dispatch}
+        />
       </Flex>
 
       <Flex direction='column' justify='center' m='1em 0'>
