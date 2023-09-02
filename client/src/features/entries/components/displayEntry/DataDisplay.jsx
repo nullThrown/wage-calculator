@@ -47,7 +47,7 @@ const DataDisplay = ({ selectedEntry }) => {
         />
         <SimpleStat
           title='Total Earned Per Hour'
-          amount='not calculated'
+          amount={selectedEntry.totalEarnedPerHour}
           symbolBefore='$'
         />
         <SimpleStat
