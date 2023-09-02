@@ -44,7 +44,7 @@ const Home = () => {
     <FourColumnLayout>
       <AddEntryAccordianBtn onToggle={onToggle} />
       <Collapse in={isOpen} animateOpacity>
-        <AddEntryForm onToggle={onToggle} />
+        <AddEntryForm onToggle={onToggle} filter={filter} />
       </Collapse>
       <Divider mt='1.5em' maxW='700px' />
       <CompanySelect filter={filter} setFilter={setFilter} />

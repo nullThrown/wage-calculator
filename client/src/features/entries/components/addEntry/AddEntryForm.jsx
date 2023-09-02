@@ -38,7 +38,7 @@ const initialEntryValue = {
   totalSalesApplicable: false,
   shiftDate: new Date(),
 };
-const AddEntryForm = () => {
+const AddEntryForm = ({ filter }) => {
   const [newEntry, setNewEntry] = useState(initialEntryValue);
   const [isValidationError, setIsValidationError] = useState(false);
 
@@ -106,7 +106,7 @@ const AddEntryForm = () => {
       <TertHeading textAlign='center'>Add Earning's Report</TertHeading>
       <Flex m='1em' justify='center'>
         <EditEntryBtn onOpen={onOpen} />
-        <EditEntryModal isOpen={isOpen} onClose={onClose} />
+        <EditEntryModal isOpen={isOpen} onClose={onClose} filter={filter} />
       </Flex>
 
       <Flex direction='column' justify='center' m='1em 0'>
