@@ -34,7 +34,7 @@ const Entries = ({ filter }) => {
         Entries
       </Heading>
       <Header date={date}>
-        <CustomDatePicker date={date} setDate={setDate} />
+        <CustomDatePicker date={date} onChange={(date) => setDate(date)} />
       </Header>
       <Week
         entriesByWeek={entriesByWeek}

@@ -2,7 +2,7 @@ import { forwardRef } from 'react';
 import DatePicker from 'react-datepicker';
 import './CustomDatePicker.css';
 
-const CustomDatePicker = ({ date, setDate }) => {
+const CustomDatePicker = ({ date, onChange }) => {
   const CustomInput = forwardRef(({ value, onClick, onChange }, ref) => (
     <input
       value={value}
@@ -14,7 +14,7 @@ const CustomDatePicker = ({ date, setDate }) => {
   return (
     <DatePicker
       selected={date}
-      onChange={(date) => setDate(date)}
+      onChange={onChange}
       maxDate={new Date()}
       customInput={<CustomInput />}
       dayClassName={() => 'datepicker-day-class'}

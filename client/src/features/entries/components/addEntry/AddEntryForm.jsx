@@ -116,7 +116,7 @@ const AddEntryForm = ({ filter }) => {
             <FormLabel opacity='.85'>Shift Date</FormLabel>
             <CustomDatePicker
               date={newEntry.shiftDate}
-              setDate={(date) => setNewEntry({ ...newEntry, shiftDate: date })}
+              onChange={(date) => setNewEntry({ ...newEntry, shiftDate: date })}
             />
           </Flex>
           <ShiftCheckboxGroup
