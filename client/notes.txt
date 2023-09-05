@@ -1,12 +1,12 @@
 
 GENERAL 
+*cleanup of all files
 *add company name to all locations where only company Id is accessible   
 *normalize all front end validation error handling and error display
 -currently selected company needs to be saved on user model
--entry items coming from API need to have both a company Id as well as a company name - mongoose join (populate) method 
+✔-entry items coming from API need to have both a company Id as well as a company name - mongoose join (populate) method 
 *authentication does not work!
--after login/logout, navigation does not send the user with updated info 
-in other words, when the page navigates, router does not recognize change in auth status 
+-after login/logout, navigation router does not recognize change in auth status 
 *create generic react-query error handler
 
 
@@ -19,31 +19,18 @@ OVERVIEW
 ADD ENTRY
 *CompanyId does not repopulate after entry is submitted -- stays null!!
 
-
-
-EDIT ENTRY (Add Entry Form)
-??*addEntry function does not create all fields specified in Entry model 
-*add functionality to edit button  
-✔-add state var, selectedEntry 
-✔-pass main filter ('all', 'active', companyId)
-✔-add hook to get all entries 
-✔-if no entries add isEmpty text (sorry, no entries for that date) 
-✔-if entries display entries and add sun/moon icon based on shiftTime 
-
-entries Select
-✔-set fill button to disabled if no entry selected 
-✔-if entry selected(respective button click)
-✔-put selective entry into state variable 
-✔-change button class to darker color 
-
-fill button 
--copy Edit Company actions
--add onChange to fill button 
--if clicked send selectedEntry to form 
--change form to reflect edit mode 
-   
-
-
+COMPLETE INTEGRATION OF EDIT MODE 
+*other values need to be checked that they are accurately imported
+✔*update Add Entry action to take state from reducer
+✔*edit 'fill' action, hours + minutes worked does not populate 
+✔-derive hours + minutes from timeWorkedDec 
+✔*create updateEntryHandler, custom useMutation hook, custom api call 
+✔*create update entry backend call
+✔*edit modal -- selected entry needs to clear upon 'Fill' & 'cancel' actions
+✔-cancel actions need to include 'X' close, click away event, 'esc' event, 'spacebar' event, 'enter' event
+✔-custom function needs to be placed within modal
+*create backend validation for update entry
+*entries will not load upon initial mount 
 
 LINE GRAPH 
 *add feat day/night filter functionality 
