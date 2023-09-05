@@ -35,7 +35,7 @@ const createEntry = async (req, res, next) => {
         },
       },
     ]);
-    const { hourlyWage, position } = filteredCompany[0].companies[0];
+    const { hourlyWage, position, name } = filteredCompany[0].companies[0];
     const timeWorkedDec = +hoursWorked + +minutesWorked / 60;
     const trueTotalEarned =
       +creditTips + +cashTips - tipOut + timeWorkedDec * +hourlyWage;
@@ -52,6 +52,7 @@ const createEntry = async (req, res, next) => {
       company: companyObjectId,
       position,
       hourlyWage,
+      name,
       specialEvent,
       shiftDate,
       // calc these data outside of the object
