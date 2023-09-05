@@ -6,6 +6,7 @@ import {
   useDisclosure,
   FormLabel,
   useToast,
+  Button,
 } from '@chakra-ui/react';
 import TertHeading from 'components/typography/TertHeading';
 import QuatHeading from 'components/typography/QuatHeading';
@@ -24,49 +25,25 @@ import { errorToast, successToast } from 'components/toast/toast';
 import { connection_error, server_error } from 'constants/api/error';
 import useGetCompanies from 'features/company/hooks/useGetCompanies';
 import CustomDatePicker from 'components/inputs/DatePicker/CustomDatePicker';
-import useGetAllEntries from 'features/entries/hooks/useGetAllEntries';
-
+import useUpdateEntry from 'features/entries/hooks/useUpdateEntry';
 import {
   initialState,
   entryFormReducer,
 } from 'features/entries/helpers/entryFormReducer';
 
-const initialEntryValue = {
-  hoursWorked: 0,
-  minutesWorked: 0,
-  totalSales: 0,
-  creditTips: 0,
-  cashTips: 0,
-  tipOut: 0,
-  shiftTime: 'morning',
-  companyId: null,
-  specialEvent: false,
-  totalSalesApplicable: false,
-  shiftDate: new Date(),
-};
 const AddEntryForm = ({ filter }) => {
-  const [newEntry, setNewEntry] = useState(initialEntryValue);
   const [isValidationError, setIsValidationError] = useState(false);
 
+  const [state, dispatch] = useReducer(entryFormReducer, initialState);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { isTimeWorkedZero } = useAddEntryValidation(newEntry);
+  const { isTimeWorkedZero } = useAddEntryValidation(state.entryFormData);
   const toast = useToast();
   const getCompanies = useGetCompanies();
   const createEntry = useCreateEntry();
-  const [state, dispatch] = useReducer(entryFormReducer, initialState);
-  const { isLoading, isError, entries } = useGetAllEntries(filter);
+  const updateEntry = useUpdateEntry();
 
-  // the first argument of the Chakra UI's onChange callback varies based on input type
-  const handleChange = (firstArg, name) => {
-    if (typeof firstArg === 'object') {
-      setNewEntry({
-        ...newEntry,
-        [firstArg.target.name]: firstArg.target.value,
-      });
-    } else {
-      setNewEntry({ ...newEntry, [name]: firstArg });
-    }
-  };
+  const handleChange = (firstArg, name) =>
+    dispatch({ type: 'set_form_data', firstArg, name });
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -74,9 +51,9 @@ const AddEntryForm = ({ filter }) => {
       setIsValidationError(true);
     } else {
       setIsValidationError(false);
-      createEntry.mutate(newEntry, {
+      createEntry.mutate(state.entryFormData, {
         onSuccess: (data, variables, context) => {
-          setNewEntry(initialEntryValue);
+          dispatch({ type: 'reset_all_state' });
           toast({ ...successToast, title: 'New entry added' });
         },
         onError: (error, variables, context) => {
@@ -88,27 +65,51 @@ const AddEntryForm = ({ filter }) => {
       });
     }
   };
+
+  const handleUpdateEntry = (e) => {
+    e.preventDefault();
+    if (isTimeWorkedZero) {
+      setIsValidationError(true);
+    } else {
+      setIsValidationError(false);
+    }
+    updateEntry.mutate(state.entryFormData, {
+      onSuccess: () => {
+        dispatch({ type: 'reset_all_state' });
+        toast({ ...successToast, title: 'Entry updated Successfully!' });
+      },
+      onError: (error) => {
+        const { message } = error;
+        if (message === server_error || message === connection_error) {
+          toast({ ...errorToast });
+        }
+      },
+    });
+  };
+
   useEffect(() => {
     const { companyList } = getCompanies;
     if (companyList) {
-      setNewEntry({
-        ...newEntry,
-        companyId: companyList[0]._id,
+      dispatch({
+        type: 'init_entry_form',
+        selectedCompanyId: companyList[0]._id,
       });
     }
   }, [getCompanies.companyList]);
+  // set totalSalesApplicable state value according to selected Company totalSalesApplicable
   useEffect(() => {
-    const { companyId } = newEntry;
+    const { companyId } = state.entryFormData;
     if (companyId) {
       const selectedCompany = getCompanies.companyList.find(
         (company) => company._id === companyId
       );
-      setNewEntry({
-        ...newEntry,
-        totalSalesApplicable: selectedCompany.totalSalesApplicable,
+      dispatch({
+        type: 'set_total_sales_applicable',
+        companyTotalSalesApplicable: selectedCompany.totalSalesApplicable,
       });
     }
-  }, [newEntry.companyId, getCompanies.companyList]);
+  }, [state.entryFormData.companyId, getCompanies.companyList]);
+
   return (
     <LargeCard as='form'>
       <TertHeading textAlign='center'>Add Earning's Report</TertHeading>
@@ -129,13 +130,15 @@ const AddEntryForm = ({ filter }) => {
           <Flex flexDirection='column'>
             <FormLabel opacity='.85'>Shift Date</FormLabel>
             <CustomDatePicker
-              date={newEntry.shiftDate}
-              onChange={(date) => setNewEntry({ ...newEntry, shiftDate: date })}
+              date={state.entryFormData.shiftDate}
+              onChange={(date) =>
+                dispatch({ type: 'set_shift_date', shiftDate: date })
+              }
             />
           </Flex>
           <ShiftCheckboxGroup
-            totalSalesApplicable={newEntry.totalSalesApplicable}
-            specialEvent={newEntry.specialEvent}
+            totalSalesApplicable={state.entryFormData.totalSalesApplicable}
+            specialEvent={state.entryFormData.specialEvent}
             onChange={handleChange}
           />
         </Grid>
@@ -152,7 +155,7 @@ const AddEntryForm = ({ filter }) => {
           <NumInput
             title='Hours Worked'
             name='hoursWorked'
-            value={newEntry.hoursWorked}
+            value={state.entryFormData.hoursWorked}
             onChange={handleChange}
             isInvalid={isValidationError && isTimeWorkedZero}
             errorMsg='Must have at least 1 minute of time worked'
@@ -163,7 +166,7 @@ const AddEntryForm = ({ filter }) => {
           <NumInput
             title='Minutes Worked'
             name='minutesWorked'
-            value={newEntry.minutesWorked}
+            value={state.entryFormData.minutesWorked}
             onChange={handleChange}
             isInvalid={isValidationError && isTimeWorkedZero}
             precision={0}
@@ -173,8 +176,8 @@ const AddEntryForm = ({ filter }) => {
           <NumInput
             title='Total Sales'
             name='totalSales'
-            isDisabled={!newEntry.totalSalesApplicable}
-            value={formatDollar(newEntry.totalSales)}
+            isDisabled={!state.entryFormData.totalSalesApplicable}
+            value={formatDollar(state.entryFormData.totalSales)}
             onChange={(value) => handleChange(parseDollar(value), 'totalSales')}
             precision={2}
             min={0}
@@ -190,7 +193,7 @@ const AddEntryForm = ({ filter }) => {
           <NumInput
             title='Credit Tips'
             name='creditTips'
-            value={formatDollar(newEntry.creditTips)}
+            value={formatDollar(state.entryFormData.creditTips)}
             onChange={(value) => handleChange(parseDollar(value), 'creditTips')}
             precision={2}
             min={0}
@@ -198,7 +201,7 @@ const AddEntryForm = ({ filter }) => {
           <NumInput
             title='Cash Tips'
             name='cashTips'
-            value={formatDollar(newEntry.cashTips)}
+            value={formatDollar(state.entryFormData.cashTips)}
             onChange={(value) => handleChange(parseDollar(value), 'cashTips')}
             precision={2}
             min={0}
@@ -206,7 +209,7 @@ const AddEntryForm = ({ filter }) => {
           <NumInput
             title='Tip Out'
             name='tipOut'
-            value={formatDollar(newEntry.tipOut)}
+            value={formatDollar(state.entryFormData.tipOut)}
             onChange={(value) => handleChange(parseDollar(value), 'tipOut')}
             precision={2}
             min={0}
@@ -223,21 +226,36 @@ const AddEntryForm = ({ filter }) => {
         alignItems='start'
         m='.4em 0'>
         <ShiftRadioGroup
-          value={newEntry.shiftTime}
+          value={state.entryFormData.shiftTime}
           onChange={(value) => handleChange(value, 'shiftTime')}
         />
         <CompanySelect
           onChange={handleChange}
-          companyId={newEntry.companyId}
+          companyId={state.entryFormData.companyId}
           companyList={getCompanies.companyList}
         />
       </Grid>
       <Divider />
-
-      <SubmitEntryBtn
-        handleSubmit={handleSubmit}
-        isLoading={createEntry.isLoading}
-      />
+      <Flex justifyContent='center' gap='.5em' mt='1.5em'>
+        {state.isEditMode ? (
+          <>
+            <Button
+              type='submit'
+              onClick={handleUpdateEntry}
+              colorScheme='teal'>
+              Edit Entry
+            </Button>
+            <Button onClick={() => dispatch({ type: 'reset_all_state' })}>
+              Cancel
+            </Button>
+          </>
+        ) : (
+          <SubmitEntryBtn
+            handleSubmit={handleSubmit}
+            isLoading={createEntry.isLoading}
+          />
+        )}
+      </Flex>
     </LargeCard>
   );
 };
