@@ -8,7 +8,6 @@ import {
   ModalCloseButton,
   Button,
   VStack,
-  Text,
   Box,
 } from '@chakra-ui/react';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -16,12 +15,27 @@ import CustomDatePicker from 'components/inputs/DatePicker/CustomDatePicker';
 import { BsSunFill, BsFillMoonFill } from 'react-icons/bs';
 import { IconContext } from 'react-icons';
 import useGetAllEntries from 'features/entries/hooks/useGetAllEntries';
+import EntriesCountText from 'features/entries/components/editEntry/EntriesCountText';
 
 const EditEntryModal = ({ isOpen, onClose, filter, state, dispatch }) => {
   const { isLoading, isError, entries } = useGetAllEntries(filter);
 
+  const handleFill = () => {
+    dispatch({ type: 'set_to_edit_mode' });
+    onClose();
+  };
+  const handleClose = () => {
+    // if user is in edit mode & closes modal -- all state (read: entryFormData) will be reset
+
+    // const reducerType = state.isEditMode
+    // ? 'reset_all_state'
+    // : 'reset_edit_mode';
+    dispatch({ type: 'reset_edit_mode' });
+    onClose();
+  };
+
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={handleClose}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader textAlign='center' fontSize='lg' opacity='.85'>
@@ -42,19 +56,7 @@ const EditEntryModal = ({ isOpen, onClose, filter, state, dispatch }) => {
             />
 
             <VStack mt='.8em' alignItems='stretch'>
-              {state.filteredEntries.length === 0 ? (
-                <Text mt='.5em' textAlign='center'>
-                  There are no entries for that day
-                </Text>
-              ) : (
-                <Text m='.5em 0' textAlign='center'>
-                  There are{' '}
-                  <Text color='purple.500' fontWeight='500' display='inline'>
-                    {state.filteredEntries.length}{' '}
-                  </Text>
-                  entries for that day
-                </Text>
-              )}
+              <EntriesCountText count={state.filteredEntries.length} />
               {state.filteredEntries.map((entry) => {
                 return (
                   <Button
@@ -94,6 +96,7 @@ const EditEntryModal = ({ isOpen, onClose, filter, state, dispatch }) => {
             size='sm'
             colorScheme='blue'
             mr='.8em'
+            onClick={() => handleFill()}
             isDisabled={!state.selectedEntryId}>
             Fill
           </Button>
@@ -101,7 +104,7 @@ const EditEntryModal = ({ isOpen, onClose, filter, state, dispatch }) => {
             size='sm'
             colorScheme='gray'
             variant='outline'
-            onClick={onClose}>
+            onClick={handleClose}>
             Cancel
           </Button>
         </ModalFooter>
