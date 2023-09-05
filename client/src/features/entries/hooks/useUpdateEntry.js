@@ -1,14 +1,16 @@
-import { createEntry } from '../api/entries';
-import { useMutation } from 'react-query';
+import { updateEntry } from '../api/entries';
+import { useMutation, useQueryClient } from 'react-query';
 
-const useUpdateEntries = useMutation((entry) => createEntry(entry), {
-  onError: () => {
-    // not sure what to place here but will most likely need something
-  },
-  onSuccess: () => {
-    // invalidate all queries for data
-    // overview, monthly, weekly, shift
-  },
-});
+const useUpdateEntry = () => {
+  const queryClient = useQueryClient();
 
-export default useUpdateEntries;
+  return useMutation((updatedEntry) => updateEntry(updatedEntry), {
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['entries'],
+      });
+    },
+  });
+};
+
+export default useUpdateEntry;
