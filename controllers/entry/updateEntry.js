@@ -1,41 +1,58 @@
 const Entries = require('../../models/Entries');
 const { resourceUpdated } = require('../../services/responseTypes/success');
+const mongoose = require('mongoose');
+const User = require('../../models/User');
 
 const updateEntry = async (req, res, next) => {
-  const {
-    entryId,
-    timeWorkedDec,
-    totalSales,
-    totalSalesApplicable,
-    creditTips,
-    cashTips,
-    tipOut,
-    shiftTime,
-    companyId,
-    position,
-    hourlyWage,
-    specialEvent,
-    shiftDate,
-  } = req.body;
-  // conduct these calculations outside the object
-  const totalTips = +creditTips + +cashTips;
-  const trueTotalTips = +creditTips + +cashTips - +tipOut;
-  const totalWages = +timeWorkedDec * +hourlyWage;
-  const totalEarned = +creditTips + +cashTips + +timeWorkedDec * +hourlyWage;
-  const trueTotalEarned =
-    +creditTips + +cashTips - tipOut + +timeWorkedDec * +hourlyWage;
-  let tipPct;
-  let trueTipPct;
-  if (JSON.parse(totalSalesApplicable.toLowerCase())) {
-    tipPct = (+creditTips + +cashTips) / +totalSales;
-    trueTipPct = (+creditTips + +cashTips - +tipOut) / +totalSales;
-  } else {
-    tipPct = -1;
-    trueTipPct = -1;
-  }
   try {
+    const {
+      minutesWorked,
+      hoursWorked,
+      totalSales,
+      totalSalesApplicable,
+      creditTips,
+      cashTips,
+      tipOut,
+      shiftTime,
+      company,
+      specialEvent,
+      shiftDate,
+    } = req.body;
+    // conduct these calculations outside the object
+    const userId = mongoose.Types.ObjectId(req.user.id);
+    const companyObjectId = mongoose.Types.ObjectId(company);
+    const filteredCompany = await User.aggregate([
+      { $match: { _id: userId } },
+      {
+        $project: {
+          _id: 0,
+          companies: {
+            $filter: {
+              input: '$companies',
+              as: 'company',
+              cond: { $eq: ['$$company._id', companyObjectId] },
+            },
+          },
+        },
+      },
+    ]);
+    const { name, position, hourlyWage } = filteredCompany[0].companies[0];
+    const timeWorkedDec = +hoursWorked + +minutesWorked / 60;
+    const trueTotalEarned =
+      +creditTips + +cashTips - tipOut + timeWorkedDec * +hourlyWage;
+    const totalEarnedPerHour = trueTotalEarned / timeWorkedDec;
+    const totalTips = +creditTips + +cashTips;
+    const trueTotalTips = totalTips - +tipOut;
+    const totalWages = timeWorkedDec * +hourlyWage;
+    const totalEarned = trueTotalTips + totalWages;
+    let tipPct, trueTipPct;
+
+    if (totalSalesApplicable) {
+      tipPct = totalEarned / +totalSales;
+      trueTipPct = trueTotalEarned / +totalSales;
+    }
     await Entries.findOneAndUpdate(
-      { user: req.user.id, 'data._id': entryId },
+      { user: req.user.id, 'data._id': userId },
       {
         $set: {
           'data.$.timeWorkedDec': timeWorkedDec,
@@ -45,7 +62,8 @@ const updateEntry = async (req, res, next) => {
           'data.$.cashTips': cashTips,
           'data.$.tipOut': tipOut,
           'data.$.shiftTime': shiftTime,
-          'data.$.company': companyId,
+          'data.$.company': companyObjectId,
+          'data.$.companyName': name,
           'data.$.position': position,
           'data.$.hourlyWage': hourlyWage,
           'data.$.specialEvent': specialEvent,
@@ -55,6 +73,7 @@ const updateEntry = async (req, res, next) => {
           'data.$.totalWages': totalWages,
           'data.$.totalEarned': totalEarned,
           'data.$.trueTotalEarned': trueTotalEarned,
+          'data.$.totalEarnedPerHour': totalEarnedPerHour,
           'data.$.tipPct': tipPct,
           'data.$.trueTipPct': trueTipPct,
         },
