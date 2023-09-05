@@ -15,13 +15,15 @@ export const createEntry = async (entry) => {
   }
 };
 
-export const updateEntry = async (entry) => {
+export const updateEntry = async (updatedEntry) => {
   try {
-    const { data } = await axios.post('/entries/update', entry);
+    console.log(updatedEntry);
+    const { data } = await axios.put('/entries/update', updatedEntry);
     return data;
   } catch (err) {
     console.log(err);
-    return err;
+    const errorMsg = !err.response ? connection_error : err.response.data.msg;
+    return Promise.reject(new Error(errorMsg));
   }
 };
 export const getAllEntries = async (filter) => {
