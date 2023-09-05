@@ -24,7 +24,7 @@ router.post('/create', validateEntry, createEntry);
 // ROUTE PUT api/entries/update
 // DESC update earning's entry
 // ACCESS private
-router.put('/update', validateEntry, updateEntry);
+router.put('/update', updateEntry);
 
 // ROUTE GET api/entries/all
 // DESC get overview data
