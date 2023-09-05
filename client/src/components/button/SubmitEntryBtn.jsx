@@ -5,7 +5,6 @@ const SubmitEntryBtn = ({ handleSubmit, isLoading }) => {
       onClick={handleSubmit}
       type='submit'
       colorScheme='green'
-      m='2.6em auto 1em'
       isLoading={isLoading}
       loadingText='Adding'
       display='block'>
