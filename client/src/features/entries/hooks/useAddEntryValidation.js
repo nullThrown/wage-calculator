@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
-const useAddEntryValidation = (newEntry) => {
-  const { hoursWorked, minutesWorked } = newEntry;
+const useAddEntryValidation = (entryFormData) => {
+  const { hoursWorked, minutesWorked } = entryFormData;
 
   const [isTimeWorkedZero, setIsTimeWorkedZero] = useState(false);
 
