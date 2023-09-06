@@ -1,20 +1,26 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const { requiredNum, requiredStr } = require('../constants/mongooseTypes');
+const {
+  requiredNum,
+  requiredStr,
+  requiredBool,
+  requiredMongoId,
+} = require('../constants/mongooseTypes');
 
 const EntrySchema = new Schema(
   {
     timeWorkedDec: requiredNum,
     totalSales: requiredNum,
-    totalSalesApplicable: { type: Boolean },
+    totalSalesApplicable: requiredBool,
     creditTips: requiredNum,
     cashTips: requiredNum,
     tipOut: requiredNum,
     shiftTime: requiredStr,
-    company: { type: mongoose.Types.ObjectId, required: true },
+    companyId: requiredMongoId,
+    companyName: requiredStr,
     position: requiredStr,
     hourlyWage: requiredNum,
-    specialEvent: { type: Boolean, default: false },
+    specialEvent: requiredBool,
     shiftDate: requiredNum,
     totalTips: requiredNum,
     trueTotalTips: requiredNum,
