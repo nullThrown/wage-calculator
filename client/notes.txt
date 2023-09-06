@@ -1,13 +1,18 @@
 
 GENERAL 
 *cleanup of all files
-*add company name to all locations where only company Id is accessible   
+*add company name to all locations where only company Id is accessible 
+✔-EditEntryModal - shift display 
+-Graph - data Ids
+-Entris - ShiftInstance on calendar
+-single entry - companyName
+
 *normalize all front end validation error handling and error display
 -currently selected company needs to be saved on user model
-✔-entry items coming from API need to have both a company Id as well as a company name - mongoose join (populate) method 
 *authentication does not work!
 -after login/logout, navigation router does not recognize change in auth status 
 *create generic react-query error handler
+*all data calculations need to be tested 
 
 
 
@@ -18,19 +23,9 @@ OVERVIEW
 
 ADD ENTRY
 *CompanyId does not repopulate after entry is submitted -- stays null!!
-
-COMPLETE INTEGRATION OF EDIT MODE 
-*other values need to be checked that they are accurately imported
-✔*update Add Entry action to take state from reducer
-✔*edit 'fill' action, hours + minutes worked does not populate 
-✔-derive hours + minutes from timeWorkedDec 
-✔*create updateEntryHandler, custom useMutation hook, custom api call 
-✔*create update entry backend call
-✔*edit modal -- selected entry needs to clear upon 'Fill' & 'cancel' actions
-✔-cancel actions need to include 'X' close, click away event, 'esc' event, 'spacebar' event, 'enter' event
-✔-custom function needs to be placed within modal
-*create backend validation for update entry
 *entries will not load upon initial mount 
+
+
 
 LINE GRAPH 
 *add feat day/night filter functionality 
