@@ -6,6 +6,7 @@ const User = require('../../models/User');
 const updateEntry = async (req, res, next) => {
   try {
     const {
+      _id,
       minutesWorked,
       hoursWorked,
       totalSales,
@@ -14,13 +15,13 @@ const updateEntry = async (req, res, next) => {
       cashTips,
       tipOut,
       shiftTime,
-      company,
+      companyId,
       specialEvent,
       shiftDate,
     } = req.body;
-    // conduct these calculations outside the object
+
     const userId = mongoose.Types.ObjectId(req.user.id);
-    const companyObjectId = mongoose.Types.ObjectId(company);
+    const companyObjectId = mongoose.Types.ObjectId(companyId);
     const filteredCompany = await User.aggregate([
       { $match: { _id: userId } },
       {
@@ -45,14 +46,15 @@ const updateEntry = async (req, res, next) => {
     const trueTotalTips = totalTips - +tipOut;
     const totalWages = timeWorkedDec * +hourlyWage;
     const totalEarned = trueTotalTips + totalWages;
-    let tipPct, trueTipPct;
 
+    let tipPct, trueTipPct;
     if (totalSalesApplicable) {
       tipPct = totalEarned / +totalSales;
       trueTipPct = trueTotalEarned / +totalSales;
     }
-    await Entries.findOneAndUpdate(
-      { user: req.user.id, 'data._id': userId },
+
+    const entries = await Entries.findOneAndUpdate(
+      { user: userId, 'data._id': _id },
       {
         $set: {
           'data.$.timeWorkedDec': timeWorkedDec,
@@ -62,7 +64,7 @@ const updateEntry = async (req, res, next) => {
           'data.$.cashTips': cashTips,
           'data.$.tipOut': tipOut,
           'data.$.shiftTime': shiftTime,
-          'data.$.company': companyObjectId,
+          'data.$.companyId': companyObjectId,
           'data.$.companyName': name,
           'data.$.position': position,
           'data.$.hourlyWage': hourlyWage,
@@ -77,8 +79,10 @@ const updateEntry = async (req, res, next) => {
           'data.$.tipPct': tipPct,
           'data.$.trueTipPct': trueTipPct,
         },
-      }
+      },
+      { returnOriginal: false }
     );
+    console.log(entries.data[5]);
     res.status(200).json(resourceUpdated);
   } catch (err) {
     next(err);
