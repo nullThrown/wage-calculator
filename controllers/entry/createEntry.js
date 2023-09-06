@@ -5,8 +5,8 @@ const mongoose = require('mongoose');
 const createEntry = async (req, res, next) => {
   try {
     const {
-      hoursWorked,
       minutesWorked,
+      hoursWorked,
       totalSales,
       totalSalesApplicable,
       creditTips,
@@ -49,7 +49,8 @@ const createEntry = async (req, res, next) => {
       cashTips,
       tipOut,
       shiftTime,
-      company: companyObjectId,
+      companyId: companyObjectId,
+      companyName: name,
       position,
       hourlyWage,
       name,
