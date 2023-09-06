@@ -25,7 +25,7 @@ const EditEntryModal = ({ isOpen, onClose, filter, state, dispatch }) => {
     onClose();
   };
   const handleClose = () => {
-    // if user is in edit mode & closes modal -- all state (read: entryFormData) will be reset
+    // if user is in edit mode & closes modal -- all state (read: in particular, entryFormData) will be reset
 
     // const reducerType = state.isEditMode
     // ? 'reset_all_state'
@@ -75,7 +75,7 @@ const EditEntryModal = ({ isOpen, onClose, filter, state, dispatch }) => {
                     }
                     rightIcon={
                       entry.shiftTime === 'morning' ? (
-                        <IconContext.Provider value={{ color: 'yellow' }}>
+                        <IconContext.Provider value={{ color: 'gold' }}>
                           <BsSunFill />
                         </IconContext.Provider>
                       ) : (
@@ -84,7 +84,7 @@ const EditEntryModal = ({ isOpen, onClose, filter, state, dispatch }) => {
                         </IconContext.Provider>
                       )
                     }>
-                    {entry.company} - {entry.position}
+                    {entry.companyName} - {entry.position}
                   </Button>
                 );
               })}
