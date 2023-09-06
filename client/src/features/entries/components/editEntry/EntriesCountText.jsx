@@ -4,7 +4,7 @@ const EntriesCountText = ({ count }) => {
   const noun = count === 1 ? 'entry' : 'entries';
 
   const Count = ({ count }) => (
-    <Text color='purple.500' fontWeight='500' display='inline'>
+    <Text as='span' color='purple.500' fontWeight='500' display='inline'>
       {count}
     </Text>
   );
