@@ -4,6 +4,7 @@ const byMonthPerShift = (entries) => {
 
   const companyItem = {
     companyId: '',
+    companyName: '',
     data: [
       { x: 'Jan', numOfShifts: 0, trueTotalEarned: 0 },
       { x: 'Feb', numOfShifts: 0, trueTotalEarned: 0 },
@@ -23,13 +24,14 @@ const byMonthPerShift = (entries) => {
   data.forEach((entry) => {
     const shiftMonth = new Date(entry.shiftDate).getMonth();
     let companyIndex = dataStore.findIndex(
-      (item) => item.companyId === entry.company
+      (item) => item.companyId === entry.companyId
     );
 
     if (companyIndex === -1) {
       dataStore.push(JSON.parse(JSON.stringify(companyItem)));
       companyIndex = dataStore.length - 1;
-      dataStore[companyIndex].companyId = entry.company;
+      dataStore[companyIndex].companyId = entry.companyId;
+      dataStore[companyIndex].companyName = entry.companyName;
     }
     dataStore[companyIndex].data[shiftMonth].numOfShifts++;
     dataStore[companyIndex].data[shiftMonth].trueTotalEarned +=
@@ -37,12 +39,12 @@ const byMonthPerShift = (entries) => {
   });
 
   const formattedDataStore = dataStore.map((dataByCompany) => {
-    const { data, companyId } = dataByCompany;
+    const { data, companyName } = dataByCompany;
     const formattedData = data.map((month) => {
       if (month.numOfShifts === 0) return { x: month.x, y: 0 };
       return { x: month.x, y: month.trueTotalEarned / month.numOfShifts };
     });
-    return { id: companyId, data: formattedData };
+    return { id: companyName, data: formattedData };
   });
   return formattedDataStore;
 };

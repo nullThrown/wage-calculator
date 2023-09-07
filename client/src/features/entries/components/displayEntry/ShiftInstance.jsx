@@ -27,16 +27,16 @@ const ShiftInstance = ({ entry, setSelectedEntry }) => {
               textOverflow='ellipsis'
               colorScheme='green'
               isTruncated>
-              {entry.position}
+              {entry.companyName} - {entry.position}
             </Badge>
           </button>
         </Flex>
       </PopoverTrigger>
       <PopoverContent>
         <PopoverArrow />
-        <PopoverHeader
-          bg='purple.700'
-          color='white'>{`bar - ${entry.position}`}</PopoverHeader>
+        <PopoverHeader bg='purple.700' color='white'>
+          {entry.companyName} - {entry.position}
+        </PopoverHeader>
         <PopoverBody m='.4em 0'>
           <Flex flexDirection='column' gap='.2em'>
             <Text color='purple.700 !important'>
@@ -44,11 +44,8 @@ const ShiftInstance = ({ entry, setSelectedEntry }) => {
               <sub>hrs</sub> {minutes}
               <sub>min</sub>
             </Text>
-            <Text>
-              {' '}
-              {`total Earned:  $ ${entry.trueTotalEarned.toFixed(2)}`}
-            </Text>
-            <Text>{`tip Pct: ${(entry.tipPct * 100).toFixed(2)}`} %</Text>
+            <Text> Total earned: ${entry.trueTotalEarned.toFixed(2)}</Text>
+            <Text>Earned per hour: ${entry.totalEarnedPerHour.toFixed(2)}</Text>
           </Flex>
         </PopoverBody>
         <PopoverFooter>

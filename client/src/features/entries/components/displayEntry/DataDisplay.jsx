@@ -28,8 +28,8 @@ const DataDisplay = ({ selectedEntry }) => {
           <Tbody>
             <Tr>
               <Td>{formatReadableDate(selectedEntry.shiftDate)}</Td>
-              <Td>{selectedEntry.company}</Td>
-              <Td>{selectedEntry?.position}</Td>
+              <Td>{selectedEntry.companyName}</Td>
+              <Td>{selectedEntry.position}</Td>
             </Tr>
           </Tbody>
         </Table>
