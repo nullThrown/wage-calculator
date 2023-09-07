@@ -4,7 +4,7 @@ GENERAL
 *add company name to all locations where only company Id is accessible 
 ✔-EditEntryModal - shift display 
 -Graph - data Ids
--Entris - ShiftInstance on calendar
+✔-Entris - ShiftInstance on calendar
 -single entry - companyName
 
 *normalize all front end validation error handling and error display
